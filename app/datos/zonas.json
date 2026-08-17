@@ -1,0 +1,158 @@
+{
+ "zonas": [
+  {
+   "id": "odiel",
+   "nombre": "Marismas del Odiel",
+   "bloque": "Estuario y litoral",
+   "proteccion": "Paraje Natural · Reserva de la Biosfera (UNESCO) · Reservas Naturales Isla de Enmedio e Isla de la Liebre",
+   "centro": [
+    -6.96,
+    37.22
+   ],
+   "estacionMarea": "huelva-5",
+   "desfaseMinutos": 0,
+   "mareaOptima": "bajamar",
+   "autorizacion": false,
+   "ventana": "Todo el año. Espátulas y flamencos en cría de marzo a julio; limícolas de agosto a abril; máxima diversidad en el paso postnupcial, de agosto a octubre.",
+   "itinerario": "Media jornada: observatorio de Calatilla al amanecer, sendero de Salinas de Bacuta con la marea bajando y cierre en Isla de Bacuta.",
+   "avisos": [
+    "Sendero Calatilla de Bacuta reabierto por completo el 29/07/2026"
+   ],
+   "puntos": [
+    "observatorio-calatilla",
+    "observatorio-el-aguila",
+    "observatorio-laguna-grande",
+    "observatorio-salinas-pesquero",
+    "observatorio-la-choza",
+    "observatorio-la-gravera",
+    "isla-de-bacuta",
+    "mirador-isla-enmedio"
+   ]
+  },
+  {
+   "id": "piedras",
+   "nombre": "Marismas del río Piedras y Flecha del Rompido",
+   "bloque": "Estuario y litoral",
+   "proteccion": "Paraje Natural",
+   "centro": [
+    -7.12,
+    37.215
+   ],
+   "estacionMarea": "huelva-5",
+   "desfaseMinutos": 25,
+   "mareaOptima": "bajamar",
+   "autorizacion": false,
+   "ventana": "Invierno para pato colorado y ostrero; paso migratorio para limícolas y charranes. Bajamar imprescindible.",
+   "itinerario": "Senderos de marisma desde El Rompido; la flecha litoral (~10 km) solo es accesible en barco.",
+   "avisos": [],
+   "puntos": [
+    "sendero-el-rompido"
+   ]
+  },
+  {
+   "id": "portil",
+   "nombre": "Laguna de El Portil",
+   "bloque": "Estuario y litoral",
+   "proteccion": "Reserva Natural",
+   "centro": [
+    -7.045,
+    37.21
+   ],
+   "estacionMarea": "huelva-5",
+   "desfaseMinutos": 0,
+   "mareaOptima": "indiferente",
+   "autorizacion": false,
+   "ventana": "Invierno (anátidas, garcetas) y paso. Laguna dulce: complemento tras una mañana de marisma salada.",
+   "itinerario": "Observatorio y sendero perimetral corto; una hora larga basta.",
+   "avisos": [],
+   "puntos": [
+    "observatorio-el-portil"
+   ]
+  },
+  {
+   "id": "palos-madres",
+   "nombre": "Lagunas de Palos y Las Madres",
+   "bloque": "Estuario y litoral",
+   "proteccion": "Paraje Natural",
+   "centro": [
+    -6.88,
+    37.145
+   ],
+   "estacionMarea": "huelva-5",
+   "desfaseMinutos": 0,
+   "mareaOptima": "indiferente",
+   "autorizacion": false,
+   "ventana": "Agua todo el año. Garcilla cangrejera en verano; fumarel cariblanco, pato colorado y porrón europeo en cría.",
+   "itinerario": "Observatorios sobre la Laguna Primera de Palos.",
+   "avisos": [],
+   "puntos": [
+    "observatorio-primera-palos"
+   ]
+  },
+  {
+   "id": "donana",
+   "nombre": "Doñana occidental",
+   "bloque": "Doñana",
+   "proteccion": "Parque Nacional y Natural · Patrimonio de la Humanidad",
+   "centro": [
+    -6.49,
+    37.13
+   ],
+   "estacionMarea": "huelva-5",
+   "desfaseMinutos": 60,
+   "mareaOptima": "indiferente",
+   "autorizacion": true,
+   "ventana": "Invernada de noviembre a febrero: ánsar común y grulla. Primavera para colonias de cría.",
+   "itinerario": "La Rocina y el sendero Charco de la Boca (3,5 km), C.O. Francisco Bernis a pie de El Rocío.",
+   "avisos": [
+    "Algunos senderos tienen cupo: comprobar disponibilidad antes de ir"
+   ],
+   "puntos": [
+    "cv-la-rocina",
+    "cv-el-acebuche",
+    "co-francisco-bernis",
+    "cv-jose-antonio-valverde"
+   ]
+  },
+  {
+   "id": "sierra",
+   "nombre": "Sierra de Aracena y Picos de Aroche",
+   "bloque": "Sierra e interior",
+   "proteccion": "Parque Natural",
+   "centro": [
+    -6.56,
+    37.9
+   ],
+   "estacionMarea": null,
+   "desfaseMinutos": null,
+   "mareaOptima": "indiferente",
+   "autorizacion": false,
+   "ventana": "Todo el año para buitre negro; cigüeña negra de marzo a septiembre.",
+   "itinerario": "Observatorio de buitres de Sierra Pelada y dehesas de los alrededores.",
+   "avisos": [],
+   "puntos": [
+    "observatorio-sierra-pelada"
+   ]
+  },
+  {
+   "id": "andevalo",
+   "nombre": "El Andévalo y embalses",
+   "bloque": "Sierra e interior",
+   "proteccion": "Zona de Especial Protección para las Aves",
+   "centro": [
+    -7.15,
+    37.6
+   ],
+   "estacionMarea": null,
+   "desfaseMinutos": null,
+   "mareaOptima": "indiferente",
+   "autorizacion": false,
+   "ventana": "Invierno para grulla; primavera para esteparias. Críalo europeo desde finales del invierno.",
+   "itinerario": "Recorrido en coche por pistas de pseudoestepa, con paradas de escucha al amanecer.",
+   "avisos": [],
+   "puntos": [
+    "andevalo-pseudoestepa"
+   ]
+  }
+ ]
+}

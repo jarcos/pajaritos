@@ -1,0 +1,14 @@
+.env
+*.env
+!.env.example
+.DS_Store
+._*
+*.sql
+*.dump
+*.pmtiles
+*.db
+*.db-wal
+*.db-shm
+snapshots/
+app/fotos/
+data/

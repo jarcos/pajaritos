@@ -1,0 +1,3238 @@
+{
+ "version": "2026-08-17",
+ "fuente": "60 especies de arranque · Aves de la ría de Huelva (Autoridad Portuaria de Huelva + SEO/BirdLife)",
+ "nota": "La fenología marcada como 'verificado' procede de la matriz del plan de la guía. El resto entra como 'estimado' con presencia genérica y debe contrastarse con los barcharts de eBird de los hotspots del Odiel antes de darse por buena.",
+ "grupos": [
+  {
+   "id": "anatidas",
+   "nombre": "Anátidas"
+  },
+  {
+   "id": "colimbos-zampullines",
+   "nombre": "Colimbos y zampullines"
+  },
+  {
+   "id": "aves-marinas",
+   "nombre": "Aves marinas"
+  },
+  {
+   "id": "cormoranes",
+   "nombre": "Cormoranes"
+  },
+  {
+   "id": "garzas-espatulas-ciguenas",
+   "nombre": "Garzas, espátulas y cigüeñas"
+  },
+  {
+   "id": "flamencos",
+   "nombre": "Flamencos"
+  },
+  {
+   "id": "rapaces-diurnas",
+   "nombre": "Rapaces diurnas"
+  },
+  {
+   "id": "rallidos",
+   "nombre": "Rállidos"
+  },
+  {
+   "id": "limicolas",
+   "nombre": "Limícolas"
+  },
+  {
+   "id": "gaviotas",
+   "nombre": "Gaviotas"
+  },
+  {
+   "id": "charranes-pagazas",
+   "nombre": "Charranes y pagazas"
+  },
+  {
+   "id": "alcidos",
+   "nombre": "Álcidos"
+  },
+  {
+   "id": "aves-terrestres",
+   "nombre": "Aves terrestres"
+  }
+ ],
+ "especies": [
+  {
+   "id": "melanitta-nigra",
+   "grupo": "anatidas",
+   "nombre": "Negrón común",
+   "cientifico": "Melanitta nigra",
+   "ingles": "Common Scoter",
+   "estatus": [
+    "I"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "mar"
+   ],
+   "identificacion": "Pato marino de aspecto uniformemente negro en el macho, con una protuberancia amarilla en la base del pico. La hembra es parda oscura con las mejillas claras que contrastan con el píleo. Vuela bajo y en línea sobre el agua, en bandos alargados.",
+   "conducta": "Se ve casi siempre en el mar, más allá de la rompiente. Bucea con un pequeño salto previo.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "mergus-serrator",
+   "grupo": "anatidas",
+   "nombre": "Serreta mediana",
+   "cientifico": "Mergus serrator",
+   "ingles": "Red-breasted Merganser",
+   "estatus": [
+    "I"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "mar",
+    "estuario"
+   ],
+   "identificacion": "Pato de pico fino, rojo y aserrado, con cresta desgreñada de dos puntas. Macho con cabeza verde oscuro, collar blanco y pecho pardo moteado; hembra parda con la cabeza rojiza fundiéndose sin corte con el cuello.",
+   "conducta": "Pesca buceando en aguas someras del estuario, a menudo en pequeños grupos que avanzan en línea.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "gavia-stellata",
+   "grupo": "colimbos-zampullines",
+   "nombre": "Colimbo chico",
+   "cientifico": "Gavia stellata",
+   "ingles": "Red-throated Diver",
+   "estatus": [
+    "I"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "mar",
+    "estuario"
+   ],
+   "identificacion": "En invierno, dorso gris finamente moteado de blanco y cara muy blanca que sube por encima del ojo. El pico, fino, se lleva característicamente inclinado hacia arriba.",
+   "conducta": "Silueta muy baja en el agua. Poco frecuente pero regular frente a la costa en pleno invierno.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "podiceps-nigricollis",
+   "grupo": "colimbos-zampullines",
+   "nombre": "Zampullín cuellinegro",
+   "cientifico": "Podiceps nigricollis",
+   "ingles": "Black-necked Grebe",
+   "estatus": [
+    "I"
+   ],
+   "meses": [
+    2,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2
+   ],
+   "confianza": "verificado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres"
+   ],
+   "tamano": "pequeno",
+   "habitat": [
+    "salina",
+    "laguna",
+    "estuario"
+   ],
+   "identificacion": "Zampullín pequeño de frente abombada y pico fino ligeramente respingón. En invierno, negro y blanco sucio con el negro del píleo bajando por detrás del ojo; ojo rojo intenso.",
+   "conducta": "Abundante en las salinas del Odiel en invierno, a menudo en grupos dispersos que bucean sin descanso.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "puffinus-mauretanicus",
+   "grupo": "aves-marinas",
+   "nombre": "Pardela balear",
+   "cientifico": "Puffinus mauretanicus",
+   "ingles": "Balearic Shearwater",
+   "estatus": [
+    "M"
+   ],
+   "meses": [
+    1,
+    1,
+    2,
+    2,
+    2,
+    1,
+    1,
+    2,
+    2,
+    2,
+    1,
+    1
+   ],
+   "confianza": "verificado",
+   "zonas": [
+    "odiel",
+    "piedras"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "mar"
+   ],
+   "identificacion": "Pardela parda por arriba y sucia por abajo, sin el contraste limpio de la mediterránea. Axilas y bajo el ala manchados de pardo. Vuelo de aleteos rápidos y planeos rasantes.",
+   "conducta": "Pasa frente a la costa en bandos bajos. Especie En Peligro Crítico: cualquier cita bien documentada tiene valor.",
+   "confusiones": [
+    {
+     "especie": "stercorarius-skua",
+     "clave": "El págalo es más robusto, con manchas blancas en la base de las primarias"
+    }
+   ],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "oceanodroma-leucorhoa",
+   "grupo": "aves-marinas",
+   "nombre": "Paíño boreal",
+   "cientifico": "Oceanodroma leucorhoa",
+   "ingles": "Leach's Storm-petrel",
+   "estatus": [
+    "M"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras"
+   ],
+   "tamano": "pequeno",
+   "habitat": [
+    "mar"
+   ],
+   "identificacion": "Paíño pequeño y oscuro con obispillo blanco dividido por una línea central, alas largas y angulosas y cola ligeramente ahorquillada.",
+   "conducta": "Vuelo errático, de golondrina, cambiando de dirección. Casi siempre en temporales de poniente.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "morus-bassanus",
+   "grupo": "aves-marinas",
+   "nombre": "Alcatraz atlántico",
+   "cientifico": "Morus bassanus",
+   "ingles": "Northern Gannet",
+   "estatus": [
+    "I"
+   ],
+   "meses": [
+    2,
+    2,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2,
+    2
+   ],
+   "confianza": "verificado",
+   "zonas": [
+    "odiel",
+    "piedras"
+   ],
+   "tamano": "grande",
+   "habitat": [
+    "mar"
+   ],
+   "identificacion": "Ave marina grande, blanca, con las puntas de las alas negras y la cabeza teñida de amarillo. Silueta de cruz: alas largas y estrechas, cola y pico puntiagudos. Los jóvenes son pardos moteados y tardan cuatro años en blanquear.",
+   "conducta": "Se zambulle en picado desde gran altura, plegando las alas. Muy visible desde la costa en invierno.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "stercorarius-skua",
+   "grupo": "aves-marinas",
+   "nombre": "Págalo grande",
+   "cientifico": "Stercorarius skua",
+   "ingles": "Great Skua",
+   "estatus": [
+    "I",
+    "M"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras"
+   ],
+   "tamano": "grande",
+   "habitat": [
+    "mar"
+   ],
+   "identificacion": "Robusto y pardo, del tamaño de una gaviota patiamarilla pero de aspecto más pesado. Manchas blancas muy marcadas en la base de las primarias, visibles arriba y abajo.",
+   "conducta": "Persigue a otras aves marinas para robarles la presa. Vuelo potente y directo.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "phalacrocorax-carbo",
+   "grupo": "cormoranes",
+   "nombre": "Cormorán grande",
+   "cientifico": "Phalacrocorax carbo",
+   "ingles": "Great Cormorant",
+   "estatus": [
+    "I"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "grande",
+   "habitat": [
+    "estuario",
+    "salina",
+    "laguna"
+   ],
+   "identificacion": "Ave acuática grande y oscura, con pico ganchudo y mancha blanca en la garganta. Los jóvenes tienen el pecho claro. En vuelo, cuello estirado con una ligera curva.",
+   "conducta": "Se posa en postes y bateas con las alas extendidas para secarse. Nada muy hundido, con el pico algo elevado.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "egretta-garzetta",
+   "grupo": "garzas-espatulas-ciguenas",
+   "nombre": "Garceta común",
+   "cientifico": "Egretta garzetta",
+   "ingles": "Little Egret",
+   "estatus": [
+    "AR"
+   ],
+   "meses": [
+    2,
+    2,
+    3,
+    3,
+    3,
+    3,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "confianza": "verificado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "marisma",
+    "estero",
+    "salina"
+   ],
+   "identificacion": "Garza blanca de tamaño medio, pico negro y patas negras con los dedos amarillos, muy llamativos cuando levanta el vuelo. En primavera luce dos plumas largas en la nuca.",
+   "conducta": "Persigue a los peces corriendo por el agua somera y agitando un pie para levantar la presa.",
+   "confusiones": [
+    {
+     "especie": "ardea-cinerea",
+     "clave": "La garza real es gris, mucho mayor y de pico amarillento"
+    }
+   ],
+   "marea": "bajamar",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "ardea-cinerea",
+   "grupo": "garzas-espatulas-ciguenas",
+   "nombre": "Garza real",
+   "cientifico": "Ardea cinerea",
+   "ingles": "Grey Heron",
+   "estatus": [
+    "AR"
+   ],
+   "meses": [
+    2,
+    2,
+    3,
+    3,
+    3,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2
+   ],
+   "confianza": "verificado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "grande",
+   "habitat": [
+    "marisma",
+    "estero",
+    "laguna"
+   ],
+   "identificacion": "Garza grande y gris, con cuello blanquecino rayado de negro por delante y una ceja negra que acaba en un penacho. Pico fuerte y amarillento.",
+   "conducta": "Caza inmóvil en el borde del agua durante largos minutos. Vuela con el cuello recogido en S y aleteo lento.",
+   "confusiones": [
+    {
+     "especie": "egretta-garzetta",
+     "clave": "La garceta es enteramente blanca y bastante menor"
+    }
+   ],
+   "marea": "bajamar",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "ciconia-ciconia",
+   "grupo": "garzas-espatulas-ciguenas",
+   "nombre": "Cigüeña blanca",
+   "cientifico": "Ciconia ciconia",
+   "ingles": "White Stork",
+   "estatus": [
+    "AR"
+   ],
+   "meses": [
+    1,
+    3,
+    3,
+    3,
+    3,
+    3,
+    1,
+    2,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "verificado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "grande",
+   "habitat": [
+    "marisma",
+    "dehesa",
+    "cultivo"
+   ],
+   "identificacion": "Inconfundible: blanca con las remeras negras, pico y patas rojos. Vuela con el cuello estirado, al contrario que las garzas.",
+   "conducta": "Planea en círculos aprovechando las térmicas. Cría en nidos voluminosos sobre torres y postes.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "platalea-leucorodia",
+   "grupo": "garzas-espatulas-ciguenas",
+   "nombre": "Espátula común",
+   "cientifico": "Platalea leucorodia",
+   "ingles": "Eurasian Spoonbill",
+   "estatus": [
+    "AR"
+   ],
+   "meses": [
+    1,
+    1,
+    3,
+    3,
+    3,
+    3,
+    3,
+    2,
+    2,
+    1,
+    1,
+    1
+   ],
+   "confianza": "verificado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "grande",
+   "habitat": [
+    "marisma",
+    "estero",
+    "salina"
+   ],
+   "identificacion": "Zancuda blanca de gran tamaño, con el pico negro claramente ensanchado en el extremo, como una espátula. En época de cría, penacho amarillento en la nuca y una banda del mismo color en la base del cuello.",
+   "conducta": "Barre el agua con el pico entreabierto dibujando semicírculos mientras avanza. Vuela con el cuello estirado, en formación de línea o en cuña.",
+   "confusiones": [
+    {
+     "especie": "egretta-garzetta",
+     "clave": "La garceta tiene el pico recto y afilado, nunca espatulado"
+    }
+   ],
+   "marea": "bajamar",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "phoenicopterus-roseus",
+   "grupo": "flamencos",
+   "nombre": "Flamenco común",
+   "cientifico": "Phoenicopterus roseus",
+   "ingles": "Greater Flamingo",
+   "estatus": [
+    "AR"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    3,
+    3,
+    3,
+    2,
+    2,
+    2,
+    2,
+    1,
+    1
+   ],
+   "confianza": "verificado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "grande",
+   "habitat": [
+    "salina",
+    "marisma"
+   ],
+   "identificacion": "Inconfundible por el cuello y las patas desmesurados. De cerca, blanco rosado con las coberteras rojas y las remeras negras, evidentes solo en vuelo. Pico rosa con la punta negra, doblado hacia abajo.",
+   "conducta": "Filtra el fango con la cabeza invertida, «taconeando» con las patas para removerlo. Se desplaza en bandos que vuelan en línea.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "milvus-migrans",
+   "grupo": "rapaces-diurnas",
+   "nombre": "Milano negro",
+   "cientifico": "Milvus migrans",
+   "ingles": "Black Kite",
+   "estatus": [
+    "ER"
+   ],
+   "meses": [
+    0,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0
+   ],
+   "confianza": "verificado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "marisma",
+    "dehesa",
+    "cultivo"
+   ],
+   "identificacion": "Rapaz parda oscura de aspecto uniforme, con la cola solo ligeramente escotada, que parece recta cuando la abre. Alas algo arqueadas en vuelo.",
+   "conducta": "Planea bajo sobre vertederos, cultivos y marismas, girando la cola como un timón.",
+   "confusiones": [
+    {
+     "especie": "milvus-milvus",
+     "clave": "El milano real es más rojizo, con la cola muy ahorquillada y grandes manchas blancas bajo el ala"
+    }
+   ],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "milvus-milvus",
+   "grupo": "rapaces-diurnas",
+   "nombre": "Milano real",
+   "cientifico": "Milvus milvus",
+   "ingles": "Red Kite",
+   "estatus": [
+    "I"
+   ],
+   "meses": [
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2
+   ],
+   "confianza": "verificado",
+   "zonas": [
+    "odiel",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "dehesa",
+    "cultivo"
+   ],
+   "identificacion": "Rapaz rojiza de cola profundamente ahorquillada y muy larga. Bajo el ala, dos manchas blancas amplias en la base de las primarias. Cabeza pálida, casi blanquecina.",
+   "conducta": "Vuelo elástico y muy maniobrero, con la cola en continuo movimiento.",
+   "confusiones": [
+    {
+     "especie": "milvus-migrans",
+     "clave": "El milano negro es más oscuro y su cola apenas está escotada"
+    }
+   ],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "circus-aeruginosus",
+   "grupo": "rapaces-diurnas",
+   "nombre": "Aguilucho lagunero occidental",
+   "cientifico": "Circus aeruginosus",
+   "ingles": "Western Marsh Harrier",
+   "estatus": [
+    "AR"
+   ],
+   "meses": [
+    2,
+    2,
+    3,
+    3,
+    3,
+    3,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2
+   ],
+   "confianza": "verificado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "marisma",
+    "carrizal"
+   ],
+   "identificacion": "Aguilucho grande y pesado. El macho combina pardo, gris y negro en las alas; la hembra es parda oscura con el píleo y la garganta de un crema muy contrastado.",
+   "conducta": "Patrulla el carrizal a poca altura con las alas en V marcada, balanceándose. Su paso levanta a los bandos de limícolas.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "pandion-haliaetus",
+   "grupo": "rapaces-diurnas",
+   "nombre": "Águila pescadora",
+   "cientifico": "Pandion haliaetus",
+   "ingles": "Osprey",
+   "estatus": [
+    "ER",
+    "I"
+   ],
+   "meses": [
+    1,
+    3,
+    3,
+    3,
+    3,
+    3,
+    1,
+    1,
+    2,
+    2,
+    2,
+    1
+   ],
+   "confianza": "verificado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "grande",
+   "habitat": [
+    "estuario",
+    "salina",
+    "laguna"
+   ],
+   "identificacion": "Blanca por debajo, parda por arriba, con una banda oscura que atraviesa el ojo. En vuelo, alas largas y anguladas en el carpo, con una mancha oscura en la muñeca.",
+   "conducta": "Se cierne sobre el agua y se lanza con las patas por delante. Lleva el pez orientado en el sentido del vuelo.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "falco-tinnunculus",
+   "grupo": "rapaces-diurnas",
+   "nombre": "Cernícalo vulgar",
+   "cientifico": "Falco tinnunculus",
+   "ingles": "Common Kestrel",
+   "estatus": [
+    "AR"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "pequeno",
+   "habitat": [
+    "cultivo",
+    "marisma",
+    "dehesa"
+   ],
+   "identificacion": "Halcón pequeño de dorso rojizo moteado y cola larga. El macho tiene la cabeza gris y la cola gris con una banda negra terminal; la hembra es rojiza y barrada por completo.",
+   "conducta": "Se cierne en el aire con la cabeza fija mientras la cola y las alas trabajan sin parar.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "gallinula-chloropus",
+   "grupo": "rallidos",
+   "nombre": "Polla de agua",
+   "cientifico": "Gallinula chloropus",
+   "ingles": "Common Moorhen",
+   "estatus": [
+    "AR"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "pequeno",
+   "habitat": [
+    "laguna",
+    "carrizal",
+    "canal"
+   ],
+   "identificacion": "Oscura, con escudete frontal y base del pico rojos, punta amarilla y una línea blanca quebrada en el flanco. Bajo la cola, dos triángulos blancos que enseña al nadar.",
+   "conducta": "Nada moviendo la cabeza y levantando la cola. Camina sobre la vegetación flotante con sus dedos larguísimos.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "himantopus-himantopus",
+   "grupo": "limicolas",
+   "nombre": "Cigüeñuela común",
+   "cientifico": "Himantopus himantopus",
+   "ingles": "Black-winged Stilt",
+   "estatus": [
+    "AR"
+   ],
+   "meses": [
+    1,
+    1,
+    3,
+    3,
+    3,
+    3,
+    2,
+    2,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "verificado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "salina",
+    "marisma",
+    "laguna"
+   ],
+   "identificacion": "Blanco y negro puro, con unas patas rosas desproporcionadamente largas que sobresalen mucho por detrás de la cola en vuelo. Pico recto, fino y negro.",
+   "conducta": "Camina por aguas más profundas que ningún otro limícola. Muy ruidosa y agresiva cerca del nido.",
+   "confusiones": [
+    {
+     "especie": "recurvirostra-avosetta",
+     "clave": "La avoceta tiene el pico curvado hacia arriba y las patas grises"
+    }
+   ],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "recurvirostra-avosetta",
+   "grupo": "limicolas",
+   "nombre": "Avoceta común",
+   "cientifico": "Recurvirostra avosetta",
+   "ingles": "Pied Avocet",
+   "estatus": [
+    "AR",
+    "I"
+   ],
+   "meses": [
+    2,
+    2,
+    3,
+    3,
+    3,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2
+   ],
+   "confianza": "verificado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "salina",
+    "marisma"
+   ],
+   "identificacion": "Blanca con un dibujo negro nítido en cabeza, nuca y alas. El pico, negro y fino, se curva claramente hacia arriba. Patas azuladas.",
+   "conducta": "Barre el agua somera moviendo el pico de lado a lado. Suele alimentarse en grupos compactos.",
+   "confusiones": [
+    {
+     "especie": "himantopus-himantopus",
+     "clave": "La cigüeñuela tiene el pico recto y las patas rosas"
+    }
+   ],
+   "marea": "bajamar",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "charadrius-hiaticula",
+   "grupo": "limicolas",
+   "nombre": "Chorlitejo grande",
+   "cientifico": "Charadrius hiaticula",
+   "ingles": "Common Ringed Plover",
+   "estatus": [
+    "I",
+    "M"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres"
+   ],
+   "tamano": "pequeno",
+   "habitat": [
+    "playa",
+    "fango",
+    "salina"
+   ],
+   "identificacion": "Collar negro completo y ancho, antifaz negro y pico naranja con la punta negra. Patas anaranjadas. En vuelo, banda alar blanca bien marcada.",
+   "conducta": "Avanza a carreras cortas y se detiene en seco para picotear. Menos ligado a la arena seca que el patinegro.",
+   "confusiones": [
+    {
+     "especie": "charadrius-alexandrinus",
+     "clave": "El patinegro tiene el collar interrumpido, patas oscuras y aspecto más pálido"
+    }
+   ],
+   "marea": "bajamar",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "charadrius-alexandrinus",
+   "grupo": "limicolas",
+   "nombre": "Chorlitejo patinegro",
+   "cientifico": "Charadrius alexandrinus",
+   "ingles": "Kentish Plover",
+   "estatus": [
+    "AR"
+   ],
+   "meses": [
+    1,
+    1,
+    3,
+    3,
+    3,
+    3,
+    3,
+    2,
+    2,
+    1,
+    1,
+    1
+   ],
+   "confianza": "verificado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres"
+   ],
+   "tamano": "pequeno",
+   "habitat": [
+    "playa",
+    "salina",
+    "fango"
+   ],
+   "identificacion": "Muy pálido por arriba, con el collar negro interrumpido en el centro del pecho, formando dos manchas laterales. Pico y patas oscuros; el macho tiene la nuca canela.",
+   "conducta": "Cría en playas y salinas: en primavera y verano hay que extremar la prudencia, sus nidos están en el suelo desnudo.",
+   "confusiones": [
+    {
+     "especie": "charadrius-hiaticula",
+     "clave": "El chorlitejo grande tiene el collar completo y el pico naranja"
+    }
+   ],
+   "marea": "bajamar",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "pluvialis-squatarola",
+   "grupo": "limicolas",
+   "nombre": "Chorlito gris",
+   "cientifico": "Pluvialis squatarola",
+   "ingles": "Grey Plover",
+   "estatus": [
+    "I",
+    "M"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "fango",
+    "playa"
+   ],
+   "identificacion": "Chorlito rechoncho, gris moteado en invierno, con cabeza grande y pico corto y robusto. La clave definitiva son las axilas negras, visibles al levantar el vuelo.",
+   "conducta": "Solitario y espaciado en el fango, a diferencia de los correlimos. Nervioso, levanta el vuelo con un silbido triste de tres notas.",
+   "confusiones": [],
+   "marea": "bajamar",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "calidris-alba",
+   "grupo": "limicolas",
+   "nombre": "Correlimos tridáctilo",
+   "cientifico": "Calidris alba",
+   "ingles": "Sanderling",
+   "estatus": [
+    "I",
+    "M"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres"
+   ],
+   "tamano": "pequeno",
+   "habitat": [
+    "playa"
+   ],
+   "identificacion": "El más blanco de los correlimos en invierno, con una mancha negra en el hombro y una banda alar blanca muy ancha en vuelo. Carece de dedo posterior.",
+   "conducta": "Corre persiguiendo el vaivén de las olas en la orilla, como un juguete de cuerda. Inconfundible por esa conducta.",
+   "confusiones": [
+    {
+     "especie": "calidris-alpina",
+     "clave": "El común es más pardo, con el pico algo curvado y no corre con las olas"
+    }
+   ],
+   "marea": "bajamar",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "calidris-ferruginea",
+   "grupo": "limicolas",
+   "nombre": "Correlimos zarapitín",
+   "cientifico": "Calidris ferruginea",
+   "ingles": "Curlew Sandpiper",
+   "estatus": [
+    "M"
+   ],
+   "meses": [
+    0,
+    0,
+    0,
+    1,
+    2,
+    0,
+    1,
+    2,
+    2,
+    1,
+    0,
+    0
+   ],
+   "confianza": "verificado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres"
+   ],
+   "tamano": "pequeno",
+   "habitat": [
+    "fango",
+    "salina"
+   ],
+   "identificacion": "Como un correlimos común pero más estilizado, de patas y pico más largos y el pico claramente curvado hacia abajo. En vuelo, obispillo blanco puro, sin línea central oscura.",
+   "conducta": "En paso postnupcial es de los limícolas más elegantes del Odiel. Los adultos pueden conservar restos del rojo ladrillo nupcial hasta agosto.",
+   "confusiones": [
+    {
+     "especie": "calidris-alpina",
+     "clave": "El común tiene obispillo oscuro y patas más cortas"
+    }
+   ],
+   "marea": "bajamar",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "calidris-alpina",
+   "grupo": "limicolas",
+   "nombre": "Correlimos común",
+   "cientifico": "Calidris alpina",
+   "ingles": "Dunlin",
+   "estatus": [
+    "I"
+   ],
+   "meses": [
+    2,
+    2,
+    2,
+    1,
+    1,
+    0,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2
+   ],
+   "confianza": "verificado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres"
+   ],
+   "tamano": "pequeno",
+   "habitat": [
+    "fango",
+    "salina"
+   ],
+   "identificacion": "El correlimos de referencia: pardo grisáceo en invierno, con el pico de longitud media y curvado en la punta. En plumaje nupcial, mancha negra en el vientre inconfundible.",
+   "conducta": "Forma bandos densos de cientos de aves que giran al unísono sobre el fango en bajamar.",
+   "confusiones": [
+    {
+     "especie": "calidris-ferruginea",
+     "clave": "El zarapitín es más esbelto, de pico más curvado y obispillo blanco"
+    }
+   ],
+   "marea": "bajamar",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "limosa-limosa",
+   "grupo": "limicolas",
+   "nombre": "Aguja colinegra",
+   "cientifico": "Limosa limosa",
+   "ingles": "Black-tailed Godwit",
+   "estatus": [
+    "I",
+    "M"
+   ],
+   "meses": [
+    2,
+    2,
+    1,
+    1,
+    0,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "confianza": "verificado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "fango",
+    "marisma",
+    "arrozal"
+   ],
+   "identificacion": "Zancuda de pico muy largo y recto. En vuelo, banda alar blanca ancha y cola blanca con una banda negra terminal nítida. Patas que sobresalen mucho.",
+   "conducta": "Se alimenta sondeando el fango hasta enterrar todo el pico. Bandos grandes en invierno.",
+   "confusiones": [
+    {
+     "especie": "limosa-lapponica",
+     "clave": "La colipinta tiene el pico ligeramente respingón, sin banda alar y con la cola barrada"
+    }
+   ],
+   "marea": "bajamar",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "limosa-lapponica",
+   "grupo": "limicolas",
+   "nombre": "Aguja colipinta",
+   "cientifico": "Limosa lapponica",
+   "ingles": "Bar-tailed Godwit",
+   "estatus": [
+    "I",
+    "M"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "fango",
+    "playa"
+   ],
+   "identificacion": "Pico largo y sutilmente arqueado hacia arriba. En vuelo no hay banda alar blanca y la cola aparece finamente barrada; el blanco del obispillo sube en cuña por la espalda.",
+   "conducta": "Más ligada al fango costero abierto que la colinegra, con la que se mezcla.",
+   "confusiones": [
+    {
+     "especie": "limosa-limosa",
+     "clave": "La colinegra tiene el pico recto, banda alar blanca y cola con banda negra"
+    }
+   ],
+   "marea": "bajamar",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "numenius-phaeopus",
+   "grupo": "limicolas",
+   "nombre": "Zarapito trinador",
+   "cientifico": "Numenius phaeopus",
+   "ingles": "Whimbrel",
+   "estatus": [
+    "M"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "fango",
+    "marisma"
+   ],
+   "identificacion": "Zarapito de tamaño medio con el pico curvado más corto y quebrado en ángulo. La clave está en la cabeza: dos bandas oscuras longitudinales separadas por una lista central clara.",
+   "conducta": "Reclamo característico: un trino rápido y uniforme de siete notas, distinto del silbido melancólico del real.",
+   "confusiones": [
+    {
+     "especie": "numenius-arquata",
+     "clave": "El real es mayor, de pico mucho más largo y cabeza sin bandas marcadas"
+    }
+   ],
+   "marea": "bajamar",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "numenius-arquata",
+   "grupo": "limicolas",
+   "nombre": "Zarapito real",
+   "cientifico": "Numenius arquata",
+   "ingles": "Eurasian Curlew",
+   "estatus": [
+    "I"
+   ],
+   "meses": [
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2
+   ],
+   "confianza": "verificado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres"
+   ],
+   "tamano": "grande",
+   "habitat": [
+    "fango",
+    "marisma"
+   ],
+   "identificacion": "El limícola más grande de la marisma. Pico enormemente largo y curvado, cabeza sin dibujo contrastado. Obispillo blanco en cuña.",
+   "conducta": "Reclamo aflautado y triste, «cur-lii», muy audible al amanecer sobre el estuario.",
+   "confusiones": [
+    {
+     "especie": "numenius-phaeopus",
+     "clave": "El trinador es menor, con bandas en la cabeza y pico más corto"
+    }
+   ],
+   "marea": "bajamar",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "actitis-hypoleucos",
+   "grupo": "limicolas",
+   "nombre": "Andarríos chico",
+   "cientifico": "Actitis hypoleucos",
+   "ingles": "Common Sandpiper",
+   "estatus": [
+    "I",
+    "M"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "pequeno",
+   "habitat": [
+    "canal",
+    "estero",
+    "laguna"
+   ],
+   "identificacion": "Pequeño y pardo, con una cuña blanca que sube entre el pecho pardo y el ala plegada. Cola larga.",
+   "conducta": "Balancea el cuerpo sin parar. Vuela pegado al agua con aleteos rígidos y entrecortados, alternando planeos.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "tringa-nebularia",
+   "grupo": "limicolas",
+   "nombre": "Archibebe claro",
+   "cientifico": "Tringa nebularia",
+   "ingles": "Common Greenshank",
+   "estatus": [
+    "I",
+    "M"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "salina",
+    "estero",
+    "fango"
+   ],
+   "identificacion": "Pálido y estilizado, con el pico grueso, largo y ligeramente respingón, y patas verdosas. En vuelo, cuña blanca que sube por la espalda y alas uniformemente oscuras.",
+   "conducta": "Persigue peces pequeños corriendo por el agua somera. Reclamo de tres notas potentes y claras.",
+   "confusiones": [
+    {
+     "especie": "tringa-totanus",
+     "clave": "El archibebe común tiene las patas rojas y una banda alar blanca muy visible"
+    }
+   ],
+   "marea": "bajamar",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "tringa-totanus",
+   "grupo": "limicolas",
+   "nombre": "Archibebe común",
+   "cientifico": "Tringa totanus",
+   "ingles": "Common Redshank",
+   "estatus": [
+    "AR",
+    "I"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "salina",
+    "marisma",
+    "fango"
+   ],
+   "identificacion": "Patas rojo anaranjado y pico rojo en la base. En vuelo, el borde de fuga de las alas es blanco y ancho: la marca más segura.",
+   "conducta": "Muy ruidoso y desconfiado; suele ser el primero en dar la alarma y levantar a todo el bando.",
+   "confusiones": [
+    {
+     "especie": "tringa-nebularia",
+     "clave": "El claro tiene patas verdosas y no muestra borde blanco en el ala"
+    }
+   ],
+   "marea": "bajamar",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "arenaria-interpres",
+   "grupo": "limicolas",
+   "nombre": "Vuelvepiedras común",
+   "cientifico": "Arenaria interpres",
+   "ingles": "Ruddy Turnstone",
+   "estatus": [
+    "I",
+    "M"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    2,
+    2,
+    0,
+    1,
+    2,
+    2,
+    1,
+    1,
+    1
+   ],
+   "confianza": "verificado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres"
+   ],
+   "tamano": "pequeno",
+   "habitat": [
+    "playa",
+    "escollera",
+    "fango"
+   ],
+   "identificacion": "Rechoncho, de patas naranjas cortas y pico corto y cuneiforme. Dibujo pardo, negro y blanco muy desordenado. En vuelo, un llamativo patrón blanco y negro en el dorso.",
+   "conducta": "Vuelve piedras, algas y conchas con el pico para buscar debajo. Muy confiado; frecuente en espigones y muelles.",
+   "confusiones": [],
+   "marea": "bajamar",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "chroicocephalus-ridibundus",
+   "grupo": "gaviotas",
+   "nombre": "Gaviota reidora",
+   "cientifico": "Chroicocephalus ridibundus",
+   "ingles": "Black-headed Gull",
+   "estatus": [
+    "I",
+    "M"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "salina",
+    "estuario",
+    "cultivo"
+   ],
+   "identificacion": "Gaviota pequeña con el borde de ataque del ala blanco y brillante, visible a distancia. En invierno solo conserva una mancha oscura tras el ojo; en verano, capucha pardo chocolate, no negra.",
+   "conducta": "La gaviota más numerosa del interior del estuario. Muy sociable y bulliciosa.",
+   "confusiones": [
+    {
+     "especie": "larus-melanocephalus",
+     "clave": "La cabecinegra tiene el ala sin negro en la punta y el pico rojo más grueso"
+    }
+   ],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "larus-melanocephalus",
+   "grupo": "gaviotas",
+   "nombre": "Gaviota cabecinegra",
+   "cientifico": "Larus melanocephalus",
+   "ingles": "Mediterranean Gull",
+   "estatus": [
+    "I",
+    "M"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "playa",
+    "estuario",
+    "salina"
+   ],
+   "identificacion": "Adulto de aspecto muy blanco: sin negro alguno en las puntas de las alas. Pico rojo coral, robusto, con banda oscura. Capucha realmente negra en verano, que baja por la nuca.",
+   "conducta": "Se mezcla con las reidoras en las playas; buscarla por el ala completamente blanca.",
+   "confusiones": [
+    {
+     "especie": "chroicocephalus-ridibundus",
+     "clave": "La reidora tiene puntas de ala negras y pico más fino"
+    }
+   ],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "larus-audouinii",
+   "grupo": "gaviotas",
+   "nombre": "Gaviota de Audouin",
+   "cientifico": "Larus audouinii",
+   "ingles": "Audouin's Gull",
+   "estatus": [
+    "M"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2,
+    1,
+    1
+   ],
+   "confianza": "verificado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "playa",
+    "estuario"
+   ],
+   "identificacion": "Gaviota de porte elegante, dorso gris pálido, patas verde oliva oscuro y pico rojo oscuro con banda negra y punta amarilla. Ojo oscuro que le da expresión suave.",
+   "conducta": "Muy ligada al mar abierto y a la playa; pesca en vuelo rasante en lugar de buscar en vertederos. Especie protegida y de interés.",
+   "confusiones": [
+    {
+     "especie": "larus-michahellis",
+     "clave": "La patiamarilla tiene patas amarillas, pico amarillo con mancha roja y ojo claro"
+    }
+   ],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "larus-fuscus",
+   "grupo": "gaviotas",
+   "nombre": "Gaviota sombría",
+   "cientifico": "Larus fuscus",
+   "ingles": "Lesser Black-backed Gull",
+   "estatus": [
+    "I",
+    "M"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "grande",
+   "habitat": [
+    "estuario",
+    "playa",
+    "cultivo"
+   ],
+   "identificacion": "Dorso gris pizarra oscuro, claramente más oscuro que el de la patiamarilla, y patas amarillas. Tamaño algo menor y silueta más estilizada.",
+   "conducta": "Muy abundante en invernada en el estuario y en los arrozales del entorno.",
+   "confusiones": [
+    {
+     "especie": "larus-michahellis",
+     "clave": "La patiamarilla tiene el dorso gris claro, no pizarra"
+    }
+   ],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "larus-michahellis",
+   "grupo": "gaviotas",
+   "nombre": "Gaviota patiamarilla",
+   "cientifico": "Larus michahellis",
+   "ingles": "Yellow-legged Gull",
+   "estatus": [
+    "AR"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "grande",
+   "habitat": [
+    "estuario",
+    "playa",
+    "puerto"
+   ],
+   "identificacion": "Gaviota grande de dorso gris medio, patas amarillas, pico amarillo con una mancha roja marcada y ojo claro con anillo orbital rojo.",
+   "conducta": "La gaviota residente por defecto de la ría. Los jóvenes, pardos y moteados, tardan cuatro años en adquirir el plumaje adulto.",
+   "confusiones": [
+    {
+     "especie": "larus-fuscus",
+     "clave": "La sombría tiene el dorso mucho más oscuro"
+    }
+   ],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "hydroprogne-caspia",
+   "grupo": "charranes-pagazas",
+   "nombre": "Pagaza piquirroja",
+   "cientifico": "Hydroprogne caspia",
+   "ingles": "Caspian Tern",
+   "estatus": [
+    "M",
+    "I"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres"
+   ],
+   "tamano": "grande",
+   "habitat": [
+    "estuario",
+    "salina"
+   ],
+   "identificacion": "El charrán más grande del mundo, casi del tamaño de una gaviota patiamarilla, con un pico rojo coral enorme y macizo. Bajo las primarias, mancha oscura extensa.",
+   "conducta": "Vuelo pesado para un charrán, con el pico apuntando hacia abajo mientras busca. Reclamo áspero y grave.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "sterna-sandvicensis",
+   "grupo": "charranes-pagazas",
+   "nombre": "Charrán patinegro",
+   "cientifico": "Sterna sandvicensis",
+   "ingles": "Sandwich Tern",
+   "estatus": [
+    "AR"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    3,
+    3,
+    3,
+    3,
+    2,
+    2,
+    1,
+    1,
+    1
+   ],
+   "confianza": "verificado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "estuario",
+    "playa",
+    "salina"
+   ],
+   "identificacion": "Charrán pálido y estilizado, con el pico negro rematado en amarillo y un píleo negro que en invierno retrocede dejando la frente blanca y erizada en la nuca.",
+   "conducta": "Pesca zambulléndose desde bastante altura. Reclamo áspero y bisilábico, «kirrik», que delata su presencia antes de verlo.",
+   "confusiones": [
+    {
+     "especie": "sterna-hirundo",
+     "clave": "El charrán común tiene el pico rojo con la punta negra y aspecto más compacto"
+    }
+   ],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "sterna-hirundo",
+   "grupo": "charranes-pagazas",
+   "nombre": "Charrán común",
+   "cientifico": "Sterna hirundo",
+   "ingles": "Common Tern",
+   "estatus": [
+    "ER"
+   ],
+   "meses": [
+    0,
+    0,
+    0,
+    1,
+    3,
+    3,
+    3,
+    2,
+    1,
+    0,
+    0,
+    0
+   ],
+   "confianza": "verificado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "estuario",
+    "salina"
+   ],
+   "identificacion": "Pico rojo anaranjado con la punta negra, patas rojas cortas y cola muy ahorquillada que sobresale de las alas en reposo. Primarias externas con una cuña oscura difusa.",
+   "conducta": "Cría en las salinas del Odiel desde 2020. En época de cría no acercarse a los diques ocupados.",
+   "confusiones": [
+    {
+     "especie": "sterna-sandvicensis",
+     "clave": "El patinegro es mayor, más pálido y con el pico negro de punta amarilla"
+    }
+   ],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "sternula-albifrons",
+   "grupo": "charranes-pagazas",
+   "nombre": "Charrancito común",
+   "cientifico": "Sternula albifrons",
+   "ingles": "Little Tern",
+   "estatus": [
+    "ER"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres"
+   ],
+   "tamano": "pequeno",
+   "habitat": [
+    "playa",
+    "salina"
+   ],
+   "identificacion": "Minúsculo, con la frente blanca incluso en plumaje nupcial, pico amarillo de punta negra y patas anaranjadas. Aleteo rapidísimo, casi de insecto.",
+   "conducta": "Se cierne sobre el agua somera antes de zambullirse. Cría en playas y salinas: colonias muy vulnerables al pisoteo.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "alca-torda",
+   "grupo": "alcidos",
+   "nombre": "Alca común",
+   "cientifico": "Alca torda",
+   "ingles": "Razorbill",
+   "estatus": [
+    "I"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "mar"
+   ],
+   "identificacion": "Cuerpo compacto blanco y negro, con el pico alto, comprimido lateralmente y cruzado por una línea blanca vertical. Cola puntiaguda, apreciable en el agua.",
+   "conducta": "Bucea desde la superficie. En invierno se ve en el mar, a veces desde la costa en días de temporal.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "tyto-alba",
+   "grupo": "aves-terrestres",
+   "nombre": "Lechuza común",
+   "cientifico": "Tyto alba",
+   "ingles": "Western Barn Owl",
+   "estatus": [
+    "AR"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "cultivo",
+    "edificio",
+    "dehesa"
+   ],
+   "identificacion": "Rapaz nocturna de disco facial blanco en forma de corazón, dorso dorado vermiculado y partes inferiores muy blancas. Ojos negros.",
+   "conducta": "Vuelo silencioso y flotante a poca altura sobre cunetas y cultivos. Chillido áspero, nada parecido a un ulular.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "apus-apus",
+   "grupo": "aves-terrestres",
+   "nombre": "Vencejo común",
+   "cientifico": "Apus apus",
+   "ingles": "Common Swift",
+   "estatus": [
+    "ER"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "pequeno",
+   "habitat": [
+    "urbano",
+    "cielo"
+   ],
+   "identificacion": "Silueta de hoz, enteramente pardo negruzco con la garganta algo más clara. No se posa nunca salvo en el nido.",
+   "conducta": "Grupos que persiguen insectos a gran altura chillando. Presente de finales de marzo a agosto.",
+   "confusiones": [
+    {
+     "especie": "delichon-urbicum",
+     "clave": "El avión común tiene el obispillo blanco y las partes inferiores blancas"
+    }
+   ],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "hirundo-rustica",
+   "grupo": "aves-terrestres",
+   "nombre": "Golondrina común",
+   "cientifico": "Hirundo rustica",
+   "ingles": "Barn Swallow",
+   "estatus": [
+    "ER"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "pequeno",
+   "habitat": [
+    "cultivo",
+    "urbano",
+    "marisma"
+   ],
+   "identificacion": "Frente y garganta rojo ladrillo separadas del vientre claro por un collar azul oscuro. Cola muy ahorquillada con filetes largos en los adultos.",
+   "conducta": "Vuela bajo sobre el agua y los pastos. Cría dentro de construcciones abiertas.",
+   "confusiones": [
+    {
+     "especie": "delichon-urbicum",
+     "clave": "El avión tiene obispillo blanco y la cola menos ahorquillada"
+    }
+   ],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "delichon-urbicum",
+   "grupo": "aves-terrestres",
+   "nombre": "Avión común",
+   "cientifico": "Delichon urbicum",
+   "ingles": "Common House Martin",
+   "estatus": [
+    "ER"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "pequeno",
+   "habitat": [
+    "urbano",
+    "cielo"
+   ],
+   "identificacion": "Azul oscuro por arriba con un obispillo blanco puro muy contrastado, y totalmente blanco por debajo. Cola escotada, sin filetes.",
+   "conducta": "Construye nidos cerrados de barro bajo los aleros, en colonias.",
+   "confusiones": [
+    {
+     "especie": "hirundo-rustica",
+     "clave": "La golondrina tiene la garganta roja y no tiene obispillo blanco"
+    }
+   ],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "motacilla-flava",
+   "grupo": "aves-terrestres",
+   "nombre": "Lavandera boyera",
+   "cientifico": "Motacilla flava",
+   "ingles": "Western Yellow Wagtail",
+   "estatus": [
+    "ER",
+    "M"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "pequeno",
+   "habitat": [
+    "marisma",
+    "cultivo",
+    "pastizal"
+   ],
+   "identificacion": "Lavandera de cola más corta que la blanca, con las partes inferiores amarillas y el dorso verde oliva. La cabeza varía mucho según la subespecie.",
+   "conducta": "Camina entre el ganado y por los bordes de las salinas cazando insectos.",
+   "confusiones": [
+    {
+     "especie": "motacilla-alba",
+     "clave": "La lavandera blanca no tiene amarillo y es gris, blanca y negra"
+    }
+   ],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "motacilla-alba",
+   "grupo": "aves-terrestres",
+   "nombre": "Lavandera blanca",
+   "cientifico": "Motacilla alba",
+   "ingles": "White Wagtail",
+   "estatus": [
+    "AR",
+    "I"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "pequeno",
+   "habitat": [
+    "urbano",
+    "cultivo",
+    "orilla"
+   ],
+   "identificacion": "Gris, blanca y negra, con cola larga y fina. En invierno, babero negro reducido y frente blanca.",
+   "conducta": "Balancea la cola sin parar mientras camina. Duerme en dormideros comunales en árboles urbanos.",
+   "confusiones": [
+    {
+     "especie": "motacilla-flava",
+     "clave": "La boyera tiene el vientre amarillo y la cola más corta"
+    }
+   ],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "erithacus-rubecula",
+   "grupo": "aves-terrestres",
+   "nombre": "Petirrojo europeo",
+   "cientifico": "Erithacus rubecula",
+   "ingles": "European Robin",
+   "estatus": [
+    "AR",
+    "I"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "pequeno",
+   "habitat": [
+    "bosque",
+    "jardin",
+    "matorral"
+   ],
+   "identificacion": "Pequeño y redondeado, con la cara y el pecho de un naranja intenso bordeado de gris. Postura erguida y ojos grandes.",
+   "conducta": "Confiado y territorial incluso en invierno; canta también en los meses fríos.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "phoenicurus-ochruros",
+   "grupo": "aves-terrestres",
+   "nombre": "Colirrojo tizón",
+   "cientifico": "Phoenicurus ochruros",
+   "ingles": "Black Redstart",
+   "estatus": [
+    "I"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "pequeno",
+   "habitat": [
+    "urbano",
+    "roquedo",
+    "edificio"
+   ],
+   "identificacion": "Oscuro y sobrio, con la cola de un rojo herrumbre encendido que contrasta con todo lo demás.",
+   "conducta": "Hace vibrar la cola al posarse. Frecuente en tejados, ruinas y muelles en invierno.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "saxicola-rubicola",
+   "grupo": "aves-terrestres",
+   "nombre": "Tarabilla europea",
+   "cientifico": "Saxicola rubicola",
+   "ingles": "European Stonechat",
+   "estatus": [
+    "AR"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "pequeno",
+   "habitat": [
+    "matorral",
+    "marisma",
+    "cultivo"
+   ],
+   "identificacion": "Compacta y de cola corta. El macho tiene la cabeza negra, un collar blanco a los lados y el pecho naranja; la hembra es más apagada.",
+   "conducta": "Se posa muy visible en la punta de un tallo o un poste y vuelve a él tras cada vuelo corto. Reclamo como dos piedras chocando.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "turdus-merula",
+   "grupo": "aves-terrestres",
+   "nombre": "Mirlo común",
+   "cientifico": "Turdus merula",
+   "ingles": "Common Blackbird",
+   "estatus": [
+    "AR"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "bosque",
+    "jardin",
+    "matorral"
+   ],
+   "identificacion": "Macho enteramente negro con pico y anillo ocular naranja; hembra parda oscura con la garganta algo moteada.",
+   "conducta": "Rebusca entre la hojarasca dando saltos. Canto flautado y pausado desde posadero alto al amanecer.",
+   "confusiones": [
+    {
+     "especie": "sturnus-unicolor",
+     "clave": "El estornino tiene la cola corta, el cuerpo triangular y camina en vez de saltar"
+    }
+   ],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "pica-pica",
+   "grupo": "aves-terrestres",
+   "nombre": "Urraca",
+   "cientifico": "Pica pica",
+   "ingles": "Eurasian Magpie",
+   "estatus": [
+    "AR"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "mediano",
+   "habitat": [
+    "cultivo",
+    "dehesa",
+    "urbano"
+   ],
+   "identificacion": "Blanca y negra con brillos azules y verdes, y una cola larguísima escalonada.",
+   "conducta": "Ruidosa y descarada. En vuelo, aleteos cortos alternados con planeos, con la cola muy visible.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "sturnus-unicolor",
+   "grupo": "aves-terrestres",
+   "nombre": "Estornino negro",
+   "cientifico": "Sturnus unicolor",
+   "ingles": "Spotless Starling",
+   "estatus": [
+    "AR"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "pequeno",
+   "habitat": [
+    "urbano",
+    "dehesa",
+    "cultivo"
+   ],
+   "identificacion": "Negro con brillo metálico y sin apenas moteado en época de cría; pico amarillo. Cola corta y silueta triangular en vuelo.",
+   "conducta": "Forma bandos densos y dormideros urbanos muy numerosos. Gran imitador de otros sonidos.",
+   "confusiones": [
+    {
+     "especie": "turdus-merula",
+     "clave": "El mirlo tiene cola larga, salta en vez de caminar y no forma bandos densos"
+    }
+   ],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "passer-domesticus",
+   "grupo": "aves-terrestres",
+   "nombre": "Gorrión común",
+   "cientifico": "Passer domesticus",
+   "ingles": "House Sparrow",
+   "estatus": [
+    "AR"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "pequeno",
+   "habitat": [
+    "urbano",
+    "cultivo"
+   ],
+   "identificacion": "Macho con píleo gris, nuca castaña y babero negro; hembra parda con una ceja clara difusa.",
+   "conducta": "Siempre cerca del ser humano, en grupos bulliciosos. En claro declive: conviene anotarlo aunque parezca banal.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  },
+  {
+   "id": "carduelis-carduelis",
+   "grupo": "aves-terrestres",
+   "nombre": "Jilguero europeo",
+   "cientifico": "Carduelis carduelis",
+   "ingles": "European Goldfinch",
+   "estatus": [
+    "AR"
+   ],
+   "meses": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "confianza": "estimado",
+   "zonas": [
+    "odiel",
+    "piedras",
+    "portil",
+    "palos-madres",
+    "donana",
+    "sierra",
+    "andevalo"
+   ],
+   "tamano": "pequeno",
+   "habitat": [
+    "cultivo",
+    "jardin",
+    "matorral"
+   ],
+   "identificacion": "Cara roja, cabeza blanca y negra y una banda amarilla brillante en el ala, muy visible en vuelo.",
+   "conducta": "Se alimenta de semillas de cardo colgándose de los tallos. Vuelo ondulante y canto de gorjeos líquidos.",
+   "confusiones": [],
+   "marea": "indiferente",
+   "canto": null,
+   "foto": {
+    "estado": "pendiente",
+    "archivo": null,
+    "autor": null,
+    "licencia": null,
+    "origen": null
+   }
+  }
+ ]
+}

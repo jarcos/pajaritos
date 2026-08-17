@@ -1,0 +1,85 @@
+# pajaritos.josearcos.me — guía de observación de aves, Marismas del Odiel
+#
+# Casa rules aplicadas (NEW-PROJECT-SETUP.md §0):
+#   - Solo pajaritos-web entra en la red externa `tunnel`.
+#   - Ningún contenedor publica puertos de host (ver override para LAN/WireGuard).
+#   - Sin base de datos: no hay nada que exponer ni que auto-migrar.
+#   - Tags de imagen pinnados, nunca :latest.
+#   - Secretos solo en .env (chmod 600), jamás aquí.
+name: pajaritos
+
+services:
+  # ─────────────────────────────────────────────────────────────────
+  # ÚNICO contenedor público. Sirve estáticos y proxea /api al backend.
+  # ─────────────────────────────────────────────────────────────────
+  web:
+    image: nginx:1.27-alpine
+    container_name: pajaritos-web
+    restart: unless-stopped
+    networks: [tunnel, internal]
+    volumes:
+      - ./nginx/pajaritos.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./app:/srv/app:ro                  # index.html, JSON de contenido, fotos
+      - pajaritos-mapas:/srv/mapas:ro      # huelva-<fecha>.pmtiles
+      - pajaritos-datos:/srv/datos:ro      # mareas.json escrito por el servicio de mareas
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    depends_on:
+      mareas:
+        condition: service_started
+
+  # ─────────────────────────────────────────────────────────────────
+  # Cron diario: descarga las mareas de PORTUS y publica mareas.json
+  # ─────────────────────────────────────────────────────────────────
+  mareas:
+    build: ./services/mareas
+    image: pajaritos-mareas:1.0.0
+    container_name: pajaritos-mareas
+    restart: unless-stopped
+    env_file: .env
+    networks: [internal]                   # NO en tunnel
+    volumes:
+      - pajaritos-datos:/datos
+    environment:
+      TZ: Europe/Madrid
+      PORTUS_ESTACIONES: "huelva-5:3329"
+      DIAS_HORIZONTE: "30"
+
+  # ─────────────────────────────────────────────────────────────────
+  # Endpoint de reportes. Única superficie de escritura de todo el sitio.
+  # ─────────────────────────────────────────────────────────────────
+  api:
+    build: ./services/api
+    image: pajaritos-api:1.0.0
+    container_name: pajaritos-api
+    restart: unless-stopped
+    env_file: .env
+    networks: [internal]                   # NO en tunnel
+    volumes:
+      # Volumen propio. `web` NO lo monta: la base de datos es físicamente
+      # inalcanzable por HTTP, no depende de acertar con la config de nginx.
+      - pajaritos-reportes:/reportes
+      - ./scripts:/scripts:ro          # ver-reportes.py + snapshot, para `docker compose exec`
+    environment:
+      TZ: Europe/Madrid
+      REPORTES_DB: /reportes/reportes.db
+      MAX_BODY_BYTES: "8192"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8000/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+networks:
+  tunnel:
+    external: true          # ya existe, nunca recrear
+  internal:
+    driver: bridge
+
+volumes:
+  pajaritos-reportes:       # reportes.db → dato ÚNICO, SÍ necesita backup
+  pajaritos-datos:          # mareas.json → se regenera a diario, NO necesita backup
+  pajaritos-mapas:          # .pmtiles   → regenerable, NO necesita backup

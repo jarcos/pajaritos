@@ -1,0 +1,78 @@
+{
+ "version": "2026-08-17",
+ "nota": "4 de 60 verificadas contra Wikimedia Commons el 12/08/2026. El resto consta como pendiente en lugar de darse por bueno.",
+ "entradas": [
+  {
+   "id": "larus-audouinii",
+   "vigente": "Ichthyaetus audouinii",
+   "enPdfSeo": "Larus audouinii",
+   "categoriaCommons": "Ichthyaetus audouinii",
+   "commonsVerificado": true,
+   "archivos": 63,
+   "nota": "Buscar 'Larus audouinii' en Commons devuelve 0 resultados"
+  },
+  {
+   "id": "oceanodroma-leucorhoa",
+   "vigente": "Hydrobates leucorhous",
+   "enPdfSeo": "Oceanodroma leucorhoa",
+   "categoriaCommons": "Oceanodroma leucorhoa",
+   "commonsVerificado": true,
+   "archivos": 39,
+   "nota": "El nombre vigente no existe como categoría en Commons"
+  },
+  {
+   "id": "puffinus-mauretanicus",
+   "vigente": "Puffinus mauretanicus",
+   "enPdfSeo": "Puffinus mauretanicus",
+   "categoriaCommons": "Puffinus mauretanicus",
+   "commonsVerificado": true,
+   "archivos": 18,
+   "nota": "Buena parte de la categoría son en realidad págalos mal clasificados"
+  },
+  {
+   "id": "platalea-leucorodia",
+   "vigente": "Platalea leucorodia",
+   "enPdfSeo": "Platalea leucorodia",
+   "categoriaCommons": "Platalea leucorodia",
+   "commonsVerificado": true,
+   "archivos": 194,
+   "nota": ""
+  },
+  {
+   "id": "hydroprogne-caspia",
+   "vigente": "Hydroprogne caspia",
+   "enPdfSeo": "Hydropogne caspia (errata del PDF)",
+   "categoriaCommons": "Hydroprogne caspia",
+   "commonsVerificado": false,
+   "archivos": null,
+   "nota": "Por verificar"
+  },
+  {
+   "id": "larus-melanocephalus",
+   "vigente": "Ichthyaetus melanocephalus",
+   "enPdfSeo": "Larus melanocephalus",
+   "categoriaCommons": "Ichthyaetus melanocephalus",
+   "commonsVerificado": false,
+   "archivos": null,
+   "nota": "Previsible, por verificar"
+  },
+  {
+   "id": "sterna-sandvicensis",
+   "vigente": "Thalasseus sandvicensis",
+   "enPdfSeo": "Sterna sandvicensis",
+   "categoriaCommons": "Thalasseus sandvicensis",
+   "commonsVerificado": false,
+   "archivos": null,
+   "nota": "Previsible, por verificar"
+  },
+  {
+   "id": "sternula-albifrons",
+   "vigente": "Sternula albifrons",
+   "enPdfSeo": "Sterna albifrons",
+   "categoriaCommons": "Sternula albifrons",
+   "commonsVerificado": false,
+   "archivos": null,
+   "nota": "Previsible, por verificar"
+  }
+ ]
+}

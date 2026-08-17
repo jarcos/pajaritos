@@ -1,0 +1,17 @@
+{
+  "name": "Aves del Odiel",
+  "short_name": "Odiel",
+  "description": "Guía de observación y cuaderno de campo de las Marismas del Odiel y su entorno. Funciona sin cobertura.",
+  "lang": "es",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#EFEDE7",
+  "theme_color": "#EFEDE7",
+  "categories": ["education", "travel", "utilities"],
+  "icons": [
+    { "src": "icono.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icono-maskable.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}

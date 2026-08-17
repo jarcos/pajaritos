@@ -1,0 +1,10 @@
+# Ajustes específicos del NAS. No se commitea a un repo público sin revisar.
+services:
+  web:
+    # Descomenta para poder abrir la app por LAN/WireGuard durante las pruebas
+    # de campo. Enlazado SOLO a la IP del NAS: nunca a 0.0.0.0, nunca al tunnel.
+    # Puerto 3012 reservado en el registro (§2) — ⚠️ confirmar que sigue libre.
+    # ports:
+    #   - "NAS_LAN_IP:3012:8080"
+    logging:
+      driver: db            # driver propietario de Synology; logspout → tcplog

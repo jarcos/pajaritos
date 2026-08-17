@@ -1,0 +1,329 @@
+{
+ "type": "FeatureCollection",
+ "nota": "Coordenadas aproximadas (precisión ~100 m), pendientes de afinar con GPS en la primera salida.",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.9345,
+     37.2447
+    ]
+   },
+   "properties": {
+    "id": "observatorio-calatilla",
+    "nombre": "Observatorio de Calatilla",
+    "tipo": "observatorio",
+    "zona": "odiel",
+    "mareaOptima": "bajamar",
+    "nota": "El clásico del Odiel. Laguna de Calatilla, espátulas y limícolas con la marea bajando.",
+    "precision": "aproximada"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.952,
+     37.228
+    ]
+   },
+   "properties": {
+    "id": "observatorio-el-aguila",
+    "nombre": "Observatorio de El Águila",
+    "tipo": "observatorio",
+    "zona": "odiel",
+    "mareaOptima": "bajamar",
+    "nota": "Sobre los esteros; buena luz a primera hora.",
+    "precision": "aproximada"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.961,
+     37.213
+    ]
+   },
+   "properties": {
+    "id": "observatorio-laguna-grande",
+    "nombre": "Observatorio de Laguna Grande",
+    "tipo": "observatorio",
+    "zona": "odiel",
+    "mareaOptima": "indiferente",
+    "nota": "Lámina de agua estable, útil también en pleamar.",
+    "precision": "aproximada"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.97,
+     37.199
+    ]
+   },
+   "properties": {
+    "id": "observatorio-salinas-pesquero",
+    "nombre": "Observatorio de Salinas del Pesquero",
+    "tipo": "observatorio",
+    "zona": "odiel",
+    "mareaOptima": "pleamar",
+    "nota": "Las salinas concentran limícolas justo cuando la marea cubre el fango.",
+    "precision": "aproximada"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.98,
+     37.26
+    ]
+   },
+   "properties": {
+    "id": "observatorio-la-choza",
+    "nombre": "Observatorio de La Choza",
+    "tipo": "observatorio",
+    "zona": "odiel",
+    "mareaOptima": "bajamar",
+    "nota": "",
+    "precision": "aproximada"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.966,
+     37.37
+    ]
+   },
+   "properties": {
+    "id": "observatorio-la-gravera",
+    "nombre": "Observatorio de La Gravera (Gibraleón)",
+    "tipo": "observatorio",
+    "zona": "odiel",
+    "mareaOptima": "indiferente",
+    "nota": "",
+    "precision": "aproximada"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.921,
+     37.221
+    ]
+   },
+   "properties": {
+    "id": "isla-de-bacuta",
+    "nombre": "Isla de Bacuta",
+    "tipo": "sendero",
+    "zona": "odiel",
+    "mareaOptima": "bajamar",
+    "nota": "Sendero de salinas; colonia de charrán común desde 2020, no salir del trazado en cría.",
+    "precision": "aproximada"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.906,
+     37.178
+    ]
+   },
+   "properties": {
+    "id": "mirador-isla-enmedio",
+    "nombre": "Mirador de Isla de Enmedio",
+    "tipo": "mirador",
+    "zona": "odiel",
+    "mareaOptima": "bajamar",
+    "nota": "Reserva Natural: se observa desde fuera, sin acceso.",
+    "precision": "aproximada"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -7.129,
+     37.219
+    ]
+   },
+   "properties": {
+    "id": "sendero-el-rompido",
+    "nombre": "Senderos de marisma de El Rompido",
+    "tipo": "sendero",
+    "zona": "piedras",
+    "mareaOptima": "bajamar",
+    "nota": "",
+    "precision": "aproximada"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -7.044,
+     37.211
+    ]
+   },
+   "properties": {
+    "id": "observatorio-el-portil",
+    "nombre": "Observatorio de la Laguna de El Portil",
+    "tipo": "observatorio",
+    "zona": "portil",
+    "mareaOptima": "indiferente",
+    "nota": "",
+    "precision": "aproximada"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.883,
+     37.142
+    ]
+   },
+   "properties": {
+    "id": "observatorio-primera-palos",
+    "nombre": "Observatorio de Laguna Primera de Palos",
+    "tipo": "observatorio",
+    "zona": "palos-madres",
+    "mareaOptima": "indiferente",
+    "nota": "",
+    "precision": "aproximada"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.523,
+     37.123
+    ]
+   },
+   "properties": {
+    "id": "cv-la-rocina",
+    "nombre": "C.V. La Rocina",
+    "tipo": "centro",
+    "zona": "donana",
+    "mareaOptima": "indiferente",
+    "nota": "Sendero Charco de la Boca, 3,5 km con varios observatorios.",
+    "precision": "aproximada"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.58,
+     37.047
+    ]
+   },
+   "properties": {
+    "id": "cv-el-acebuche",
+    "nombre": "C.V. El Acebuche",
+    "tipo": "centro",
+    "zona": "donana",
+    "mareaOptima": "indiferente",
+    "nota": "",
+    "precision": "aproximada"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.484,
+     37.131
+    ]
+   },
+   "properties": {
+    "id": "co-francisco-bernis",
+    "nombre": "C.O. Francisco Bernis",
+    "tipo": "centro",
+    "zona": "donana",
+    "mareaOptima": "indiferente",
+    "nota": "A pie de El Rocío, sobre la madre de las marismas. Excelente para fotografía.",
+    "precision": "aproximada"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.266,
+     37.053
+    ]
+   },
+   "properties": {
+    "id": "cv-jose-antonio-valverde",
+    "nombre": "C.V. José Antonio Valverde",
+    "tipo": "centro",
+    "zona": "donana",
+    "mareaOptima": "indiferente",
+    "nota": "Colonias de garzas y moritos visibles desde el propio edificio.",
+    "precision": "aproximada"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.77,
+     37.88
+    ]
+   },
+   "properties": {
+    "id": "observatorio-sierra-pelada",
+    "nombre": "Observatorio de buitres de Sierra Pelada",
+    "tipo": "observatorio",
+    "zona": "sierra",
+    "mareaOptima": "indiferente",
+    "nota": "Buitre negro todo el año; cigüeña negra en época de cría.",
+    "precision": "aproximada"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -7.15,
+     37.6
+    ]
+   },
+   "properties": {
+    "id": "andevalo-pseudoestepa",
+    "nombre": "Pseudoestepa del Andévalo",
+    "tipo": "area",
+    "zona": "andevalo",
+    "mareaOptima": "indiferente",
+    "nota": "Avutarda, sisón, ganga y ortega. Recorrido en coche con paradas de escucha.",
+    "precision": "aproximada"
+   }
+  }
+ ]
+}

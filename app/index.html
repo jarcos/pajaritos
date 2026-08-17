@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#EFEDE7">
+<meta name="color-scheme" content="light dark">
+<title>Aves del Odiel</title>
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+/* ============================================================================
+   Aves del Odiel · pajaritos.josearcos.me
+   Implementación del wireframe 2a. Sin framework, un solo index.html.
+   ========================================================================= */
+
+/* --- tokens --------------------------------------------------------------- */
+:root{
+  --papel:#EFEDE7; --sup:#ffffff; --sup-2:#F7F5F1;
+  --tinta:#1A1A18; --tinta-2:#4A4740; --mudo:#6E6A60;
+  --linea:#DDD9D0; --linea-2:#C9C5BB; --linea-3:#B9B6AE;
+  --relleno:#F2F0EB; --relleno-2:#EBE8E1; --relleno-3:#E2DFD8;
+  --azul:#2A6FB0; --azul-sup:#E8F0F8;
+  --alarma:#A33A2A; --alarma-sup:#FBEDEA;
+  --ok:#2F6B5F;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",sans-serif;
+  --serif:Georgia,"Times New Roman",serif;
+  --r:14px; --r-s:8px;
+  --sombra:0 1px 2px rgba(26,26,24,.06),0 8px 28px rgba(26,26,24,.10);
+  --tap:44px;
+  --seg:env(safe-area-inset-bottom,0px);
+}
+html[data-tema="oscuro"]{
+  --papel:#14140F; --sup:#1D1D18; --sup-2:#232320;
+  --tinta:#EDEBE4; --tinta-2:#B9B6AE; --mudo:#8E8B82;
+  --linea:#34342E; --linea-2:#45453E; --linea-3:#55554C;
+  --relleno:#26261F; --relleno-2:#2C2C25; --relleno-3:#33332B;
+  --azul:#79AEE4; --azul-sup:#1B2836;
+  --alarma:#E8907F; --alarma-sup:#2E1A16;
+  --ok:#6FBFAC;
+  --sombra:0 1px 2px rgba(0,0,0,.5),0 8px 28px rgba(0,0,0,.6);
+}
+/* Exterior: alto contraste puro, para sol directo sobre la marisma. */
+html[data-tema="exterior"]{
+  --papel:#ffffff; --sup:#ffffff; --sup-2:#ffffff;
+  --tinta:#000000; --tinta-2:#000000; --mudo:#333333;
+  --linea:#000000; --linea-2:#000000; --linea-3:#000000;
+  --relleno:#ffffff; --relleno-2:#EDEDED; --relleno-3:#DADADA;
+  --azul:#0A3F80; --azul-sup:#ffffff;
+  --alarma:#8A0000; --alarma-sup:#ffffff;
+  --sombra:0 0 0 2px #000;
+}
+html[data-tema="exterior"] body{font-weight:500}
+html[data-tema="exterior"] .fen i[data-m="1"]{background:#767676}
+html[data-tema="exterior"] .marea-hoy div.pasado{opacity:.7}
+html[data-tema="exterior"] .tarj,
+html[data-tema="exterior"] .fila,
+html[data-tema="exterior"] .btn{border-width:2px}
+
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overscroll-behavior-y:none}
+body{
+  background:var(--papel);color:var(--tinta);font:16px/1.45 var(--sans);
+  -webkit-font-smoothing:antialiased;
+  /* Gestos de dos dedos y doble toque quedan fuera por decisión del wireframe. */
+  touch-action:manipulation;
+}
+button,input,select,textarea{font:inherit;color:inherit;background:none;border:none}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--azul);outline-offset:2px;border-radius:4px}
+.oculto{display:none !important}
+.solo-lector{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* --- armazón -------------------------------------------------------------- */
+#app{display:flex;flex-direction:column;height:100%;max-width:520px;margin:0 auto;
+     background:var(--papel);position:relative;overflow:hidden}
+@media (min-width:560px){#app{border-left:1px solid var(--linea);border-right:1px solid var(--linea)}}
+
+/* Banda de estado: una línea, no bloqueante, no se repite al navegar. */
+#banda{display:none;align-items:center;gap:8px;padding:7px 14px;font:600 12px/1.2 var(--mono);
+       letter-spacing:.04em;background:var(--relleno-3);color:var(--tinta-2);
+       border-bottom:1px solid var(--linea);flex:0 0 auto}
+#banda.on{display:flex}
+#banda.aviso{background:var(--alarma-sup);color:var(--alarma)}
+#banda button{margin-left:auto;font:600 12px/1 var(--mono);color:var(--azul);text-decoration:underline;
+              padding:6px 2px;min-height:32px}
+
+main{flex:1 1 auto;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;
+     scroll-behavior:smooth;padding-bottom:8px}
+.pantalla{display:none;padding:14px 16px 24px;flex-direction:column;gap:14px}
+#p-mapa.activa{height:100%}
+.pantalla.activa{display:flex}
+
+.cab{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.cab h1{font:700 26px/1.05 var(--serif);letter-spacing:-.01em}
+.cab .sub{font:600 11px/1.2 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mudo);
+          text-align:right;max-width:48%}
+
+.rot{font:700 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mudo)}
+.tarj{background:var(--sup);border:1px solid var(--linea);border-radius:var(--r);padding:14px}
+.tarj.marco{border-width:2px;border-color:var(--tinta)}
+
+/* --- barra de pestañas ---------------------------------------------------- */
+#tabs{flex:0 0 auto;display:grid;grid-template-columns:repeat(5,1fr);
+      background:var(--sup);border-top:1px solid var(--linea);
+      padding-bottom:var(--seg);position:relative;z-index:20}
+#tabs button{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+             padding:9px 2px 8px;min-height:56px;color:var(--mudo);
+             font:700 10px/1 var(--mono);letter-spacing:.08em}
+#tabs button svg{width:22px;height:22px;stroke:currentColor;stroke-width:1.7;fill:none;
+                 stroke-linecap:round;stroke-linejoin:round}
+#tabs button[aria-current="page"]{color:var(--tinta)}
+#tabs button[aria-current="page"]::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
+             height:3px;width:28px;background:var(--tinta);border-radius:0 0 3px 3px}
+#tabs button span.pt{position:absolute;top:6px;left:calc(50% + 10px);width:7px;height:7px;
+             border-radius:50%;background:var(--azul)}
+
+/* --- botones -------------------------------------------------------------- */
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 18px;
+     border:2px solid var(--tinta);border-radius:var(--r-s);background:var(--sup);
+     font:600 15px/1 var(--sans);color:var(--tinta);width:100%}
+.btn.pri{background:var(--tinta);color:var(--papel)}
+html[data-tema="oscuro"] .btn.pri{color:#14140F}
+.btn.fina{min-height:var(--tap);border-width:1px;font-size:14px}
+.btn.texto{border:none;background:none;color:var(--azul);text-decoration:underline;min-height:var(--tap)}
+.btn:active{transform:translateY(1px)}
+.btn[disabled]{opacity:.4}
+.par{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* --- fenología: altura + trama = 4 estados sin depender del color ---------- */
+.fen{display:flex;align-items:flex-end;gap:2px;height:var(--h,34px)}
+.fen i{flex:1;display:block;border-radius:2px 2px 0 0;background:var(--relleno-2);
+       border-bottom:2px solid var(--linea-2)}
+.fen i[data-m="0"]{height:12%;background:var(--relleno);border-bottom-color:var(--linea)}
+.fen i[data-m="1"]{height:42%;background:var(--linea-2)}
+.fen i[data-m="2"]{height:100%;background:var(--tinta);border-bottom-color:var(--tinta)}
+.fen i[data-m="3"]{height:74%;border-bottom-color:var(--tinta);
+  background:repeating-linear-gradient(45deg,var(--tinta) 0 2px,transparent 2px 5px),var(--relleno-3)}
+.fen.mini{--h:14px;gap:1.5px;width:52px;flex:0 0 52px}
+.fen.mini i{border-bottom-width:1px}
+/* estimada: opacidad 55 % + filete punteado + etiqueta en cursiva */
+.fen-caja.estimada .fen{opacity:.55}
+.fen-caja.estimada .fen i{border-bottom-style:dotted}
+.meses{display:flex;gap:2px;margin-top:4px}
+.meses span{flex:1;text-align:center;font:600 9px/1 var(--mono);color:var(--mudo)}
+.marca{display:inline-flex;align-items:center;gap:5px;font:700 10px/1 var(--mono);
+       letter-spacing:.1em;text-transform:uppercase}
+.marca.ver{color:var(--ok)}
+.marca.est{color:var(--mudo);font-style:italic;text-transform:none;letter-spacing:.04em;
+           font-family:var(--serif);font-size:12px}
+.leyenda{display:flex;flex-wrap:wrap;gap:10px 14px;margin-top:10px}
+.leyenda span{display:flex;align-items:flex-end;gap:6px;font:400 11px/1.1 var(--sans);color:var(--mudo)}
+.leyenda i{width:10px;border-radius:2px 2px 0 0;border-bottom:2px solid var(--linea-2);background:var(--relleno-2)}
+</style>
+<style>
+/* --- marea ---------------------------------------------------------------- */
+#tarj-marea .fila-sup{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+#tarj-marea .fila-sup>:first-child{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#tarj-marea .fila-sup>:last-child{flex:0 0 auto;text-align:right;font-size:9px;opacity:.8}
+.marea-ahora{display:flex;align-items:baseline;gap:10px;margin:8px 0 2px;flex-wrap:wrap}
+.marea-ahora b{font:700 30px/1 var(--serif);letter-spacing:-.02em}
+.marea-ahora .alt{font:600 14px/1 var(--mono);color:var(--mudo)}
+.marea-ahora .tipo{font:700 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mudo)}
+.cuenta{margin-top:2px;font:600 13px/1.3 var(--sans);color:var(--tinta-2)}
+.marea-hoy{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:6px;margin-top:12px;
+           border-top:1px dashed var(--linea-3);padding-top:10px}
+.marea-hoy div{border-top:3px solid var(--tinta);padding-top:6px;min-height:44px}
+.marea-hoy div.baja{border-top-color:var(--linea-2)}
+.marea-hoy div.pasado{opacity:.4}
+.marea-hoy b{display:block;font:600 14px/1.1 var(--mono)}
+.marea-hoy small{display:block;font:400 10px/1.3 var(--mono);color:var(--mudo);margin-top:2px}
+.proc{margin-top:10px;font:400 10px/1.4 var(--mono);color:var(--mudo)}
+/* Dato caducado: la hora se tacha, sigue visible pero inutilizable para planificar. */
+#tarj-marea.caducada .marea-ahora b,
+#tarj-marea.caducada .marea-hoy b{text-decoration:line-through;text-decoration-thickness:2px;color:var(--mudo)}
+#tarj-marea.caducada{border-color:var(--alarma);background:var(--alarma-sup)}
+.aviso-cad{display:none;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+#tarj-marea.caducada .aviso-cad{display:flex}
+.aviso-cad .et{font:700 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--alarma)}
+
+/* --- filas de especie ----------------------------------------------------- */
+.grupo{margin-top:6px}
+.grupo h2{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+          font:700 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mudo);
+          padding:14px 0 8px;border-bottom:1px solid var(--linea)}
+.grupo h2 b{font-family:var(--sans);font-size:13px;letter-spacing:0;color:var(--tinta)}
+.lista{display:flex;flex-direction:column}
+.fila{display:flex;align-items:center;gap:10px;min-height:64px;padding:8px 0;
+      border-bottom:1px solid var(--linea);background:var(--papel);text-align:left;width:100%}
+.fila .txt{flex:1;min-width:0}
+.fila .nom{font:600 15px/1.2 var(--sans);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fila .sci{font:400 12px/1.3 var(--serif);font-style:italic;color:var(--mudo);display:block;
+           overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fila .est{font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.08em}
+.fila .miniatura{width:44px;height:44px;flex:0 0 44px;border:1px solid var(--linea-2);border-radius:var(--r-s);
+      background:var(--relleno);display:grid;place-items:center;font:700 9px/1.1 var(--mono);
+      color:var(--mudo);text-align:center;overflow:hidden}
+.fila .miniatura.pend{background:repeating-linear-gradient(45deg,var(--relleno-2) 0 5px,var(--relleno) 5px 10px)}
+.mas{flex:0 0 var(--tap);width:var(--tap);height:var(--tap);border:2px solid var(--tinta);
+     border-radius:var(--r-s);display:grid;place-items:center;font:700 22px/1 var(--sans);background:var(--sup)}
+.mas.puesto{background:var(--tinta);color:var(--papel);border-color:var(--tinta)}
+
+/* --- chips de filtro ------------------------------------------------------ */
+.chips{display:flex;gap:7px;overflow-x:auto;padding:2px 0 6px;scrollbar-width:none;
+       margin:0 -16px;padding-left:16px;padding-right:16px}
+.chips::-webkit-scrollbar{display:none}
+.chip{display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 10px;flex:0 0 auto;
+      border:1.5px solid var(--tinta);border-radius:15px;background:var(--sup);
+      font:600 13px/1 var(--sans);white-space:nowrap;position:relative}
+/* 30 px de alto, 44 con el área táctil */
+.chip::after{content:"";position:absolute;inset:-7px -4px}
+.chip .x{font:700 15px/1 var(--sans);color:var(--mudo);margin-right:-2px}
+.chip.add{border-style:dashed;color:var(--mudo);border-color:var(--linea-3)}
+.chip.on{background:var(--tinta);color:var(--papel);border-color:var(--tinta)}
+.chip.on .x{color:var(--papel)}
+
+/* --- contador ------------------------------------------------------------- */
+.cuenta-fila{display:flex;align-items:center;gap:8px;min-height:64px;padding:6px 0;
+             border-bottom:1px solid var(--linea);position:relative;background:var(--papel)}
+.cuenta-fila.estimando{background:var(--relleno-2);margin:0 -8px;padding:6px 8px;border-radius:var(--r-s)}
+.cuenta-fila .txt{flex:1;min-width:0}
+.ctl{display:flex;align-items:center;gap:6px;flex:0 0 auto}
+.ctl button{width:var(--tap);height:var(--tap);border:2px solid var(--tinta);border-radius:var(--r-s);
+            display:grid;place-items:center;font:700 20px/1 var(--sans);background:var(--sup)}
+.ctl .num{min-width:58px;height:var(--tap);border:2px solid transparent;border-radius:var(--r-s);
+          display:grid;place-items:center;font:700 19px/1 var(--mono);background:var(--relleno);
+          padding:0 6px;user-select:none;-webkit-user-select:none}
+.ctl .num.cero{color:var(--mudo);background:transparent}
+.ctl .num.largo{border-color:var(--azul);background:var(--azul-sup)}
+.plum{display:inline-block;font:600 10px/1 var(--mono);letter-spacing:.08em;color:var(--mudo);
+      border:1px solid var(--linea-2);border-radius:4px;padding:3px 5px;margin-top:4px}
+
+/* --- hojas y superposiciones ---------------------------------------------- */
+.velo{position:absolute;inset:0;background:rgba(20,20,15,.42);opacity:0;pointer-events:none;
+      transition:opacity .26s ease;z-index:30}
+.velo.on{opacity:1;pointer-events:auto}
+.hoja{position:absolute;left:0;right:0;bottom:0;z-index:31;background:var(--sup);
+      border-radius:var(--r) var(--r) 0 0;border-top:2px solid var(--tinta);
+      box-shadow:var(--sombra);transform:translateY(102%);transition:transform .26s cubic-bezier(.22,1,.36,1);
+      max-height:88%;display:flex;flex-direction:column;padding-bottom:var(--seg)}
+.hoja.on{transform:translateY(0)}
+.hoja.arrastrando{transition:none}
+.asa{flex:0 0 auto;padding:10px 0 4px;display:grid;place-items:center;cursor:grab;touch-action:none}
+.asa::before{content:"";width:44px;height:5px;border-radius:3px;background:var(--linea-2)}
+.hoja-cuerpo{overflow-y:auto;padding:6px 16px 18px;display:flex;flex-direction:column;gap:12px}
+.hoja h2{font:700 20px/1.1 var(--serif)}
+
+.capa{position:absolute;inset:0;z-index:32;background:var(--papel);display:flex;flex-direction:column;
+      transform:translateY(100%);transition:transform .26s cubic-bezier(.22,1,.36,1);visibility:hidden}
+.capa.on{transform:translateY(0);visibility:visible}
+.capa.arrastrando{transition:none}
+.capa-cab{flex:0 0 auto;display:flex;align-items:center;gap:10px;padding:10px 12px;
+          border-bottom:1px solid var(--linea);background:var(--sup);touch-action:none}
+.capa-cab .volver{width:var(--tap);height:var(--tap);display:grid;place-items:center;
+                  font:700 22px/1 var(--sans);flex:0 0 auto}
+.capa-cab .tit{flex:1;min-width:0}
+.capa-cab .tit b{display:block;font:700 17px/1.15 var(--serif);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.capa-cab .tit small{display:block;font:400 12px/1.3 var(--serif);font-style:italic;color:var(--mudo)}
+.capa-cuerpo{flex:1;overflow-y:auto;padding:14px 16px 28px;display:flex;flex-direction:column;gap:16px}
+
+/* --- foto y placeholder --------------------------------------------------- */
+.foto{width:100%;aspect-ratio:4/3;border-radius:var(--r);overflow:hidden;background:var(--relleno);
+      border:1px solid var(--linea);display:grid;place-items:center;position:relative}
+/* mismo alto que la foto · marco continuo = decisión, no fallo */
+.foto.pendiente{border:2px solid var(--tinta);
+  background:repeating-linear-gradient(45deg,var(--relleno-2) 0 9px,var(--relleno) 9px 18px)}
+.foto .et{font:700 11px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--tinta-2);
+          background:var(--sup);border:1.5px solid var(--tinta);border-radius:var(--r-s);padding:8px 12px;text-align:center}
+.credito{margin-top:6px;font:400 10px/1.4 var(--mono);color:var(--mudo)}
+.sec{display:flex;flex-direction:column;gap:8px}
+.sec p{font-size:15px;line-height:1.55;color:var(--tinta-2)}
+.conf{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid var(--linea);
+      border-radius:var(--r-s);background:var(--sup);width:100%;text-align:left;min-height:60px}
+.conf .txt{flex:1}
+.conf .nom{font:600 14px/1.2 var(--sans);display:block}
+.conf .cl{font:400 12px/1.35 var(--sans);color:var(--mudo);display:block;margin-top:2px}
+.conf .fl{font:700 18px/1 var(--sans);color:var(--mudo)}
+
+/* --- mapa ----------------------------------------------------------------- */
+#lienzo-mapa{position:relative;flex:1 1 auto;min-height:320px;border:1px solid var(--linea);border-radius:var(--r);
+             overflow:hidden;background:var(--relleno);touch-action:none}
+#lienzo-mapa svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.mapa-ctl{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:6px;z-index:3}
+.mapa-ctl button{width:var(--tap);height:var(--tap);border:2px solid var(--tinta);border-radius:var(--r-s);
+                 background:var(--sup);font:700 20px/1 var(--sans);display:grid;place-items:center}
+#mapa-capas .chip{height:32px}
+.atrib{position:absolute;right:8px;bottom:8px;z-index:3;font:400 9px/1.3 var(--mono);color:var(--mudo);
+       background:var(--sup);padding:3px 6px;border-radius:4px;opacity:.9}
+.mapa-nota{position:absolute;left:8px;top:8px;z-index:3;font:600 9px/1.25 var(--mono);
+       letter-spacing:.05em;text-transform:uppercase;color:var(--mudo);background:var(--sup);
+       border:1px solid var(--linea);border-radius:4px;padding:4px 7px;max-width:52%;opacity:.92}
+
+/* --- croquis -------------------------------------------------------------- */
+#croquis-caja{position:relative;border:2px dashed var(--linea-3);border-radius:var(--r);overflow:hidden;
+              background:var(--sup);aspect-ratio:4/3}
+#croquis{position:absolute;inset:0;width:100%;height:100%;touch-action:none;display:block}
+.croquis-ctl{position:absolute;right:8px;top:8px;display:flex;flex-direction:column;gap:6px}
+.croquis-ctl button{width:var(--tap);height:var(--tap);border:1.5px solid var(--linea-2);border-radius:var(--r-s);
+                    background:var(--sup);display:grid;place-items:center;font:600 16px/1 var(--sans)}
+
+/* --- estados vacíos y varios ---------------------------------------------- */
+.vacio{display:flex;flex-direction:column;gap:14px;align-items:flex-start;padding:34px 0 10px}
+.vacio h2{font:700 22px/1.2 var(--serif)}
+.vacio p{color:var(--mudo);font-size:15px;max-width:36ch}
+.barra{height:8px;border-radius:4px;background:var(--relleno-3);overflow:hidden}
+.barra i{display:block;height:100%;background:var(--tinta)}
+.tramo{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--linea)}
+.tramo .txt{flex:1}
+.tramo .nom{font:600 14px/1.2 var(--sans)}
+.tramo .mb{font:400 11px/1.3 var(--mono);color:var(--mudo)}
+.tramo button{font:600 12px/1 var(--sans);color:var(--alarma);text-decoration:underline;
+              min-height:var(--tap);padding:0 4px}
+.deslizable{position:relative;overflow:hidden}
+.deslizable .cara{background:var(--papel);transition:transform .18s ease;will-change:transform}
+.deslizable .accion{position:absolute;inset:0 0 0 auto;width:104px;display:grid;place-items:center;
+                    font:700 11px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;
+                    background:var(--relleno-3);color:var(--tinta);z-index:-1}
+.deslizable .accion.rojo{background:var(--alarma-sup);color:var(--alarma)}
+#brindis{position:absolute;left:12px;right:12px;bottom:calc(72px + var(--seg));z-index:40;
+         pointer-events:none;
+         display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--r-s);
+         background:var(--tinta);color:var(--papel);box-shadow:var(--sombra);
+         font:600 13px/1.35 var(--sans);opacity:0;visibility:hidden;
+         transform:translateY(calc(100% + 80px));transition:transform .22s ease,opacity .18s ease,visibility .18s}
+#brindis.on{transform:translateY(0);opacity:1;visibility:visible}
+#brindis button{pointer-events:auto}
+#brindis button{margin-left:auto;color:inherit;text-decoration:underline;font:700 13px/1 var(--sans);
+                min-height:var(--tap);padding:0 4px;flex:0 0 auto}
+.dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px}
+.dl dt{font:700 10px/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mudo)}
+.dl dd{color:var(--tinta)}
+.campo{display:flex;flex-direction:column;gap:5px}
+.campo label{font:700 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mudo)}
+.campo input,.campo select,.campo textarea{border:1.5px solid var(--linea-2);border-radius:var(--r-s);
+     padding:11px 12px;background:var(--sup);min-height:var(--tap);width:100%}
+.campo textarea{min-height:96px;resize:vertical;font:inherit}
+.conmuta{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:var(--tap);
+         padding:8px 0;border-bottom:1px solid var(--linea)}
+.conmuta .txt b{display:block;font:600 15px/1.25 var(--sans)}
+.conmuta .txt small{display:block;font-size:12px;color:var(--mudo);margin-top:2px}
+.sw{flex:0 0 52px;width:52px;height:32px;border-radius:16px;background:var(--linea-2);position:relative;
+    transition:background .18s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;
+           background:var(--sup);transition:transform .18s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.sw[aria-checked="true"]{background:var(--tinta)}
+.sw[aria-checked="true"]::after{transform:translateX(20px)}
+.segm{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;border:1.5px solid var(--tinta);
+      border-radius:var(--r-s);overflow:hidden}
+.segm button{min-height:var(--tap);font:600 13px/1.2 var(--sans);border-right:1.5px solid var(--tinta);
+             padding:6px 4px}
+.segm button:last-child{border-right:none}
+.segm button[aria-pressed="true"]{background:var(--tinta);color:var(--papel)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01ms !important}}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- Banda de estado: una línea, no bloqueante. -->
+  <div id="banda" role="status"><span id="banda-txt"></span><button id="banda-btn" class="oculto"></button></div>
+
+  <main id="main">
+
+    <!-- ================= 01 · HOY ================= -->
+    <section class="pantalla activa" id="p-hoy" aria-labelledby="t-hoy">
+      <div class="cab">
+        <h1 id="t-hoy">Hoy</h1>
+        <div class="sub" id="hoy-sub">—</div>
+      </div>
+
+      <div class="tarj marco" id="tarj-marea">
+        <div class="fila-sup">
+          <span class="rot">Marea · <span id="marea-est">—</span></span>
+          <span class="rot" id="marea-datum">Cero del Puerto</span>
+        </div>
+        <div class="marea-ahora">
+          <span class="tipo" id="marea-tipo">—</span>
+          <b id="marea-hora">—</b>
+          <span class="alt" id="marea-alt"></span>
+        </div>
+        <div class="cuenta" id="marea-cuenta"></div>
+        <div class="marea-hoy" id="marea-hoy"></div>
+        <div class="proc" id="marea-proc"></div>
+        <div class="aviso-cad">
+          <span class="et">Dato caducado</span>
+          <button class="btn fina" style="width:auto" id="btn-remarea">Reintentar con red</button>
+        </div>
+      </div>
+
+      <div class="tarj">
+        <span class="rot">Probabilidad alta este mes</span>
+        <div style="display:flex;align-items:baseline;gap:10px;margin-top:6px">
+          <b style="font:700 34px/1 var(--serif)" id="hoy-n">—</b>
+          <span style="font-size:13px;color:var(--mudo)" id="hoy-n-sub"></span>
+        </div>
+      </div>
+
+      <div>
+        <span class="rot">Destacadas ahora</span>
+        <div class="lista" id="hoy-destacadas"></div>
+      </div>
+
+      <!-- Tercio inferior: alcance del pulgar (wireframe 2a · pantalla 01). -->
+      <button class="btn pri" id="btn-empezar" style="margin-top:4px">Empezar salida aquí</button>
+    </section>
+
+    <!-- ================= 02 · GUÍA ================= -->
+    <section class="pantalla" id="p-guia" aria-labelledby="t-guia">
+      <div class="cab">
+        <h1 id="t-guia">Guía</h1>
+        <div class="sub" id="guia-sub">—</div>
+      </div>
+      <div class="chips" id="guia-chips"></div>
+      <div id="guia-lista"></div>
+      <div id="guia-vacia" class="vacio oculto">
+        <h2>Ningún resultado con estos filtros</h2>
+        <p id="guia-vacia-txt"></p>
+        <button class="btn" id="btn-quitar-uno"></button>
+        <button class="btn texto" id="btn-quitar-todos">Quitar todos los filtros</button>
+      </div>
+    </section>
+
+    <!-- ================= 03 · MAPA ================= -->
+    <section class="pantalla" id="p-mapa" aria-labelledby="t-mapa" style="flex:1">
+      <div class="cab">
+        <h1 id="t-mapa">Mapa</h1>
+        <div class="sub" id="mapa-sub">—</div>
+      </div>
+      <div id="lienzo-mapa">
+        <svg id="svg-mapa" viewBox="0 0 400 460" preserveAspectRatio="xMidYMid slice" aria-label="Mapa esquemático de puntos de observación"></svg>
+        <div class="mapa-nota">Esquema por coordenadas · basemap PMTiles pendiente</div>
+        <div class="mapa-ctl">
+          <button id="mapa-mas" aria-label="Acercar">+</button>
+          <button id="mapa-menos" aria-label="Alejar">−</button>
+          <button id="mapa-pos" aria-label="Mi posición" style="font-size:11px;font-family:var(--mono);font-weight:700">POS</button>
+        </div>
+        <div class="atrib">© OpenStreetMap · Protomaps</div>
+      </div>
+      <div class="chips" id="mapa-capas" style="margin:0;padding:0"></div>
+      <div class="tarj" id="mapa-cercano">
+        <span class="rot" id="mapa-cercano-rot">Selecciona un punto</span>
+        <b style="display:block;font:700 18px/1.2 var(--serif);margin:6px 0 4px" id="mapa-cercano-nom">—</b>
+        <p style="font-size:13px;color:var(--mudo)" id="mapa-cercano-nota"></p>
+        <div class="par" style="margin-top:12px">
+          <button class="btn fina" id="btn-ver-zona">Ver la zona</button>
+          <button class="btn fina pri" id="btn-salida-aqui">Salida aquí</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 04 · CUADERNO ================= -->
+    <section class="pantalla" id="p-cuaderno" aria-labelledby="t-cuad">
+      <!-- 4a · salida en curso -->
+      <div id="cuad-curso" class="oculto" style="display:flex;flex-direction:column;gap:14px">
+        <div class="cab">
+          <h1 id="t-cuad">Salida en curso</h1>
+          <div class="sub" id="curso-sub">—</div>
+        </div>
+        <div class="tarj" style="padding:11px 14px">
+          <div class="cuenta" id="curso-marea">—</div>
+        </div>
+        <div class="segm" id="curso-tabs">
+          <button data-vista="esperable" aria-pressed="true">Esperable hoy</button>
+          <button data-vista="todas" aria-pressed="false">Todas</button>
+          <button data-vista="anotadas" aria-pressed="false">Anotadas</button>
+        </div>
+        <p id="curso-pista" style="font:400 11px/1.4 var(--mono);color:var(--mudo)">Mantén pulsado el número para cambiar entre conteo exacto y estimación.</p>
+        <div id="curso-lista"></div>
+        <button class="btn" id="btn-sinid">Ave sin identificar</button>
+        <button class="btn pri" id="btn-cerrar-salida">Cerrar salida</button>
+      </div>
+
+      <!-- 4b · histórico -->
+      <div id="cuad-hist" style="display:flex;flex-direction:column;gap:14px">
+        <div class="cab">
+          <h1>Cuaderno</h1>
+          <div class="sub" id="hist-sub">—</div>
+        </div>
+        <div id="hist-lista"></div>
+        <div id="hist-vacio" class="vacio oculto">
+          <h2>Todavía no hay ninguna salida</h2>
+          <p>El cuaderno se llena solo: empieza una salida y la lista de especies esperables ya viene precargada.</p>
+          <button class="btn pri" id="btn-vacio-empezar">Empezar una salida</button>
+          <button class="btn" id="btn-vacio-importar">Importar un CSV anterior</button>
+        </div>
+        <button class="btn pri" id="btn-nueva-salida">Nueva salida</button>
+      </div>
+    </section>
+
+    <!-- ================= 05 · AJUSTES ================= -->
+    <section class="pantalla" id="p-ajustes" aria-labelledby="t-aj">
+      <div class="cab">
+        <h1 id="t-aj">Ajustes</h1>
+        <div class="sub">Sin cuenta · todo local</div>
+      </div>
+
+      <div class="tarj">
+        <span class="rot">Antes de salir al campo</span>
+        <p style="font-size:14px;color:var(--mudo);margin:8px 0 12px" id="aj-descarga-txt">60 fotos · mapa completo de Huelva · mareas de 30 días</p>
+        <button class="btn fina" id="btn-descargar">Descargar</button>
+        <div id="aj-progreso" class="oculto" style="margin-top:12px">
+          <div class="barra"><i id="aj-barra" style="width:0%"></i></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;gap:10px">
+            <span style="font:400 11px/1.3 var(--mono);color:var(--mudo)" id="aj-progreso-txt"></span>
+            <button class="btn texto" style="width:auto" id="btn-pausar">Pausar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tarj">
+        <span class="rot">Almacenamiento · <span id="aj-total">—</span></span>
+        <div id="aj-tramos" style="margin-top:6px"></div>
+        <p style="font:400 11px/1.4 var(--mono);color:var(--mudo);margin-top:10px">Cada tramo se puede borrar por separado.</p>
+      </div>
+
+      <div class="tarj">
+        <span class="rot">Ubicación</span>
+        <div class="conmuta" style="border-bottom:none">
+          <div class="txt"><b id="aj-ubi-est">Desactivada</b><small>No se envía a ningún sitio. Solo mientras el mapa está abierto.</small></div>
+          <button class="sw" id="aj-ubi" role="switch" aria-checked="false" aria-label="Usar mi ubicación"></button>
+        </div>
+        <div id="aj-ubi-denegada" class="oculto" style="margin-top:6px">
+          <p style="font-size:13px;color:var(--alarma)">Permiso denegado en el navegador. Todo sigue funcionando eligiendo el observatorio a mano.</p>
+          <button class="btn fina" style="margin-top:10px" id="btn-elegir-obs">Elegir el observatorio a mano</button>
+        </div>
+      </div>
+
+      <div class="tarj">
+        <span class="rot">Pantalla</span>
+        <div class="segm" style="margin-top:8px" id="aj-tema">
+          <button data-tema="claro" aria-pressed="true">Claro</button>
+          <button data-tema="oscuro" aria-pressed="false">Oscuro</button>
+          <button data-tema="exterior" aria-pressed="false">Exterior</button>
+        </div>
+      </div>
+
+      <div class="tarj">
+        <span class="rot">Mis datos</span>
+        <p style="font-size:14px;color:var(--mudo);margin:8px 0 12px" id="aj-datos">—</p>
+        <div class="par">
+          <button class="btn fina" data-exp="csv">Exportar CSV</button>
+          <button class="btn fina" data-exp="json">Exportar JSON</button>
+        </div>
+        <button class="btn fina" style="margin-top:10px" id="btn-importar">Importar copia</button>
+        <input type="file" id="fichero-importar" accept=".json,.csv" class="oculto">
+        <p style="font:400 11px/1.5 var(--mono);color:var(--mudo);margin-top:12px">
+          Tus datos no salen del dispositivo. Si borras los datos del navegador o desinstalas la app, se pierden. Exporta de vez en cuando.</p>
+      </div>
+
+      <div class="tarj" id="aj-cola">
+        <span class="rot">Pendiente de envío</span>
+        <p style="font-size:14px;color:var(--mudo);margin:8px 0 12px" id="aj-cola-txt">Nada en cola.</p>
+      </div>
+
+      <div class="tarj">
+        <span class="rot">Datos de la guía</span>
+        <dl class="dl" style="margin-top:8px" id="aj-meta"></dl>
+      </div>
+    </section>
+  </main>
+
+  <nav id="tabs" aria-label="Secciones">
+    <button data-p="hoy" aria-current="page"><svg viewBox="0 0 24 24"><path d="M3 14c3-1 5-4 9-4s6 3 9 4"/><path d="M3 18c3-1 5-3 9-3s6 2 9 3"/><circle cx="12" cy="6" r="2.5"/></svg>HOY</button>
+    <button data-p="guia"><svg viewBox="0 0 24 24"><path d="M4 5.5A1.5 1.5 0 015.5 4H11v16H5.5A1.5 1.5 0 014 18.5z"/><path d="M20 5.5A1.5 1.5 0 0018.5 4H13v16h5.5a1.5 1.5 0 001.5-1.5z"/></svg>GUÍA</button>
+    <button data-p="mapa"><svg viewBox="0 0 24 24"><path d="M9 4L3 6.5v13L9 17l6 2.5 6-2.5v-13L15 6.5z"/><path d="M9 4v13M15 6.5v13"/></svg>MAPA</button>
+    <button data-p="cuaderno"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v18M12 8h4M12 12h4"/></svg>CUAD.</button>
+    <button data-p="ajustes"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M18.4 5.6l-1.8 1.8M7.4 16.6l-1.8 1.8"/></svg>AJUS.</button>
+  </nav>
+
+  <div id="brindis"><span id="brindis-txt"></span><button id="brindis-btn">Deshacer</button></div>
+  <div class="velo" id="velo"></div>
+
+  <!-- ===== hoja · confirmar salida ===== -->
+  <div class="hoja" id="h-empezar" role="dialog" aria-modal="true" aria-labelledby="h-empezar-t">
+    <div class="asa" data-arrastre></div>
+    <div class="hoja-cuerpo">
+      <h2 id="h-empezar-t">Empezar salida</h2>
+      <div>
+        <span class="rot">Zona</span>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
+          <b style="flex:1;font:600 17px/1.2 var(--sans)" id="he-zona">—</b>
+          <button class="btn fina" style="width:auto" id="he-cambiar">Cambiar</button>
+        </div>
+      </div>
+      <div>
+        <span class="rot">Observatorio · más cercano</span>
+        <select id="he-punto" style="margin-top:6px;border:1.5px solid var(--linea-2);border-radius:8px;padding:11px 12px;width:100%;min-height:44px;background:var(--sup)"></select>
+      </div>
+      <div class="tarj" style="background:var(--relleno)">
+        <span class="rot">Filtros que heredará la Guía</span>
+        <div class="chips" style="margin:8px 0 0;padding:0" id="he-filtros"></div>
+      </div>
+      <div class="par">
+        <button class="btn" data-cerrar-hoja>Cancelar</button>
+        <button class="btn pri" id="he-ok">Empezar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== hoja · modo de conteo (pulsación larga) ===== -->
+  <div class="hoja" id="h-modo" role="dialog" aria-modal="true" aria-labelledby="h-modo-t">
+    <div class="asa" data-arrastre></div>
+    <div class="hoja-cuerpo">
+      <span class="rot">Mantener pulsado el número</span>
+      <h2 id="h-modo-t">—</h2>
+      <button class="btn" data-modo="exacto"><span>Exacto · 1 en 1</span></button>
+      <button class="btn" data-modo="estimado"><span>Estimar · 10 en 10</span></button>
+      <button class="btn texto" data-cerrar-hoja>Cancelar</button>
+    </div>
+  </div>
+
+  <!-- ===== hoja · filtros ===== -->
+  <div class="hoja" id="h-filtros" role="dialog" aria-modal="true" aria-labelledby="h-filtros-t">
+    <div class="asa" data-arrastre></div>
+    <div class="hoja-cuerpo">
+      <h2 id="h-filtros-t">Filtros</h2>
+      <div><span class="rot">Mes</span><div class="chips" style="margin:8px 0 0;padding:0" id="hf-mes"></div></div>
+      <div><span class="rot">Zona</span><div class="chips" style="margin:8px 0 0;padding:0" id="hf-zona"></div></div>
+      <div><span class="rot">Marea</span><div class="chips" style="margin:8px 0 0;padding:0" id="hf-marea"></div></div>
+      <div><span class="rot">Tamaño</span><div class="chips" style="margin:8px 0 0;padding:0" id="hf-tam"></div></div>
+      <div><span class="rot">Grupo</span><div class="chips" style="margin:8px 0 0;padding:0" id="hf-grupo"></div></div>
+      <button class="btn pri" data-cerrar-hoja>Listo</button>
+    </div>
+  </div>
+
+  <!-- ===== hoja · cerrar salida ===== -->
+  <div class="hoja" id="h-cerrar" role="dialog" aria-modal="true" aria-labelledby="h-cerrar-t">
+    <div class="asa" data-arrastre></div>
+    <div class="hoja-cuerpo">
+      <h2 id="h-cerrar-t">Cerrar salida</h2>
+      <dl class="dl" id="hc-resumen"></dl>
+      <p style="font:400 11px/1.4 var(--mono);color:var(--mudo)">La marea del momento se guarda con los datos.</p>
+      <div><span class="rot">Registros · editables</span><div id="hc-registros" style="margin-top:6px"></div></div>
+      <button class="btn pri" id="hc-guardar">Guardar salida</button>
+      <button class="btn" data-cerrar-hoja>Seguir anotando</button>
+    </div>
+  </div>
+
+  <!-- ===== hoja · salida guardada ===== -->
+  <div class="hoja" id="h-guardada" role="dialog" aria-modal="true" aria-labelledby="h-guardada-t">
+    <div class="asa" data-arrastre></div>
+    <div class="hoja-cuerpo">
+      <h2 id="h-guardada-t">Salida guardada</h2>
+      <dl class="dl" id="hg-resumen"></dl>
+      <span class="rot">Exportar</span>
+      <div class="par">
+        <button class="btn" data-exp="csv">CSV ↓</button>
+        <button class="btn" data-exp="json">JSON ↓</button>
+      </div>
+      <p style="font:400 11px/1.4 var(--mono);color:var(--mudo)">Se exporta sin red: el archivo se genera en el dispositivo.</p>
+      <button class="btn texto" data-cerrar-hoja>Cerrar</button>
+    </div>
+  </div>
+
+  <!-- ===== hoja · reportar ===== -->
+  <div class="hoja" id="h-reporte" role="dialog" aria-modal="true" aria-labelledby="h-reporte-t">
+    <div class="asa" data-arrastre></div>
+    <div class="hoja-cuerpo">
+      <h2 id="h-reporte-t">Reportar un error</h2>
+      <div class="campo"><label for="hr-tipo">Tipo</label>
+        <select id="hr-tipo">
+          <option value="fenologia">Fenología</option>
+          <option value="identificacion">Identificación</option>
+          <option value="foto">Foto</option>
+          <option value="zona">Zona</option>
+          <option value="error">Otro error</option>
+        </select></div>
+      <div class="campo"><label for="hr-msg">Qué has visto</label>
+        <textarea id="hr-msg" maxlength="2000" placeholder="En Calatilla los vi en abundancia a mediados de julio…"></textarea></div>
+      <div class="campo"><label for="hr-con">Contacto (opcional)</label><input id="hr-con" maxlength="120"></div>
+      <!-- honeypot: el servidor descarta en silencio si llega relleno (HONEYPOT_FIELD) -->
+      <div class="oculto" aria-hidden="true"><label>No rellenar<input id="hr-hp" name="telefono" tabindex="-1" autocomplete="off"></label></div>
+      <button class="btn pri" id="hr-enviar">Enviar</button>
+      <button class="btn texto" data-cerrar-hoja>Cancelar</button>
+    </div>
+  </div>
+
+  <!-- ===== capa · ficha de especie ===== -->
+  <div class="capa" id="c-ficha" role="dialog" aria-modal="true">
+    <div class="capa-cab" data-arrastre>
+      <button class="volver" data-cerrar-capa aria-label="Volver">←</button>
+      <div class="tit"><b id="cf-nom">—</b><small id="cf-sci">—</small></div>
+    </div>
+    <div class="capa-cuerpo">
+      <div>
+        <div class="foto pendiente" id="cf-foto"><span class="et">Foto pendiente</span></div>
+        <div class="credito" id="cf-credito"></div>
+      </div>
+      <div class="sec fen-caja" id="cf-fencaja">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+          <span class="rot">Fenología</span><span id="cf-marca"></span>
+        </div>
+        <div class="fen" id="cf-fen" style="--h:44px"></div>
+        <div class="meses"><span>E</span><span>F</span><span>M</span><span>A</span><span>M</span><span>J</span><span>J</span><span>A</span><span>S</span><span>O</span><span>N</span><span>D</span></div>
+        <div class="leyenda">
+          <span><i style="height:5px"></i>Ausente</span>
+          <span><i style="height:11px;background:var(--linea-2)"></i>Presente</span>
+          <span><i style="height:24px;background:var(--tinta);border-bottom-color:var(--tinta)"></i>Máxima</span>
+          <span><i style="height:18px;border-bottom-color:var(--tinta);background:repeating-linear-gradient(45deg,var(--tinta) 0 2px,transparent 2px 5px),var(--relleno-3)"></i>Cría</span>
+        </div>
+      </div>
+      <div class="sec"><span class="rot">Identificación</span><p id="cf-ident"></p></div>
+      <div class="sec"><span class="rot">Conducta · plumajes</span><p id="cf-cond"></p></div>
+      <div class="sec" id="cf-confsec"><span class="rot">Se confunde con</span><div id="cf-conf" style="display:flex;flex-direction:column;gap:8px"></div></div>
+      <div class="sec"><span class="rot">Dónde y cuándo</span><dl class="dl" id="cf-datos"></dl></div>
+      <button class="btn pri" id="cf-anadir">Añadir a la salida en curso</button>
+      <div id="cf-propon" class="oculto">
+        <span class="rot">¿Tienes una foto verificada?</span>
+        <button class="btn fina" style="margin-top:8px" id="cf-proponer">Proponer una foto</button>
+      </div>
+      <button class="btn texto" id="cf-reportar" style="margin-top:4px">Reportar un error en esta ficha</button>
+    </div>
+  </div>
+
+  <!-- ===== capa · hoja de observatorio / zona ===== -->
+  <div class="capa" id="c-zona" role="dialog" aria-modal="true">
+    <div class="capa-cab" data-arrastre>
+      <button class="volver" data-cerrar-capa aria-label="Volver">←</button>
+      <div class="tit"><b id="cz-nom">—</b><small id="cz-prot">—</small></div>
+    </div>
+    <div class="capa-cuerpo">
+      <div class="sec" id="cz-avisos"></div>
+      <div class="sec"><span class="rot">Ventana óptima</span><p id="cz-ventana"></p></div>
+      <div class="sec"><span class="rot">Itinerario sugerido</span><p id="cz-itin"></p></div>
+      <div class="sec"><span class="rot">Marea</span><dl class="dl" id="cz-marea"></dl></div>
+      <div class="sec"><span class="rot">Puntos</span><div id="cz-puntos" style="display:flex;flex-direction:column"></div></div>
+      <div class="sec"><span class="rot">Especies indicadoras</span><div id="cz-esp" style="display:flex;flex-direction:column"></div></div>
+      <button class="btn pri" id="cz-salida">Empezar salida aquí</button>
+    </div>
+  </div>
+
+  <!-- ===== capa · detalle de salida ===== -->
+  <div class="capa" id="c-salida" role="dialog" aria-modal="true">
+    <div class="capa-cab" data-arrastre>
+      <button class="volver" data-cerrar-capa aria-label="Volver">←</button>
+      <div class="tit"><b id="cs-nom">—</b><small id="cs-sub">—</small></div>
+    </div>
+    <div class="capa-cuerpo">
+      <dl class="dl" id="cs-resumen"></dl>
+      <div class="sec"><span class="rot">Registros</span><div id="cs-registros"></div></div>
+      <div class="par">
+        <button class="btn fina" data-exp="csv">CSV ↓</button>
+        <button class="btn fina" data-exp="json">JSON ↓</button>
+      </div>
+      <button class="btn texto" id="cs-borrar" style="color:var(--alarma)">Borrar esta salida</button>
+    </div>
+  </div>
+
+  <!-- ===== capa · ave sin identificar ===== -->
+  <div class="capa" id="c-sinid" role="dialog" aria-modal="true">
+    <div class="capa-cab" data-arrastre>
+      <button class="volver" data-cerrar-capa aria-label="Volver">←</button>
+      <div class="tit"><b>Ave sin identificar</b><small>Dibuja primero, busca en la guía después</small></div>
+    </div>
+    <div class="capa-cuerpo">
+      <span class="rot">Croquis · lienzo libre</span>
+      <div id="croquis-caja">
+        <canvas id="croquis"></canvas>
+        <div class="croquis-ctl">
+          <button id="croquis-deshacer" aria-label="Deshacer trazo">↺</button>
+          <button id="croquis-borrar" aria-label="Borrar todo">✕</button>
+        </div>
+      </div>
+      <span class="rot">Rasgos rápidos · selección múltiple</span>
+      <div id="si-rasgos" style="display:flex;flex-wrap:wrap;gap:7px"></div>
+      <div class="sec"><span class="rot">Cuántas</span>
+        <div class="ctl" style="justify-content:flex-start;margin-top:6px">
+          <button id="si-menos">−</button><div class="num" id="si-num">1</div><button id="si-mas">+</button>
+        </div>
+      </div>
+      <div class="campo"><label for="si-nota">Nota</label><textarea id="si-nota" placeholder="Obispillo blanco, pico largo curvado, en el fango con correlimos…"></textarea></div>
+      <button class="btn pri" id="si-guardar">Guardar sin identificar</button>
+    </div>
+  </div>
+
+  <!-- ===== capa · sin conexión y sin caché ===== -->
+  <div class="capa" id="c-sincache" role="dialog" aria-modal="true">
+    <div class="capa-cab">
+      <button class="volver" data-cerrar-capa aria-label="Cerrar">✕</button>
+      <div class="tit"><b>Sin conexión</b><small>y esto no está descargado</small></div>
+    </div>
+    <div class="capa-cuerpo">
+      <p style="font-size:15px;color:var(--tinta-2)" id="sc-txt"></p>
+      <button class="btn pri" id="sc-volver">Volver a lo descargado</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="app.js" defer></script>
+</body>
+</html>
