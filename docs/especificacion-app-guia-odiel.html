@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Especificación · pajaritos.josearcos.me — App de observación, Marismas del Odiel</title>
+<style>
+:root{
+  --tinta:#1b2a2e; --tinta-2:#4a6068; --tinta-3:#7d8f92; --linea:#d8ddd4;
+  --papel:#fbfaf6; --papel-2:#f3f1e9;
+  --verde:#2f6b5f; --verde-cl:#e4efeb;
+  --sal:#b8763a; --sal-cl:#f7ece1;
+  --agua:#3b7ea1; --agua-cl:#e6f0f5;
+  --rojo:#a8443f; --rojo-cl:#f8e8e6;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--papel);color:var(--tinta);
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding:0 28px 90px}
+
+header.hero{border-bottom:1px solid var(--linea);margin-bottom:44px;padding:56px 0 34px;
+  background:linear-gradient(180deg,var(--agua-cl) 0%,rgba(230,240,245,0) 100%)}
+.kicker{font:600 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--agua);margin:0 0 16px}
+h1{font-size:clamp(28px,4.4vw,44px);line-height:1.12;margin:0 0 14px;letter-spacing:-.02em;font-weight:640}
+.dom{font:600 15px/1 var(--mono);color:var(--verde);margin:0 0 16px}
+.sub{font-size:19px;color:var(--tinta-2);max-width:64ch;margin:0 0 26px}
+.meta{display:flex;flex-wrap:wrap;gap:8px}
+.pill{font:600 12px/1 var(--mono);letter-spacing:.04em;padding:7px 12px;border-radius:100px;background:#fff;border:1px solid var(--linea);color:var(--tinta-2)}
+
+h2{font-size:13px;font-family:var(--mono);font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+   color:var(--agua);margin:64px 0 6px;padding-bottom:10px;border-bottom:2px solid var(--agua)}
+h2 .sec{color:var(--linea);margin-right:12px}
+h3{font-size:21px;margin:34px 0 10px;letter-spacing:-.01em;font-weight:620}
+h4{font-size:15px;margin:22px 0 8px;font-weight:650}
+p{margin:0 0 14px;max-width:74ch}
+ul,ol{margin:0 0 16px;padding-left:22px;max-width:74ch}
+li{margin-bottom:7px}
+a{color:var(--agua)}
+code{font:13px var(--mono);background:var(--papel-2);padding:2px 6px;border-radius:4px;word-break:break-word}
+.lead{font-size:17.5px;color:var(--tinta-2)}
+.sci{font-style:italic;color:var(--tinta-2)}
+
+.grid{display:grid;gap:16px;margin:22px 0}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(224px,1fr))}
+.card{background:#fff;border:1px solid var(--linea);border-radius:10px;padding:20px 22px}
+.card h4{margin-top:0}.card p:last-child,.card ul:last-child{margin-bottom:0}
+.card .tag{font:700 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--sal);display:block;margin-bottom:9px}
+.card.acc{border-left:3px solid var(--agua)}
+
+.tw{overflow-x:auto;margin:20px 0;border:1px solid var(--linea);border-radius:10px;background:#fff}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--linea);vertical-align:top}
+thead th{background:var(--papel-2);font:700 11px/1.3 var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--tinta-2)}
+tbody tr:last-child td{border-bottom:none}
+td.ok,span.ok{color:var(--verde);font-weight:600}
+td.warn,span.warn{color:var(--sal);font-weight:600}
+td.no,span.no{color:var(--rojo);font-weight:600}
+
+pre{background:#12211f;color:#dfe8e3;border-radius:10px;padding:20px 22px;overflow-x:auto;
+    font:12.5px/1.7 var(--mono);margin:18px 0}
+pre .k{color:#89c9b8}pre .s{color:#e3b98c}pre .c{color:#6d8580;font-style:italic}pre .v{color:#c9a9e0}
+
+.nota{background:var(--sal-cl);border-left:3px solid var(--sal);border-radius:0 8px 8px 0;padding:16px 20px;margin:22px 0}
+.nota p:last-child{margin-bottom:0}
+.nota strong{color:#8f5320}
+.aqua{background:var(--agua-cl);border-left-color:var(--agua)}.aqua strong{color:#25607e}
+.verde{background:var(--verde-cl);border-left-color:var(--verde)}.verde strong{color:#1f5348}
+.rojo{background:var(--rojo-cl);border-left-color:var(--rojo)}.rojo strong{color:#8c3630}
+
+/* diagrama de despliegue */
+.diag{background:#fff;border:1px solid var(--linea);border-radius:10px;padding:24px;margin:22px 0;overflow-x:auto}
+.diag-row{display:flex;align-items:stretch;gap:14px;min-width:660px}
+.dbox{flex:1;border:1px solid var(--linea);border-radius:8px;padding:13px 15px;background:var(--papel)}
+.dbox.h{background:var(--verde-cl);border-color:#bcd6cf}
+.dbox.e{background:var(--agua-cl);border-color:#b9d3e0}
+.dbox .dt{font:700 9.5px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--tinta-3);margin-bottom:7px}
+.dbox b{display:block;font-size:13.5px;margin-bottom:5px}
+.dbox span{font-size:11.5px;color:var(--tinta-2);line-height:1.5;display:block}
+.darrow{display:grid;place-items:center;font:700 18px var(--mono);color:var(--linea);flex:0 0 22px}
+.dgroup{flex:2;border:1.5px dashed #bcd6cf;border-radius:10px;padding:12px;background:rgba(228,239,235,.35)}
+.dgroup>.dt{font:700 9.5px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--verde);margin-bottom:10px}
+.dgroup .inner{display:flex;flex-direction:column;gap:9px}
+.dgroup .inner .dbox{flex:none}
+
+/* mockups */
+.screens{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));margin:26px 0}
+.phone{border:1px solid var(--linea);border-radius:20px;background:#fff;overflow:hidden;box-shadow:0 2px 14px rgba(27,42,46,.07)}
+.ph-top{background:var(--verde);color:#fff;padding:12px 16px 13px}
+.ph-top .t{font-size:14.5px;font-weight:650}
+.ph-top .s{font:600 10px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;opacity:.8;margin-top:3px}
+.ph-body{padding:14px 16px;font-size:13px;min-height:250px}
+.ph-cap{padding:10px 16px 14px;border-top:1px solid var(--linea);font-size:12px;color:var(--tinta-3)}
+.ph-nav{display:flex;border-top:1px solid var(--linea);background:var(--papel-2)}
+.ph-nav div{flex:1;text-align:center;padding:9px 2px;font:600 9px/1.3 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--tinta-3)}
+.ph-nav div.on{color:var(--verde);box-shadow:inset 0 2px 0 var(--verde)}
+
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.chip{font:600 10.5px/1 var(--mono);padding:5px 9px;border-radius:100px;border:1px solid var(--linea);color:var(--tinta-2);background:#fff}
+.chip.on{background:var(--verde);border-color:var(--verde);color:#fff}
+.row{display:flex;gap:9px;align-items:center;padding:8px 0;border-bottom:1px solid #eceeea}
+.row:last-child{border-bottom:none}
+.thumb{width:38px;height:38px;border-radius:6px;background:var(--papel-2);flex:0 0 38px;display:grid;place-items:center;
+       font:600 7.5px/1.2 var(--mono);color:var(--tinta-3);text-align:center;padding:2px}
+.thumb.pend{border:1.5px dashed #c3ccc4;background:repeating-linear-gradient(45deg,#f7f6f1,#f7f6f1 5px,#f1efe8 5px,#f1efe8 10px)}
+.row .nm{flex:1;min-width:0}
+.row .nm b{display:block;font-weight:600;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .nm i{font-size:10.5px;color:var(--tinta-3);font-style:italic}
+.bars{display:flex;gap:1.5px;flex:0 0 auto}
+.bars i{width:5px;height:16px;border-radius:1.5px;background:var(--papel-2);display:block}
+.bars i.p{background:#cfe2dc}.bars i.x{background:var(--verde)}.bars i.c{background:var(--sal)}
+.cnt{font:700 12px var(--mono);color:var(--verde);flex:0 0 auto}
+.stepper{display:flex;align-items:center;gap:6px;flex:0 0 auto}
+.stepper b{width:20px;height:20px;border-radius:5px;background:var(--papel-2);color:var(--tinta-2);display:grid;place-items:center;font:600 13px/1 var(--mono)}
+.big{font-size:26px;font-weight:650;letter-spacing:-.02em;margin:2px 0 1px}
+.lbl{font:700 9px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--tinta-3);margin-bottom:3px}
+.box{border:1px solid var(--linea);border-radius:8px;padding:10px 12px;margin-bottom:10px}
+.btn{display:block;text-align:center;background:var(--verde);color:#fff;border-radius:8px;padding:10px;font-size:12.5px;font-weight:650;margin-top:10px}
+.btn.g{background:#fff;color:var(--verde);border:1.5px solid var(--verde)}
+.tide{display:flex;align-items:flex-end;gap:3px;height:44px;margin:8px 0 4px}
+.tide i{flex:1;background:var(--agua-cl);border-radius:2px 2px 0 0;display:block}
+.tide i.hi{background:var(--agua)}
+.mapbox{height:150px;border-radius:8px;background:
+   linear-gradient(135deg,#e8eee6 0%,#dfe9e4 40%,#cfe0e8 100%);position:relative;overflow:hidden;margin-bottom:11px}
+.mapbox::before{content:"";position:absolute;inset:0;
+   background:repeating-linear-gradient(28deg,transparent,transparent 17px,rgba(59,126,161,.14) 17px,rgba(59,126,161,.14) 21px)}
+.pin{position:absolute;width:11px;height:11px;border-radius:50%;background:var(--sal);border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.pin.me{background:var(--agua);width:13px;height:13px}
+.pin.me::after{content:"";position:absolute;inset:-9px;border-radius:50%;border:1.5px solid rgba(59,126,161,.4)}
+.attrib{position:absolute;bottom:3px;right:5px;font:500 7.5px var(--mono);color:#5f6f68;background:rgba(255,255,255,.75);padding:1px 4px;border-radius:3px}
+
+.fase{display:flex;gap:20px;padding:20px 0;border-bottom:1px solid var(--linea)}
+.fase:last-child{border-bottom:none}
+.fase .num{flex:0 0 44px;height:44px;border-radius:50%;background:var(--agua);color:#fff;display:grid;place-items:center;font:700 16px var(--mono)}
+.fase .body{flex:1}.fase h4{margin:6px 0 6px}.fase p{margin:0;font-size:15px;color:var(--tinta-2)}
+.fase .out{margin-top:9px;font:600 11.5px/1.4 var(--mono);color:var(--sal)}
+.fase.hecha .num{background:var(--verde)}
+.fase.parcial .num{background:var(--sal)}
+.fase.pendiente .num{background:#fff;color:var(--tinta-3);border:2px solid var(--linea)}
+.estado{display:inline-block;font:700 10px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;
+        padding:5px 9px;border-radius:100px;margin-left:10px;vertical-align:2px}
+.estado.hecha{background:var(--verde-cl);color:var(--verde)}
+.estado.parcial{background:var(--sal-cl);color:#8f5320}
+.estado.pendiente{background:var(--papel-2);color:var(--tinta-3)}
+.real{margin-top:11px;padding:11px 15px;background:var(--verde-cl);border-left:3px solid var(--verde);
+      border-radius:0 6px 6px 0;font-size:14px;line-height:1.5;color:var(--tinta-2)}
+.real.ojo{background:var(--sal-cl);border-left-color:var(--sal)}
+.real b{color:var(--verde);font-weight:700}
+.real.ojo b{color:#8f5320}
+
+footer{margin-top:70px;padding-top:26px;border-top:1px solid var(--linea);font-size:13.5px;color:var(--tinta-2)}
+footer ul{list-style:none;padding:0}footer li{margin-bottom:9px}
+
+@media print{
+  body{background:#fff;font-size:10.5pt}.wrap{max-width:none;padding:0}
+  header.hero{background:none;padding:0 0 18px}
+  h2{margin-top:26px;page-break-after:avoid}h3,h4{page-break-after:avoid}
+  .card,.tw,.fase,.phone,pre,.diag{page-break-inside:avoid}
+  pre{background:#f5f5f0;color:#222;border:1px solid #ddd}
+  pre .k,pre .s,pre .c,pre .v{color:#444}
+  a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <p class="kicker">Especificación funcional y técnica · v3 · en producción</p>
+  <h1>App de observación<br>Marismas del Odiel y entorno</h1>
+  <p class="dom">pajaritos.josearcos.me</p>
+  <p class="sub">Aplicación web autoalojada en NAS, sin cuentas de usuario, con memoria local en el dispositivo, mareas oficiales cacheadas a diario, mapa OpenStreetMap autoalojado y funcionamiento híbrido offline.</p>
+  <div class="meta">
+    <span class="pill">NAS propio · HTTPS</span>
+    <span class="pill">Sin cuentas</span>
+    <span class="pill">60 especies al arranque</span>
+    <span class="pill">Mareas de Puertos del Estado</span>
+    <span class="pill">MapLibre + PMTiles</span>
+    <span class="pill">Offline híbrido</span>
+    <span class="pill" style="background:var(--verde-cl);border-color:var(--verde);color:var(--verde)">En producción · 18 ago 2026</span>
+    <span class="pill">PWA instalable</span>
+    <span class="pill">Fase 1 cerrada</span>
+  </div>
+</header>
+
+<div class="nota" style="background:var(--verde-cl);border-left-color:var(--verde)">
+  <p><strong style="color:var(--verde)">La aplicación está desplegada y en funcionamiento</strong>
+  en <a href="https://pajaritos.josearcos.me">pajaritos.josearcos.me</a> desde el 18 de agosto de 2026.
+  Verificado sobre HTTPS con navegador real: Service Worker registrado y activo, contexto seguro,
+  Geolocation API disponible, sin violaciones de CSP y sin errores de consola. Sirve 60 especies,
+  7 zonas, 17 puntos y 31 días de predicción de marea que el cron publica solo cada madrugada.</p>
+  <p>Las fases marcadas en la sección 11 reflejan lo ejecutado, no lo planeado. La sección 12 recoge
+  en qué se desvió la realidad de este documento y por qué. El diario técnico completo está en
+  <code>pajaritos/SETUP.md</code> §14.</p>
+</div>
+
+<p class="lead">Documento complementario al <em>Plan de la guía de observación</em>. Aquí se define <strong>cómo se construye y se despliega la aplicación</strong>. El contenido ornitológico —fenología, fichas, zonas— se define en el plan.</p>
+
+<h2><span class="sec">01</span>Principios de diseño</h2>
+
+<div class="grid g3">
+  <div class="card acc"><span class="tag">Principio 1</span><h4>Sin cuentas</h4>
+    <p>Ni registro, ni contraseñas, ni sesiones. El servidor sirve archivos, publica las mareas del día y recibe reportes. No sabe quién eres ni guarda tus observaciones.</p></div>
+  <div class="card acc"><span class="tag">Principio 2</span><h4>Primero la pregunta del campo</h4>
+    <p>El inicio no es un índice: responde a «qué puedo ver hoy, aquí y con esta marea». Mes, zona y marea se resuelven solos.</p></div>
+  <div class="card acc"><span class="tag">Principio 3</span><h4>La marisma no tiene cobertura</h4>
+    <p>Guía, fenología, mapa, mareas de la semana y cuaderno funcionan sin red. Lo que necesita conexión es la excepción, no la norma.</p></div>
+  <div class="card acc"><span class="tag">Principio 4</span><h4>Honestidad sobre los datos</h4>
+    <p>Cada dato fenológico indica si está verificado o estimado. Cada marea indica cuándo se descargó. Las especies sin foto fiable llevan placeholder.</p></div>
+  <div class="card acc"><span class="tag">Principio 5</span><h4>Los datos son tuyos y salen</h4>
+    <p>Exportación a CSV y JSON en un toque. La memoria local es cómoda pero frágil: la exportación es el respaldo real.</p></div>
+  <div class="card acc"><span class="tag">Principio 6</span><h4>Un guante, no un formulario</h4>
+    <p>Registrar con una mano y prismáticos en la otra: botones grandes, contador de un toque, sin teclado si no hace falta.</p></div>
+</div>
+
+<h2><span class="sec">02</span>Arquitectura y despliegue</h2>
+
+<p>La app sigue siendo estática: toda la lógica de guía y cuaderno vive en el navegador. El NAS aporta tres cosas que el navegador no puede hacer solo — servir sobre HTTPS, cachear las mareas a diario y recibir reportes.</p>
+
+<div class="diag">
+  <div class="diag-row">
+    <div class="dbox e"><div class="dt">Dispositivo</div><b>Navegador / PWA</b>
+      <span>Interfaz, guía, fenología, mapa<br>IndexedDB · localStorage · Cache API<br>Geolocalización (opt-in)</span></div>
+    <div class="darrow">→</div>
+    <div class="dgroup"><div class="dt">Cloudflare edge · tunnel «TUNNEL_NAME»</div>
+      <div class="inner">
+        <div class="dbox h"><b>DNS · TLS · WAF · rate limiting</b><span>Wildcard <code>*.josearcos.me</code> ya cubre el subdominio: cero trabajo de certificados</span></div>
+        <div class="dbox h"><b>cloudflared → pajaritos-web:8080</b><span>Túnel de salida. Ningún puerto entrante abierto en el router</span></div>
+        <div class="dbox h"><b>pajaritos-web · nginx</b><span>Único contenedor en la red <code>tunnel</code>. Estáticos, JSON, fotos, <code>.pmtiles</code> con Range. Proxea <code>/api</code></span></div>
+        <div class="dbox h"><b>mareas + api · solo red interna</b><span>cron diario → mareas.json · POST /reporte → JSONL + aviso Mailgun</span></div>
+      </div>
+    </div>
+    <div class="darrow">→</div>
+    <div class="dbox"><div class="dt">Fuentes externas</div><b>Solo el servidor sale a internet</b>
+      <span>PORTUS · Puertos del Estado (mareas)<br>Protomaps (basemap, una vez al mes)<br>El dispositivo nunca llama a terceros</span></div>
+  </div>
+</div>
+
+<div class="tw">
+<table>
+<thead><tr><th>Capa</th><th>Implementación</th><th>Por qué así</th></tr></thead>
+<tbody>
+<tr><td><strong>Interfaz</strong></td><td>HTML + CSS + JS sin framework, un solo <code>index.html</code></td><td>Cero dependencias que caduquen. Debe seguir funcionando dentro de cinco años sin reinstalar nada</td></tr>
+<tr><td><strong>Mapa</strong></td><td>MapLibre GL JS + biblioteca <code>pmtiles</code></td><td>Únicas dos dependencias externas justificadas; se sirven desde el propio NAS, no desde un CDN</td></tr>
+<tr><td><strong>Contenido</strong></td><td><code>especies.json</code>, <code>zonas.json</code>, <code>sinonimos.json</code>, <code>puntos.geojson</code> — ficheros en git, no base de datos</td><td>Corriges la fenología de una especie sin tocar el código, con diff revisable, y el navegador se los cachea como estáticos. Aquí la base de datos es git</td></tr>
+<tr><td><strong>Reportes</strong></td><td><strong>SQLite</strong> (<code>sqlite3</code> de la stdlib), en un volumen que el contenedor web no monta</td><td>Transacciones reales y datos consultables sin añadir servicio, dependencia ni RAM. Mongo se descartó: reservaría RAM de un NAS ya contendido y sería una segunda tecnología de base de datos en la casa para el conjunto de datos más pequeño</td></tr>
+<tr><td><strong>Cuaderno</strong></td><td><code>localStorage</code> para preferencias; <strong>IndexedDB</strong> para salidas y avistamientos</td><td>localStorage ronda los 5 MB y es sincrónico: sirve para ajustes, no para un histórico que crece</td></tr>
+<tr><td><strong>Fotos y teselas</strong></td><td>Cache API vía Service Worker, descarga bajo demanda</td><td>Permite el modelo híbrido: la app pesa poco y el contenido pesado se acumula según lo usas</td></tr>
+<tr><td><strong>Instalación</strong></td><td>PWA con <code>manifest.webmanifest</code> + Service Worker</td><td>Icono en la pantalla de inicio, pantalla completa, y almacenamiento local mucho más difícil de desalojar</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="nota verde">
+  <p><strong>Corrección respecto a la v1 de este documento.</strong> La v1 proponía un proxy inverso con Caddy y certificados de Let's Encrypt por desafío DNS-01. Con la infraestructura real del NAS eso <strong>no hace falta y sería peor</strong>: el wildcard <code>*.josearcos.me</code> ya cubre el subdominio, Cloudflare termina TLS en el borde y el tunnel es de salida, así que no hay ningún puerto entrante que abrir. nginx sirve en claro por <code>:8080</code> dentro de la red de Docker y nunca ve un certificado.</p>
+  <p>Lo que <strong>sí</strong> se mantiene: HTTPS es un requisito funcional, no un adorno. El <strong>Service Worker</strong> —y por tanto todo el offline—, la <strong>Geolocation API</strong> y la instalación como PWA solo funcionan en contexto seguro. Cloudflare lo proporciona.</p>
+</div>
+
+<div class="nota">
+  <p><strong>El riesgo ya no es «exponer el NAS», es el endpoint de reportes.</strong> La arquitectura de la casa cierra el riesgo grande: sin port-forwards de HTTP/HTTPS, solo el tunnel de salida, y un único contenedor en la red <code>tunnel</code>. Lo que queda expuesto es <code>POST /api/reporte</code>, la única ruta de todo el sitio que acepta escritura. Ahí se concentran las defensas: rate limit en el borde y en nginx, límite de cuerpo de 8 KB, honeypot, validación contra listas cerradas, proceso sin privilegios que solo puede añadir líneas a un fichero, y nada de lo recibido se sirve de vuelta ni se renderiza.</p>
+  <p>Sobre el hallazgo <strong>C2</strong> de la auditoría —«app-layer auth required, even behind Access»—: aquí no hay cuentas ni Access porque el sitio es público por diseño, así que la forma de la mitigación cambia. En lugar de autenticar, se hace que el servidor sea incapaz de causar daño: no guarda observaciones, ni ubicaciones, ni identidades. Todo eso vive en el dispositivo. Un compromiso del contenedor no expondría datos de nadie.</p>
+</div>
+
+<div class="nota aqua">
+  <p><strong>Dos límites del borde que condicionan el diseño.</strong> El plan gratuito de Cloudflare cachea ficheros de hasta <strong>512 MB</strong>; por encima de eso el archivo deja de cachearse y cada petición de rango viaja por el tunnel hasta el NAS. Eso fija un techo duro al <code>.pmtiles</code> y es lo que decide el <code>maxzoom</code>, no la estética del mapa. Y para que las peticiones Range devuelvan un 206 en lugar del fichero entero, el origen debe mandar <code>Content-Length</code>: hay que servir el <code>.pmtiles</code> con <strong>gzip desactivado</strong>, o el mapa se vuelve inusable.</p>
+  <p>El otro: se han reportado resets de stream HTTP/2 en descargas largas a través de Cloudflare Tunnel. La descarga previa del mapa desde Ajustes debe hacerse <strong>por trozos con peticiones Range</strong>, no con un único GET de cientos de megabytes.</p>
+</div>
+
+<h2><span class="sec">03</span>Servicio de mareas</h2>
+
+<h3>Fuente elegida</h3>
+<p><strong>La API JSON de PORTUS</strong>, de Puertos del Estado — la misma que consume su propia web. Estación <em>Mareógrafo de Huelva 5</em>, código <code>3329</code>. <strong>Verificada ejecutando el servicio contra la fuente en vivo</strong> el 12 de agosto de 2026:</p>
+
+<pre><span class="c">// mode=ext → extremos: pleamares y bajamares</span>
+GET https://poem.puertos.es/portus/Foreman/Data
+      ?code=<span class="v">3329</span>&from=<span class="v">20260812</span>@0000&to=<span class="v">20260911</span>@0000&mode=ext
+
+<span class="c">// respuesta real</span>
+[ { <span class="k">"date"</span>: <span class="v">1786609200</span>, <span class="k">"data"</span>: <span class="v">0.5511</span>, <span class="k">"hL"</span>: <span class="v">1</span> }, … ]
+  <span class="c">date → epoch UTC en segundos    hL → 0 pleamar, 1 bajamar</span>
+  <span class="c">data → metros sobre el Cero del Puerto</span></pre>
+
+<div class="nota rojo">
+  <p><strong>Cómo se descubrió, porque es la lección más útil de todo el documento.</strong> La v1 de esta especificación proponía raspar el HTML de <code>portus.puertos.es/PortusData/tablasMareas</code>, y decía «endpoint comprobado». Estaba comprobado <em>leyéndolo con un navegador</em>. Al ejecutar el servicio de verdad, la respuesta fueron <strong>2 KB</strong>: esa página es un shell de JavaScript y la tabla se monta en cliente. El parser falló en el primer intento.</p>
+  <p>El endpoint de arriba es el que llama su propio <code>tablasMareas.js</code>. Es JSON puro, así que desaparece todo el parseo de HTML: ni regex sobre maquetación, ni inferir el mes de un encabezado, ni adivinar el año en los cambios de mes. Menos código y mucho menos frágil. <strong>Comprobar leyendo una página en un navegador no es comprobar</strong>: hay que ejecutar el cliente real.</p>
+</div>
+
+<p>Resultado de la ejecución real: 31 días, 120 eventos, validación superada, y de paso las coordenadas de la estación (37,132 N · −6,834 O) que sirven para calcular la distancia del observador al mareógrafo.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Fecha</th><th>Eventos · hora local (UTC) · altura sobre Cero del Puerto</th></tr></thead>
+<tbody>
+<tr><td>13 de agosto</td><td>plea 04:29 (02:29Z) 3,53 m &nbsp;|&nbsp; <strong>baja 10:20</strong> (08:20Z) 0,55 m &nbsp;|&nbsp; plea 16:47 (14:47Z) 3,85 m &nbsp;|&nbsp; baja 22:53 (20:53Z) 0,38 m</td></tr>
+<tr><td>15 de agosto</td><td>plea 05:50 3,53 m &nbsp;|&nbsp; baja 11:37 0,55 m &nbsp;|&nbsp; plea 18:08 3,74 m &nbsp;<em style="color:var(--tinta-3)">(solo 3: la cuarta cae ya en el día 16 local)</em></td></tr>
+<tr><td>16 de agosto</td><td><strong>baja 00:07</strong> (22:07Z del día 15) 0,57 m &nbsp;|&nbsp; plea 06:27 3,42 m &nbsp;|&nbsp; baja 12:14 0,68 m &nbsp;|&nbsp; plea 18:46 3,55 m</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Las dos últimas filas muestran el reagrupamiento por fecha local funcionando: la bajamar de las 22:07 UTC del día 15 aparece donde el observador la espera, a las 00:07 del día 16.</p>
+
+<div class="nota">
+  <p><strong>La trampa de la hora.</strong> Los <code>date</code> son epoch <strong>UTC</strong>. En verano España peninsular va en GMT+2 y en invierno en GMT+1. Si la app muestra la hora tal cual, en agosto enviaría al observador dos horas antes de la bajamar real: llegaría con el fango cubierto y sin limícolas. La conversión debe hacerse con la zona <code>Europe/Madrid</code>, no con un desplazamiento fijo, para que los cambios de hora no la rompan.</p>
+  <p><strong>Y la trampa de la fecha</strong>, que es más sutil y ya mordió una vez: hay que agrupar los días por fecha <strong>local</strong>, no UTC. Una bajamar a las 22:42 UTC del día 8 es 00:42 del día 9 en hora local. Agrupando por UTC, la pantalla de «hoy» muestra una marea que pertenece a mañana — o peor, oculta la primera del día.</p>
+  <p>El tercer detalle: las alturas están referidas al <strong>Cero del Puerto</strong>. Da igual para saber cuándo hay bajamar, pero conviene mostrar el datum junto al número para que nadie compare con otra fuente que use un cero distinto.</p>
+</div>
+
+<div class="nota aqua">
+  <p><strong>Desfase de marea dentro de la marisma.</strong> El mareógrafo está en el puerto, pero la marea no llega a la vez a toda la marisma: tarda más en los caños interiores y en el estuario del Piedras que en la bocana. Para que el dato sea útil en cada punto, la ficha de zona debería llevar un <code>desfaseMinutos</code> respecto a Huelva 5, aunque sea estimado al principio y se afine con tus propias salidas. Es exactamente el tipo de dato que ninguna app comercial te va a dar y que hace que la tuya valga la pena.</p>
+</div>
+
+<h3>Servicio en el NAS</h3>
+<pre><span class="c">// cron diario, 04:05 hora local</span>
+1. GET a la API de PORTUS por cada estación configurada
+2. epoch UTC → Europe/Madrid, y agrupar por fecha LOCAL
+3. Validar: nº de eventos por día, alturas plausibles, alternancia
+   pleamar/bajamar y que cada pleamar supere a la bajamar vecina
+4. Escritura atómica de mareas.json (temp + rename, nunca a medias)
+5. Si algo no cuadra: NO se escribe, se conserva el anterior y se sale
+   con código != 0 para que cron avise
+
+<span class="c">// mareas.json servido como estático</span>
+{
+  <span class="k">"generado"</span>: <span class="s">"2026-08-12T04:00:12+02:00"</span>,
+  <span class="k">"fuente"</span>: <span class="s">"Puertos del Estado · PORTUS · Foreman/Data (mode=ext)"</span>,
+  <span class="k">"origenPredicciones"</span>: <span class="s">"Instituto Hidrográfico de la Marina"</span>,
+  <span class="k">"datum"</span>: <span class="s">"Cero del Puerto"</span>,
+  <span class="k">"zonaHoraria"</span>: <span class="s">"Europe/Madrid"</span>,
+  <span class="k">"stale"</span>: <span class="k">false</span>,
+  <span class="k">"errores"</span>: [],
+  <span class="k">"estaciones"</span>: {
+    <span class="k">"huelva-5"</span>: {
+      <span class="k">"codigo"</span>: <span class="s">"3329"</span>,
+      <span class="k">"nombre"</span>: <span class="s">"Mareografo de Huelva 5"</span>,
+      <span class="k">"lat"</span>: <span class="v">37.13202</span>, <span class="k">"lon"</span>: <span class="v">-6.83369</span>,
+      <span class="k">"dias"</span>: [
+        { <span class="k">"fecha"</span>: <span class="s">"2026-08-13"</span>, <span class="k">"eventos"</span>: [
+            { <span class="k">"tipo"</span>: <span class="s">"pleamar"</span>, <span class="k">"local"</span>: <span class="s">"04:29"</span>, <span class="k">"utc"</span>: <span class="s">"02:29"</span>, <span class="k">"altura"</span>: <span class="v">3.53</span> },
+            { <span class="k">"tipo"</span>: <span class="s">"bajamar"</span>, <span class="k">"local"</span>: <span class="s">"10:20"</span>, <span class="k">"utc"</span>: <span class="s">"08:20"</span>, <span class="k">"altura"</span>: <span class="v">0.55</span> }
+        ]}
+      ]
+    }
+  }
+}</pre>
+
+<p>El cliente descarga <code>mareas.json</code> cuando hay red y lo guarda en IndexedDB. Con 30 días por delante, una sola conexión al mes bastaría; en la práctica se refresca sola cada vez que abras la app con cobertura. Si los datos guardados se agotan, la app lo dice en lugar de callarse.</p>
+
+<div class="nota">
+  <p><strong>Advertencia sobre la fuente.</strong> <code>Foreman/Data</code> es un endpoint interno de PORTUS, no una API pública con contrato de estabilidad: puede cambiar sin avisar. Mitigaciones: una sola petición diaria por estación (carga insignificante y respetuosa), y validación que falla de forma visible —avisándote— en vez de escribir datos corruptos. A favor: al ser JSON, la superficie que puede romperse es mucho menor que con HTML, y sus tres campos son estables por naturaleza.</p>
+  <p>Conviene además revisar las condiciones de reutilización de Puertos del Estado y valorar su <a href="https://bancodatos.puertos.es/BD/peticiones/Manual_Usuario_Descargaportus.pdf">servicio de descarga de datos oceanográficos</a>, que es la vía sancionada y probablemente más estable. Planes B si esta vía se cierra: una API con clave y capa gratuita (<a href="https://tidesatlas.com/">TidesAtlas</a>, <a href="https://stormglass.io/global-tide-api/">Stormglass</a>, <a href="https://www.worldtides.info/apidocs">WorldTides</a>), o cálculo local con constituyentes armónicos —<a href="https://flaterco.com/xtide/">XTide</a> o el atlas FES2022— que eliminaría la dependencia externa por completo. El origen último de las predicciones oficiales españolas es el Instituto Hidrográfico de la Marina, que es también quien alimenta la información del propio Puerto de Huelva.</p>
+</div>
+
+<h2><span class="sec">04</span>Mapa y geolocalización</h2>
+
+<h3>Basemap autoalojado</h3>
+<p><strong>MapLibre GL JS + PMTiles</strong>, con el basemap de <a href="https://protomaps.com/">Protomaps</a> recortado a la provincia de Huelva y servido como un único archivo estático desde el NAS.</p>
+
+<pre><span class="c">// extracción directa del planet remoto: no hay que descargar los ~127 GB,</span>
+<span class="c">// pmtiles lee solo los rangos que necesita mediante HTTP Range</span>
+pmtiles extract https://build.protomaps.com/<span class="v">20260801</span>.pmtiles huelva.pmtiles \
+  --bbox=<span class="v">-7.55,36.75,-6.10,38.30</span> \
+  --maxzoom=<span class="v">14</span>
+
+<span class="c">// en el cliente</span>
+<span class="k">const</span> protocol = <span class="k">new</span> pmtiles.Protocol();
+maplibregl.addProtocol(<span class="s">"pmtiles"</span>, protocol.tile);
+<span class="c">// origen: pmtiles:///mapas/huelva.pmtiles  → mismo origen, sin claves</span></pre>
+
+<p>El recuadro cubre las siete zonas: litoral del Odiel y del Piedras, Doñana occidental, El Portil, Palos y Las Madres, el Andévalo y la Sierra de Aracena. El tamaño resultante a zoom 14 está por medir; el orden de magnitud esperable son unos cientos de megabytes, y cada nivel de zoom adicional aproximadamente duplica el archivo, así que conviene decidir el <code>maxzoom</code> midiendo, no a ojo.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Opción</th><th>Claves y límites</th><th>Offline</th><th>Veredicto</th></tr></thead>
+<tbody>
+<tr><td><strong>MapLibre + PMTiles en el NAS</strong></td><td class="ok">Ninguna</td><td class="ok">Total, un solo archivo</td><td class="ok">Elegida. Sin dependencias de terceros en tiempo de uso</td></tr>
+<tr><td>Leaflet + teselas de tile.openstreetmap.org</td><td class="no">La política de uso de la Fundación OSM no admite este tipo de aplicación</td><td class="no">No</td><td class="no">Descartada</td></tr>
+<tr><td>Proveedor con capa gratuita (MapTiler, Stadia…)</td><td class="warn">Clave y cuota mensual</td><td class="warn">Limitado</td><td class="warn">Innecesario teniendo NAS</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Atribución obligatoria y visible en el mapa: <strong>© OpenStreetMap contributors</strong>, más el crédito a Protomaps por el basemap.</p>
+
+<h3>Capas propias</h3>
+<p>Encima del basemap, un <code>puntos.geojson</code> con lo que la app aporta: los observatorios y miradores del Odiel —Calatilla, El Águila, Laguna Grande, Salinas del Pesquero, La Choza, La Gravera, Isla de Bacuta, mirador de Isla de Enmedio—, los centros de visitantes de Doñana, los senderos, aparcamientos y los límites de las siete zonas. Cada punto enlaza a su ficha de zona y, desde la ficha, a «empezar salida aquí».</p>
+
+<h3>Geolocalización</h3>
+<div class="grid g2">
+  <div class="card"><span class="tag">Qué hace</span><h4>Usos previstos</h4>
+    <ul style="margin-bottom:0">
+      <li>Detectar la zona más cercana y precargar la lista de especies esperables</li>
+      <li>Centrar el mapa y mostrar el observatorio más próximo</li>
+      <li>Rellenar el punto de la salida en el cuaderno</li>
+      <li>Opcionalmente, guardar coordenadas en cada avistamiento — útil si luego lo subes a eBird</li>
+    </ul></div>
+  <div class="card"><span class="tag">Cómo se comporta</span><h4>Reglas</h4>
+    <ul style="margin-bottom:0">
+      <li>Desactivada por defecto. El permiso se pide al pulsar «usar mi ubicación», nunca al arrancar</li>
+      <li><code>watchPosition</code> activo solo mientras el mapa está abierto, para no gastar batería en una jornada larga</li>
+      <li>Las coordenadas se quedan en el dispositivo: no van al NAS ni a ningún tercero</li>
+      <li>Si se deniega el permiso, todo sigue funcionando con la zona elegida a mano</li>
+      <li>Requiere HTTPS — otro motivo por el que el certificado es requisito y no adorno</li>
+    </ul></div>
+</div>
+
+<h2><span class="sec">05</span>Formulario de reporte</h2>
+
+<p>Sustituye a la sincronización: quien detecte un error no necesita cuenta, solo un formulario que te llegue a ti.</p>
+
+<pre>POST /api/reporte
+{
+  <span class="k">"tipo"</span>: <span class="s">"fenologia"</span>,          <span class="c">// fenologia | identificacion | foto | zona | error</span>
+  <span class="k">"especie"</span>: <span class="s">"calidris-ferruginea"</span>,
+  <span class="k">"mensaje"</span>: <span class="s">"En Calatilla los vi en abundancia a mediados de julio…"</span>,
+  <span class="k">"contacto"</span>: <span class="s">""</span>,                 <span class="c">// opcional, texto libre</span>
+  <span class="k">"contexto"</span>: {                    <span class="c">// añadido por la app, no lo escribe el usuario</span>
+    <span class="k">"versionDatos"</span>: <span class="s">"2026-08-12"</span>,
+    <span class="k">"pantalla"</span>: <span class="s">"ficha-especie"</span>,
+    <span class="k">"zonaActiva"</span>: <span class="s">"odiel"</span>
+  }
+}</pre>
+
+<div class="grid g2">
+  <div class="card"><span class="tag">Servidor</span><h4>Tratamiento</h4>
+    <ul style="margin-bottom:0">
+      <li><code>INSERT</code> parametrizado en <strong>SQLite</strong> (<code>reportes.db</code>). El módulo <code>sqlite3</code> viene en la stdlib de Python: transacciones reales y datos consultables sin añadir contenedor, dependencia ni RAM reservada</li>
+      <li>La base de datos vive en un volumen que el contenedor web <strong>no monta</strong>: imposible servirla por HTTP</li>
+      <li>Lectura solo desde el NAS, con <code>ver-reportes.py</code>. No existe ninguna ruta HTTP de lectura</li>
+      <li>Aviso al recibirlo por Mailgun EU. Si el correo falla, el reporte ya está guardado</li>
+      <li>Revisión manual. Ningún reporte modifica <code>especies.json</code> automáticamente — la guía tiene un solo editor y eres tú</li>
+    </ul></div>
+  <div class="card"><span class="tag">Defensa</span><h4>Es la única puerta abierta</h4>
+    <ul style="margin-bottom:0">
+      <li>Rate limit por IP en el proxy: unos pocos envíos por hora bastan</li>
+      <li>Límite de tamaño del cuerpo (por ejemplo 8 KB) y de longitud por campo</li>
+      <li>Campo honeypot y tiempo mínimo de relleno, en lugar de CAPTCHA — que rompería el uso sin conexión y añadiría un tercero</li>
+      <li>Validación estricta de <code>tipo</code> y <code>especie</code> contra listas conocidas; el resto, texto plano</li>
+      <li>El contenido nunca se sirve de vuelta a la app ni se renderiza sin escapar</li>
+      <li>Cola local: si estás sin cobertura, el reporte se guarda y se envía al recuperar red</li>
+    </ul></div>
+</div>
+
+<h2><span class="sec">06</span>Modelo de datos</h2>
+
+<h3>Especie</h3>
+<pre><span class="c">// especies.json — una entrada por especie</span>
+{
+  <span class="k">"id"</span>: <span class="s">"platalea-leucorodia"</span>,
+  <span class="k">"grupo"</span>: <span class="s">"garzas-espatulas-ciguenas"</span>,
+  <span class="k">"nombre"</span>: <span class="s">"Espátula común"</span>,
+  <span class="k">"cientifico"</span>: <span class="s">"Platalea leucorodia"</span>,
+  <span class="k">"ingles"</span>: <span class="s">"Eurasian Spoonbill"</span>,
+  <span class="k">"estatus"</span>: [<span class="s">"AR"</span>],                    <span class="c">// AR · ER · I · M</span>
+  <span class="k">"meses"</span>: [<span class="v">1</span>,<span class="v">1</span>,<span class="v">3</span>,<span class="v">3</span>,<span class="v">3</span>,<span class="v">3</span>,<span class="v">3</span>,<span class="v">2</span>,<span class="v">2</span>,<span class="v">1</span>,<span class="v">1</span>,<span class="v">1</span>],  <span class="c">// 0 ausente · 1 presente · 2 máximo · 3 cría</span>
+  <span class="k">"confianza"</span>: <span class="s">"verificado"</span>,           <span class="c">// verificado | estimado</span>
+  <span class="k">"zonas"</span>: [<span class="s">"odiel"</span>,<span class="s">"piedras"</span>,<span class="s">"donana"</span>,<span class="s">"palos-madres"</span>],
+  <span class="k">"tamano"</span>: <span class="s">"grande"</span>,
+  <span class="k">"habitat"</span>: [<span class="s">"marisma"</span>,<span class="s">"estero"</span>,<span class="s">"salina"</span>],
+  <span class="k">"identificacion"</span>: <span class="s">"Zancuda blanca de pico espatulado…"</span>,
+  <span class="k">"conducta"</span>: <span class="s">"Barre el agua con el pico dibujando semicírculos…"</span>,
+  <span class="k">"confusiones"</span>: [
+    { <span class="k">"especie"</span>: <span class="s">"garceta-grande"</span>, <span class="k">"clave"</span>: <span class="s">"Pico recto y amarillento, no espatulado"</span> }
+  ],
+  <span class="k">"marea"</span>: <span class="s">"bajamar"</span>,                   <span class="c">// bajamar | pleamar | indiferente</span>
+  <span class="k">"canto"</span>: <span class="k">null</span>,                        <span class="c">// reservado; fuera de la v1</span>
+  <span class="k">"foto"</span>: {
+    <span class="k">"estado"</span>: <span class="s">"ok"</span>,                    <span class="c">// ok | pendiente</span>
+    <span class="k">"archivo"</span>: <span class="s">"platalea-leucorodia-01.webp"</span>,
+    <span class="k">"autor"</span>: <span class="s">"…"</span>,
+    <span class="k">"licencia"</span>: <span class="s">"CC BY-SA 4.0"</span>,
+    <span class="k">"origen"</span>: <span class="s">"https://commons.wikimedia.org/wiki/File:…"</span>
+  }
+}</pre>
+
+<h3>Zona</h3>
+<pre>{
+  <span class="k">"id"</span>: <span class="s">"odiel"</span>,
+  <span class="k">"nombre"</span>: <span class="s">"Marismas del Odiel"</span>,
+  <span class="k">"proteccion"</span>: <span class="s">"Paraje Natural · Reserva de la Biosfera"</span>,
+  <span class="k">"centro"</span>: [<span class="v">-6.9600</span>, <span class="v">37.2200</span>],
+  <span class="k">"estacionMarea"</span>: <span class="s">"huelva-5"</span>,
+  <span class="k">"desfaseMinutos"</span>: <span class="v">0</span>,                <span class="c">// +25 en caños interiores, por medir</span>
+  <span class="k">"mareaOptima"</span>: <span class="s">"bajamar"</span>,
+  <span class="k">"puntos"</span>: [<span class="s">"observatorio-calatilla"</span>, <span class="s">"mirador-isla-enmedio"</span>, <span class="s">"…"</span>],
+  <span class="k">"autorizacion"</span>: <span class="k">false</span>,               <span class="c">// true en senderos de Doñana con cupo</span>
+  <span class="k">"avisos"</span>: [<span class="s">"Sendero Calatilla de Bacuta reabierto el 29/07/2026"</span>]
+}</pre>
+
+<h3>Salida y avistamiento</h3>
+<pre><span class="c">// IndexedDB · almacén "salidas"</span>
+{
+  <span class="k">"id"</span>: <span class="s">"2026-08-12-0740"</span>,
+  <span class="k">"fecha"</span>: <span class="s">"2026-08-12"</span>,
+  <span class="k">"horaInicio"</span>: <span class="s">"07:40"</span>, <span class="k">"horaFin"</span>: <span class="s">"11:15"</span>,
+  <span class="k">"zona"</span>: <span class="s">"odiel"</span>, <span class="k">"punto"</span>: <span class="s">"observatorio-calatilla"</span>,
+  <span class="k">"coords"</span>: [<span class="v">-6.9312</span>, <span class="v">37.2461</span>],       <span class="c">// solo si autorizaste geolocalización</span>
+  <span class="k">"marea"</span>: { <span class="k">"fase"</span>: <span class="s">"bajamar"</span>, <span class="k">"hora"</span>: <span class="s">"10:20"</span>, <span class="k">"altura"</span>: <span class="v">0.55</span>,
+              <span class="k">"origen"</span>: <span class="s">"portus-3329"</span> },   <span class="c">// autorrellenado, editable</span>
+  <span class="k">"meteo"</span>: { <span class="k">"viento"</span>: <span class="s">"SO flojo"</span>, <span class="k">"cielo"</span>: <span class="s">"despejado"</span>, <span class="k">"temp"</span>: <span class="v">27</span> },
+  <span class="k">"observadores"</span>: <span class="s">"José"</span>,
+  <span class="k">"notas"</span>: <span class="s">"…"</span>,
+  <span class="k">"avistamientos"</span>: [
+    { <span class="k">"especie"</span>: <span class="s">"platalea-leucorodia"</span>, <span class="k">"n"</span>: <span class="v">34</span>, <span class="k">"exacto"</span>: <span class="k">true</span>,
+      <span class="k">"plumaje"</span>: [<span class="s">"Ad"</span>,<span class="s">"Jv"</span>], <span class="k">"nota"</span>: <span class="s">"Alimentándose en estero"</span> },
+    { <span class="k">"especie"</span>: <span class="s">"phoenicopterus-roseus"</span>, <span class="k">"n"</span>: <span class="v">180</span>, <span class="k">"exacto"</span>: <span class="k">false</span>,
+      <span class="k">"plumaje"</span>: [<span class="s">"mixto"</span>], <span class="k">"nota"</span>: <span class="s">"Bando en salina"</span> },
+    { <span class="k">"especie"</span>: <span class="s">"?"</span>, <span class="k">"n"</span>: <span class="v">1</span>, <span class="k">"sinIdentificar"</span>: {
+        <span class="k">"tamano"</span>: <span class="s">"mediano"</span>, <span class="k">"pico"</span>: <span class="s">"largo curvado"</span>,
+        <span class="k">"marcas"</span>: <span class="s">"obispillo blanco"</span>, <span class="k">"croquis"</span>: <span class="s">"blob:…"</span> } }
+  ]
+}</pre>
+
+<div class="nota aqua">
+  <p><strong>Dos detalles del modelo que importan en el campo.</strong> El campo <code>exacto</code> distingue un conteo real de una estimación: «34 espátulas» no es lo mismo que «unos 180 flamencos», y mezclarlos arruina cualquier serie que quieras construir con los años. Y el registro <code>sinIdentificar</code> permite anotar un ave que no sabes qué es, con los ejes de identificación de la guía y un croquis, para resolverla en casa. Es lo que recomienda el propio cuaderno de campo de SEO/BirdLife: dibujar primero, buscar en la guía después.</p>
+</div>
+
+<h3>Tabla de sinónimos</h3>
+<p>Resuelve la trampa de nomenclatura: el PDF de la Autoridad Portuaria usa nombres que en parte no coinciden con los de Wikimedia Commons ni con la taxonomía vigente. La app la usa para construir los enlaces de consulta y para que el buscador encuentre una especie por cualquiera de sus nombres.</p>
+
+<pre>{
+  <span class="k">"id"</span>: <span class="s">"ichthyaetus-audouinii"</span>,
+  <span class="k">"vigente"</span>: <span class="s">"Ichthyaetus audouinii"</span>,
+  <span class="k">"enPdfSeo"</span>: <span class="s">"Larus audouinii"</span>,
+  <span class="k">"categoriaCommons"</span>: <span class="s">"Ichthyaetus audouinii"</span>,
+  <span class="k">"commonsVerificado"</span>: <span class="k">true</span>,
+  <span class="k">"nota"</span>: <span class="s">"Buscar 'Larus audouinii' en Commons devuelve 0 resultados"</span>
+}</pre>
+
+<div class="tw">
+<table>
+<thead><tr><th>Especie</th><th>Nombre en el PDF</th><th>Categoría en Commons</th><th style="width:120px">Comprobado</th></tr></thead>
+<tbody>
+<tr><td>Gaviota de Audouin</td><td class="sci">Larus audouinii</td><td class="sci">Ichthyaetus audouinii</td><td class="ok">Sí · 63 archivos</td></tr>
+<tr><td>Paíño boreal</td><td class="sci">Oceanodroma leucorhoa</td><td class="sci">Oceanodroma leucorhoa <span style="font-style:normal;color:var(--tinta-3)">(vigente: Hydrobates leucorhous, sin categoría)</span></td><td class="ok">Sí · 39 archivos</td></tr>
+<tr><td>Pardela balear</td><td class="sci">Puffinus mauretanicus</td><td class="sci">Puffinus mauretanicus</td><td class="warn">Sí · 18, con errores de identificación</td></tr>
+<tr><td>Pagaza piquirroja</td><td class="sci">Hydropogne caspia <span style="font-style:normal;color:var(--rojo)">← errata del PDF</span></td><td class="sci">Hydroprogne caspia</td><td class="warn">Por verificar</td></tr>
+<tr><td>Gaviota cabecinegra</td><td class="sci">Larus melanocephalus</td><td class="sci">Ichthyaetus melanocephalus <span style="font-style:normal;color:var(--tinta-3)">(previsible)</span></td><td class="warn">Por verificar</td></tr>
+<tr><td>Charrán patinegro</td><td class="sci">Sterna sandvicensis</td><td class="sci">Thalasseus sandvicensis <span style="font-style:normal;color:var(--tinta-3)">(previsible)</span></td><td class="warn">Por verificar</td></tr>
+<tr><td>Charrancito común</td><td class="sci">Sterna albifrons</td><td class="sci">Sternula albifrons <span style="font-style:normal;color:var(--tinta-3)">(previsible)</span></td><td class="warn">Por verificar</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Las 60 especies pasan por esta comprobación en la fase 2. Solo cuatro están verificadas contra Commons a día de hoy; el resto consta como pendiente en lugar de darse por bueno.</p>
+
+<h2><span class="sec">07</span>Pantallas</h2>
+
+<p>Seis pantallas y una barra de navegación inferior. Maquetas orientativas, a resolver en la fase de diseño.</p>
+
+<div class="screens">
+
+  <div class="phone">
+    <div class="ph-top"><div class="t">Hoy en el Odiel</div><div class="s">12 ago · Calatilla</div></div>
+    <div class="ph-body">
+      <div class="box">
+        <div class="lbl">Marea · Mareógrafo de Huelva 5</div>
+        <div class="tide"><i style="height:70%"></i><i class="hi" style="height:100%"></i><i style="height:44%"></i><i style="height:22%"></i><i class="hi" style="height:96%"></i><i style="height:30%"></i></div>
+        <div style="font-size:12px;color:var(--tinta-2)"><strong>Bajamar 10:20</strong> · 0,55 m<br>Pleamar 16:47 · 3,85 m</div>
+        <div style="font-size:9.5px;color:var(--tinta-3);margin-top:5px">Hora local · datum Cero del Puerto · descargado hoy 04:00</div>
+      </div>
+      <div class="box"><div class="lbl">Probabilidad alta este mes</div>
+        <div class="big">31 especies</div>
+        <div style="font-size:11.5px;color:var(--tinta-3)">de 60 en la guía · 7 en cría</div></div>
+      <div class="lbl" style="margin:12px 0 6px">Destacado ahora</div>
+      <div class="row"><span class="thumb">FOTO</span><span class="nm"><b>Espátula común</b><i>Paso postnupcial</i></span><span class="bars"><i class="p"></i><i class="p"></i><i class="c"></i><i class="c"></i><i class="c"></i><i class="c"></i><i class="c"></i><i class="x"></i><i class="x"></i><i class="p"></i><i class="p"></i><i class="p"></i></span></div>
+      <div class="row"><span class="thumb pend">FOTO PENDIENTE</span><span class="nm"><b>Pardela balear</b><i>Paso frente a la costa</i></span><span class="bars"><i class="p"></i><i class="p"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="p"></i><i class="p"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="p"></i><i class="p"></i></span></div>
+      <div class="btn">Empezar salida aquí</div>
+    </div>
+    <div class="ph-nav"><div class="on">Hoy</div><div>Guía</div><div>Mapa</div><div>Cuaderno</div><div>Ajustes</div></div>
+    <div class="ph-cap"><strong>1 · Hoy.</strong> Marea del día en hora local y con su procedencia visible. La franja de 12 barras es la fenología en miniatura, presente en toda la app.</div>
+  </div>
+
+  <div class="phone">
+    <div class="ph-top"><div class="t">Guía</div><div class="s">Filtrado · agosto · Odiel</div></div>
+    <div class="ph-body">
+      <div class="chips"><span class="chip on">Agosto</span><span class="chip on">Odiel</span><span class="chip on">Bajamar</span><span class="chip">Grande</span><span class="chip">+ filtro</span></div>
+      <div class="lbl" style="margin-bottom:6px">Limícolas · 11</div>
+      <div class="row"><span class="thumb">FOTO</span><span class="nm"><b>Correlimos zarapitín</b><i>Calidris ferruginea · M</i></span><span class="bars"><i></i><i></i><i></i><i class="p"></i><i class="x"></i><i></i><i class="p"></i><i class="x"></i><i class="x"></i><i class="p"></i><i></i><i></i></span></div>
+      <div class="row"><span class="thumb">FOTO</span><span class="nm"><b>Aguja colinegra</b><i>Limosa limosa · I + M</i></span><span class="bars"><i class="x"></i><i class="x"></i><i class="p"></i><i class="p"></i><i></i><i class="p"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span></div>
+      <div class="row"><span class="thumb">FOTO</span><span class="nm"><b>Cigüeñuela común</b><i>Himantopus himantopus · AR</i></span><span class="bars"><i class="p"></i><i class="p"></i><i class="c"></i><i class="c"></i><i class="c"></i><i class="c"></i><i class="x"></i><i class="x"></i><i class="p"></i><i class="p"></i><i class="p"></i><i class="p"></i></span></div>
+      <div class="lbl" style="margin:12px 0 6px">Gaviotas · 5</div>
+      <div class="row"><span class="thumb">FOTO</span><span class="nm"><b>Gaviota de Audouin</b><i>Ichthyaetus audouinii · M</i></span><span class="bars"><i class="p"></i><i class="p"></i><i class="p"></i><i class="p"></i><i class="p"></i><i class="p"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="p"></i><i class="p"></i></span></div>
+    </div>
+    <div class="ph-nav"><div>Hoy</div><div class="on">Guía</div><div>Mapa</div><div>Cuaderno</div><div>Ajustes</div></div>
+    <div class="ph-cap"><strong>2 · Guía.</strong> Agrupada por los 12 grupos taxonómicos. El filtro de marea usa el <code>mareaOptima</code> de cada especie cruzado con la marea real de hoy.</div>
+  </div>
+
+  <div class="phone">
+    <div class="ph-top"><div class="t">Mapa</div><div class="s">Odiel · 7 observatorios</div></div>
+    <div class="ph-body">
+      <div class="mapbox">
+        <span class="pin me" style="left:42%;top:52%"></span>
+        <span class="pin" style="left:30%;top:34%"></span>
+        <span class="pin" style="left:57%;top:28%"></span>
+        <span class="pin" style="left:64%;top:63%"></span>
+        <span class="pin" style="left:22%;top:70%"></span>
+        <span class="attrib">© OpenStreetMap · Protomaps</span>
+      </div>
+      <div class="chips"><span class="chip on">Observatorios</span><span class="chip">Senderos</span><span class="chip">Zonas</span></div>
+      <div class="box" style="border-color:#b9d3e0;background:var(--agua-cl)">
+        <div class="lbl" style="color:#25607e">Más cerca de ti · 340 m</div>
+        <div style="font-size:13px;font-weight:650;color:#1f4f68">Observatorio de Calatilla</div>
+        <div style="font-size:11px;color:#25607e;margin-top:3px">Bajamar óptima · sin autorización previa</div>
+      </div>
+      <div class="btn g">Ver ficha de la zona</div>
+      <div class="btn">Empezar salida aquí</div>
+    </div>
+    <div class="ph-nav"><div>Hoy</div><div>Guía</div><div class="on">Mapa</div><div>Cuaderno</div><div>Ajustes</div></div>
+    <div class="ph-cap"><strong>3 · Mapa.</strong> Basemap PMTiles autoalojado, capas propias de observatorios y senderos. El punto azul aparece solo si autorizas la ubicación.</div>
+  </div>
+
+  <div class="phone">
+    <div class="ph-top"><div class="t">Espátula común</div><div class="s">Platalea leucorodia · AR</div></div>
+    <div class="ph-body">
+      <div style="height:92px;border-radius:8px;background:var(--papel-2);display:grid;place-items:center;
+                  font:600 9px/1.4 var(--mono);color:var(--tinta-3);letter-spacing:.08em;margin-bottom:11px">FOTOGRAFÍA<br>CC BY-SA · autor</div>
+      <div class="lbl">Fenología</div>
+      <div class="bars" style="gap:3px;margin:4px 0 3px"><i class="p" style="width:auto;flex:1;height:20px"></i><i class="p" style="width:auto;flex:1;height:20px"></i><i class="c" style="width:auto;flex:1;height:20px"></i><i class="c" style="width:auto;flex:1;height:20px"></i><i class="c" style="width:auto;flex:1;height:20px"></i><i class="c" style="width:auto;flex:1;height:20px"></i><i class="c" style="width:auto;flex:1;height:20px"></i><i class="x" style="width:auto;flex:1;height:20px"></i><i class="x" style="width:auto;flex:1;height:20px"></i><i class="p" style="width:auto;flex:1;height:20px"></i><i class="p" style="width:auto;flex:1;height:20px"></i><i class="p" style="width:auto;flex:1;height:20px"></i></div>
+      <div style="display:flex;justify-content:space-between;font:600 8px var(--mono);color:var(--tinta-3)">
+        <span>E</span><span>F</span><span>M</span><span>A</span><span>M</span><span>J</span><span>J</span><span>A</span><span>S</span><span>O</span><span>N</span><span>D</span></div>
+      <div style="font-size:10.5px;color:var(--verde);margin-top:7px;font-weight:600">✓ Fenología verificada</div>
+      <div class="lbl" style="margin-top:13px">Identificación</div>
+      <div style="font-size:11.5px;color:var(--tinta-2);line-height:1.5">Zancuda blanca de gran tamaño, pico negro espatulado en el extremo…</div>
+      <div class="lbl" style="margin-top:12px">No confundir con</div>
+      <div class="row" style="padding:6px 0"><span class="thumb">FOTO</span><span class="nm"><b>Garceta grande</b><i>Pico recto, no espatulado</i></span></div>
+      <div class="btn g">Añadir a la salida en curso</div>
+      <div style="font-size:10px;color:var(--tinta-3);text-align:center;margin-top:9px">Reportar un error en esta ficha</div>
+    </div>
+    <div class="ph-cap"><strong>4 · Ficha.</strong> Fenología legible con su marca de confianza, criterios, conducta, pares de confusión enlazados y acceso al formulario de reporte con el contexto ya rellenado.</div>
+  </div>
+
+  <div class="phone">
+    <div class="ph-top"><div class="t">Salida en curso</div><div class="s">Calatilla · 07:40 · 3 especies</div></div>
+    <div class="ph-body">
+      <div class="box" style="padding:8px 11px;background:var(--verde-cl);border-color:#bcd6cf">
+        <div style="font-size:11px;color:#1f5348"><strong>Bajamar 10:20</strong> · faltan 2 h 40 min</div></div>
+      <div class="chips"><span class="chip on">Esperables hoy</span><span class="chip">Todas</span><span class="chip">Anotadas</span></div>
+      <div class="row"><span class="nm"><b>Espátula común</b><i>Ad + Jv</i></span><span class="stepper"><b>−</b><span class="cnt">34</span><b>+</b></span></div>
+      <div class="row"><span class="nm"><b>Flamenco común</b><i>estimado</i></span><span class="stepper"><b>−</b><span class="cnt">~180</span><b>+</b></span></div>
+      <div class="row"><span class="nm"><b>Correlimos común</b><i>Inv</i></span><span class="stepper"><b>−</b><span class="cnt">60</span><b>+</b></span></div>
+      <div class="row" style="opacity:.45"><span class="nm"><b>Águila pescadora</b><i>—</i></span><span class="stepper"><b>−</b><span class="cnt">0</span><b>+</b></span></div>
+      <div class="btn g">Ave sin identificar</div>
+      <div class="btn">Cerrar salida</div>
+    </div>
+    <div class="ph-nav"><div>Hoy</div><div>Guía</div><div>Mapa</div><div class="on">Cuaderno</div><div>Ajustes</div></div>
+    <div class="ph-cap"><strong>5 · Cuaderno.</strong> Lista precargada con lo esperable del mes y la zona, para no teclear. Cuenta atrás hasta la marea óptima. Todo se guarda al instante.</div>
+  </div>
+
+  <div class="phone">
+    <div class="ph-top"><div class="t">Ajustes y datos</div><div class="s">Sin cuenta · todo local</div></div>
+    <div class="ph-body">
+      <div class="box"><div class="lbl">En este dispositivo</div>
+        <div style="font-size:12px;color:var(--tinta-2)">14 salidas · 212 avistamientos<br>38 fotos · mapa parcial · 46 MB</div></div>
+      <div class="box"><div class="lbl">Ubicación</div>
+        <div style="font-size:12px;color:var(--tinta-2)">Desactivada · no se envía a ningún sitio</div></div>
+      <div class="btn g">Exportar cuaderno a CSV</div>
+      <div class="btn g">Exportar todo a JSON</div>
+      <div class="btn g">Importar copia de seguridad</div>
+      <div class="box" style="margin-top:14px;border-color:#e8c9b4;background:var(--sal-cl)">
+        <div class="lbl" style="color:#8f5320">Descarga previa para el campo</div>
+        <div style="font-size:11.5px;color:#8f5320;line-height:1.5">60 fotos · mapa completo de Huelva · mareas de 30 días</div></div>
+      <div style="font-size:10.5px;color:var(--tinta-3);margin-top:12px;line-height:1.5">
+        Tus datos no salen del dispositivo. Si borras los datos del navegador o desinstalas la app, se pierden. Exporta de vez en cuando.</div>
+    </div>
+    <div class="ph-nav"><div>Hoy</div><div>Guía</div><div>Mapa</div><div>Cuaderno</div><div class="on">Ajustes</div></div>
+    <div class="ph-cap"><strong>6 · Ajustes.</strong> Transparencia sobre qué se guarda, control explícito de la ubicación, exportación en un toque y descarga previa antes de salir.</div>
+  </div>
+
+</div>
+
+<h3>Placeholder «Foto pendiente»</h3>
+<p>Según lo acordado, una especie sin imagen verificada no lleva foto dudosa: lleva un marcador de trama diagonal con el texto <em>Foto pendiente</em>.</p>
+<ul>
+  <li>En la ficha ocupa el mismo espacio que la fotografía, para que el hueco sea visible y no parezca un fallo de maquetación.</li>
+  <li>Es pulsable: enlaza a la búsqueda en Commons y en iNaturalist usando la categoría de la tabla de sinónimos. Convierte el hueco en una tarea de un clic.</li>
+  <li>Ajustes muestra el recuento de pendientes, que funciona como lista de trabajo del proyecto.</li>
+  <li>Se distingue de «foto aún no descargada», que muestra un indicador de descarga.</li>
+</ul>
+
+<h2><span class="sec">08</span>Estrategia offline híbrida</h2>
+
+<div class="tw">
+<table>
+<thead><tr><th>Recurso</th><th>Cuándo se guarda</th><th>Dónde</th><th>Peso</th></tr></thead>
+<tbody>
+<tr><td>Interfaz</td><td>Primera visita, siempre</td><td>Cache API</td><td>~150 KB</td></tr>
+<tr><td>MapLibre + pmtiles.js</td><td>Primera visita, siempre</td><td>Cache API</td><td>~900 KB</td></tr>
+<tr><td>Datos: especies, zonas, sinónimos, puntos</td><td>Primera visita, siempre</td><td>Cache API + copia en IndexedDB</td><td>~300 KB con 60 especies</td></tr>
+<tr><td>Mareas (30 días)</td><td>Al abrir con red; refresco diario oportunista</td><td>IndexedDB</td><td>~40 KB</td></tr>
+<tr><td>Fotos de especie</td><td>Al abrir la ficha, o en bloque desde Ajustes</td><td>Cache API</td><td>~120 KB cada una · ~7 MB las 60</td></tr>
+<tr><td>Teselas del mapa</td><td>Los rangos consultados, o el archivo entero desde Ajustes</td><td>Cache API</td><td>Por medir · cientos de MB a zoom 14</td></tr>
+<tr><td>Cuaderno</td><td>Al instante, en cada cambio</td><td>IndexedDB</td><td>~2 KB por salida</td></tr>
+<tr><td>Cola de reportes</td><td>Al enviar sin red</td><td>IndexedDB</td><td>Despreciable</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="nota verde">
+  <p><strong>Lo que sí necesita cobertura.</strong> Nada del funcionamiento básico. Solo cuatro cosas: descargar fotos o teselas nuevas, refrescar las mareas cuando se acerque el final de los 30 días, enviar reportes de la cola y recibir actualizaciones de contenido. Esa última merece un aviso discreto —«hay datos nuevos, actualizar»— en lugar de sobrescribir en silencio lo que ya tienes descargado.</p>
+</div>
+
+<div class="nota">
+  <p><strong>El mapa es el recurso que puede desbordar el almacenamiento.</strong> Cientos de megabytes de teselas compiten con el resto de la app por la cuota que el navegador concede al origen, y en iOS esa cuota es más estrecha y más volátil. Tres mitigaciones: elegir el <code>maxzoom</code> más bajo que siga siendo útil en el campo —a zoom 14 se distinguen caminos y esteros, que es lo que hace falta—, ofrecer la descarga completa como opción explícita y no por defecto, y usar <code>navigator.storage.persist()</code> para pedir almacenamiento persistente, que se concede con mucha más facilidad si la app está instalada como PWA.</p>
+</div>
+
+<h2><span class="sec">09</span>Privacidad y persistencia</h2>
+
+<div class="grid g2">
+  <div class="card"><span class="tag">A favor</span><h4>Lo que se gana sin cuentas</h4>
+    <ul style="margin-bottom:0">
+      <li>Nada que gestionar: ni contraseñas, ni recuperación de acceso, ni datos personales que custodiar</li>
+      <li>Sin telemetría ni analítica. El servidor no necesita ni logs de acceso con IP</li>
+      <li>Las coordenadas de tus salidas no salen del dispositivo — relevante en zonas con especies sensibles, donde publicar ubicaciones de nidos puede hacer daño</li>
+      <li>Funciona en la marisma, en avión y dentro de diez años</li>
+    </ul></div>
+  <div class="card"><span class="tag">En contra</span><h4>Lo que hay que asumir</h4>
+    <ul style="margin-bottom:0">
+      <li>Borrar los datos del navegador borra el cuaderno. Sin copia en servidor, no hay recuperación</li>
+      <li>No hay sincronía entre móvil y ordenador: son dos cuadernos distintos</li>
+      <li>iOS puede desalojar el almacenamiento de webs poco usadas; instalar la PWA lo hace bastante menos probable</li>
+      <li>Mitigación: recordatorio de exportación cada 10 salidas, y exportación automática al cerrar salida si lo activas</li>
+    </ul></div>
+</div>
+
+<h2><span class="sec">10</span>Contenido de arranque</h2>
+
+<p>Las <strong>60 especies</strong> de la guía de la ría de Huelva. El resto hasta las ~130 previstas se añade al mismo <code>especies.json</code> sin tocar la aplicación.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Grupo</th><th style="width:70px">N.º</th><th>Especies</th></tr></thead>
+<tbody>
+<tr><td>Anátidas</td><td>2</td><td class="sci">Melanitta nigra · Mergus serrator</td></tr>
+<tr><td>Colimbos y zampullines</td><td>2</td><td class="sci">Gavia stellata · Podiceps nigricollis</td></tr>
+<tr><td>Aves marinas</td><td>4</td><td class="sci">Puffinus mauretanicus · Oceanodroma leucorhoa · Morus bassanus · Stercorarius skua</td></tr>
+<tr><td>Cormoranes</td><td>1</td><td class="sci">Phalacrocorax carbo</td></tr>
+<tr><td>Garzas, espátulas y cigüeñas</td><td>4</td><td class="sci">Egretta garzetta · Ardea cinerea · Ciconia ciconia · Platalea leucorodia</td></tr>
+<tr><td>Flamencos</td><td>1</td><td class="sci">Phoenicopterus roseus</td></tr>
+<tr><td>Rapaces diurnas</td><td>5</td><td class="sci">Milvus migrans · Milvus milvus · Circus aeruginosus · Pandion haliaetus · Falco tinnunculus</td></tr>
+<tr><td>Rállidos</td><td>1</td><td class="sci">Gallinula chloropus</td></tr>
+<tr><td>Limícolas</td><td>16</td><td class="sci">Himantopus himantopus · Recurvirostra avosetta · Charadrius hiaticula · C. alexandrinus · Pluvialis squatarola · Calidris alba · C. ferruginea · C. alpina · Limosa limosa · L. lapponica · Numenius phaeopus · N. arquata · Actitis hypoleucos · Tringa nebularia · T. totanus · Arenaria interpres</td></tr>
+<tr><td>Gaviotas</td><td>5</td><td class="sci">Chroicocephalus ridibundus · Larus melanocephalus · L. audouinii · L. fuscus · L. michahellis</td></tr>
+<tr><td>Charranes y pagazas</td><td>4</td><td class="sci">Hydroprogne caspia · Sterna sandvicensis · S. hirundo · Sternula albifrons</td></tr>
+<tr><td>Álcidos</td><td>1</td><td class="sci">Alca torda</td></tr>
+<tr><td>Aves terrestres</td><td>14</td><td class="sci">Tyto alba · Apus apus · Hirundo rustica · Delichon urbicum · Motacilla flava · M. alba · Erithacus rubecula · Phoenicurus ochruros · Saxicola rubicola · Turdus merula · Pica pica · Sturnus unicolor · Passer domesticus · Carduelis carduelis</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="nota">
+  <p><strong>Sobre la fenología de estas 60.</strong> Cargadas ya en la app: <strong>23 con la matriz mensual contrastada</strong> contra la del plan y <strong>37 marcadas</strong> como <code>"confianza": "estimado"</code>, que la ficha muestra al 55 % de opacidad, con filete punteado y etiqueta en cursiva. Es la diferencia entre una guía que reconoce sus límites y una que aparenta certeza donde no la tiene — y en el campo, saber que un dato es aproximado cambia cómo lo usas.</p>
+</div>
+
+<h2><span class="sec">11</span>Fases de implementación · estado real</h2>
+
+<p class="lead">Actualizado el <strong>18 de agosto de 2026</strong>, después del despliegue. El estado
+de cada fase es el ejecutado y verificado, no el previsto. Donde la realidad se apartó de lo escrito
+aquí, se dice en qué y por qué.</p>
+
+<div class="fase hecha"><div class="num">1</div><div class="body">
+  <h4>Infraestructura en el NAS <span class="estado hecha">Hecha · 18 ago</span></h4>
+  <p>Ruta del tunnel en «Published application routes», contenedores según el patrón de la casa y
+  comprobación de que el Service Worker se registra y la Geolocation API funciona sobre HTTPS.</p>
+  <div class="real"><b>Ejecutado.</b> Los tres contenedores arriba, <code>web</code> y <code>api</code>
+  <em>healthy</em>. Solo <code>pajaritos-web</code> en la red <code>tunnel</code>, ningún puerto de host,
+  y el 3012 confirmado libre. La ruta se publicó por API e insertó <strong>antes del catch-all</strong>
+  sin tocar las seis que ya había. Service Worker registrado y <em>activated</em> con scope <code>/</code>,
+  caché de armazón con 9 entradas, contexto seguro y Geolocation disponible: verificado desde fuera con
+  navegador real, sin violaciones de CSP y sin errores de consola.</div>
+  <div class="real ojo"><b>Tres cosas estaban mal.</b> El NAS había cambiado de IP por DHCP y
+  <code>~/.ssh/config</code> apuntaba a una máquina distinta. En nginx, <code>add_header</code>
+  <strong>no se hereda</strong> en las <code>location</code> que declaran el suyo, así que la CSP no
+  llegaba ni a la raíz ni a <code>sw.js</code>: la mitigación estaba escrita y no se aplicaba. Y el
+  rate limit no contabilizaba nada, porque nginx ignora las peticiones cuya clave está vacía y la clave
+  era <code>$http_cf_connecting_ip</code>. Los tres arreglados y reverificados. Diario en
+  <code>SETUP.md</code> §14.</div>
+  <p class="out">→ Origen HTTPS operativo y aislado del resto del NAS</p>
+</div></div>
+
+<div class="fase hecha"><div class="num">2</div><div class="body">
+  <h4>Esqueleto navegable con datos reales <span class="estado hecha">Hecha · con más alcance</span></h4>
+  <p>Las seis pantallas y las ~25 especies ya verificadas. Sin fotos, sin mapa, sin offline.</p>
+  <div class="real"><b>Se hizo bastante más.</b> No las ~25 especies sino las <strong>60 de arranque</strong>,
+  y no seis pantallas sino las seis más las capas de detalle, las hojas, el croquis y los ocho estados del
+  wireframe 2a: sin conexión con y sin caché, marea caducada, ubicación denegada, cuaderno vacío, filtro
+  sin resultados —que propone quitar el filtro concreto que vacía la lista, con el recuento—, descarga en
+  progreso y reporte encolado. Los filtros de mes, zona y marea los hereda la Guía de la salida en curso.</div>
+  <p class="out">→ Prototipo navegable para validar la interacción</p>
+</div></div>
+
+<div class="fase hecha"><div class="num">3</div><div class="body">
+  <h4>Servicio de mareas <span class="estado hecha">Hecha · publicando sola</span></h4>
+  <p>Cron diario, parser de PORTUS con conversión a <code>Europe/Madrid</code>, escritura atómica,
+  marca de <code>stale</code> y aviso de fallo.</p>
+  <div class="real"><b>En marcha sin intervención.</b> El cron de las 04:05 se disparó por su cuenta la
+  primera madrugada: 31 días, 120 eventos, validación superada. El reagrupado por fecha local funciona en
+  producción —la bajamar de las 23:17 UTC sale a las <strong>01:17 del día siguiente</strong>, que es
+  donde el observador la espera—. La pantalla «Hoy» muestra procedencia, datum y hora de descarga, y la
+  cuenta atrás hasta la próxima marea.</div>
+  <p class="out">→ mareas.json publicándose solo cada día</p>
+</div></div>
+
+<div class="fase parcial"><div class="num">4</div><div class="body">
+  <h4>Completar datos y tabla de sinónimos <span class="estado parcial">Parcial</span></h4>
+  <p>Las 60 especies con estatus, fenología y marca de confianza. Verificación de las 60 categorías de
+  Commons —hoy solo 4 comprobadas— y volcado a <code>sinonimos.json</code>.</p>
+  <div class="real"><b>Hecho:</b> las 60 especies con grupo, estatus, fenología, hábitat, marea óptima,
+  zonas, criterios de identificación, conducta y pares de confusión. <strong>23 con fenología verificada</strong>
+  contra la matriz del plan; las otras <strong>37 entran como estimadas</strong> y la ficha lo dice, con la
+  franja al 55 % de opacidad y filete punteado.</div>
+  <div class="real ojo"><b>Falta lo que más pesa:</b> verificar las <strong>56 categorías de Commons</strong>
+  pendientes y contrastar las 37 fenologías estimadas con los <em>barcharts</em> de eBird de los hotspots del
+  Odiel. También hay que revisar los textos de identificación, que hoy son borradores y no material cotejado
+  con el PDF de SEO/BirdLife.</div>
+  <p class="out">→ especies.json y sinonimos.json completos</p>
+</div></div>
+
+<div class="fase parcial"><div class="num">5</div><div class="body">
+  <h4>Mapa y geolocalización <span class="estado parcial">Parcial</span></h4>
+  <p>Extracción del PMTiles de Huelva, medición del peso por nivel de zoom, servido con HTTP Range, capas
+  GeoJSON, ubicación opt-in y detección de la zona más cercana.</p>
+  <div class="real"><b>Hecho:</b> geolocalización opt-in, que pide permiso al pulsar y nunca al arrancar,
+  con detección del punto más cercano y <code>watchPosition</code> activo solo mientras el mapa está abierto.
+  Capas propias de observatorios, senderos y zonas sobre <code>puntos.geojson</code> con los 17 puntos reales,
+  conmutables. Pellizco para el zoom, solo en el mapa.</div>
+  <div class="real ojo"><b>Falta el basemap.</b> Hoy el mapa dibuja un esquema por coordenadas con retícula
+  de medio grado y se etiqueta a sí mismo como «basemap PMTiles pendiente», para no aparentar lo que no es.
+  Queda extraer el <code>.pmtiles</code> de Huelva y <strong>medir su peso real a zoom 14</strong> para fijar
+  el <code>maxzoom</code> por debajo de los 512 MB del plan gratuito de Cloudflare.</div>
+  <p class="out">→ Mapa autoalojado sin claves ni terceros</p>
+</div></div>
+
+<div class="fase hecha"><div class="num">6</div><div class="body">
+  <h4>Cuaderno con persistencia <span class="estado hecha">Hecha</span></h4>
+  <p>IndexedDB, salida en curso, contador de un toque, registro de ave sin identificar, exportación a CSV
+  y JSON, importación de respaldo, recordatorio de copia.</p>
+  <div class="real"><b>Completo.</b> IndexedDB para salidas y cola de reportes; <code>localStorage</code>
+  para preferencias y el borrador de la salida en curso. Contador de un toque, con <strong>pulsación larga
+  de 500 ms y vibración</strong> sobre el número para pasar de conteo exacto a estimación de diez en diez;
+  la fila se sombrea y el «~» va en la cifra. Ave sin identificar con croquis a dedo, deshacer y borrar, y
+  chips de rasgos multiselección. Exportación a CSV —con BOM para que Excel respete los acentos y columna
+  propia que distingue <code>exacto</code> de <code>estimado</code>— y a JSON, importación de respaldo y
+  recordatorio de copia cada 10 salidas.</div>
+  <p class="out">→ Cuaderno funcional con memoria local</p>
+</div></div>
+
+<div class="fase parcial"><div class="num">7</div><div class="body">
+  <h4>Banco de imágenes y placeholders <span class="estado parcial">Parcial</span></h4>
+  <p>Descarga desde Commons e iNaturalist, conversión a WebP, manifiesto de atribución, página de créditos
+  generada, placeholders enlazados a la búsqueda para las pendientes.</p>
+  <div class="real"><b>Hecho el placeholder,</b> que era la parte con criterio: ocupa el mismo alto que la
+  foto y lleva marco continuo para que se lea como decisión y no como fallo de maquetación, y es pulsable
+  —enlaza a la búsqueda en Commons usando la categoría de <code>sinonimos.json</code>—. Ajustes muestra el
+  recuento de pendientes como lista de trabajo.</div>
+  <div class="real ojo"><b>Falta el banco entero:</b> las <strong>60 fichas siguen sin fotografía</strong>.
+  Ninguna imagen dudosa ha entrado por rellenar el hueco.</div>
+  <p class="out">→ Fotos verificadas + créditos + lista de pendientes</p>
+</div></div>
+
+<div class="fase hecha"><div class="num">8</div><div class="body">
+  <h4>Offline, PWA y formulario de reporte <span class="estado hecha">Hecha · salvo dos cabos</span></h4>
+  <p>Service Worker con las estrategias de la sección 08, manifiesto e icono, descarga previa desde Ajustes,
+  <code>storage.persist()</code>, endpoint de reportes con rate limit y honeypot, y cola de envío diferido.</p>
+  <div class="real"><b>Funcionando en producción.</b> Service Worker con las tres estrategias: precarga del
+  armazón, «red primero» para las mareas por ser dato perecedero, y «caché primero» para fotos y teselas.
+  Manifiesto, iconos, <code>storage.persist()</code> y cola de reportes en IndexedDB que se vacía al recuperar
+  red. El endpoint <code>POST /api/reporte</code> está desplegado y probado contra el origen real:
+  <strong>201</strong> con reporte válido, honeypot aceptado en silencio <strong>sin guardar</strong>,
+  <code>tipo</code> con intento de inyección descartado por lista cerrada, y rate limit que deja pasar cuatro
+  y responde <strong>429</strong> al resto.</div>
+  <div class="real ojo"><b>Dos cabos sueltos.</b> Faltan las credenciales de Mailgun: sin ellas el reporte
+  <em>sí</em> se guarda en SQLite, solo no llega el aviso por correo. Y la descarga previa desde Ajustes mueve
+  hoy un contador, no bytes: hay que engancharla a peticiones Range reales cuando exista el
+  <code>.pmtiles</code>.</div>
+  <p class="out">→ App instalable, funcional sin cobertura, con canal de correcciones</p>
+</div></div>
+
+<div class="fase pendiente"><div class="num">9</div><div class="body">
+  <h4>Prueba de campo <span class="estado pendiente">Pendiente</span></h4>
+  <p>Una salida real al Odiel en bajamar, con el móvil, en modo avión y con la app instalada. Es la única
+  prueba que cuenta: si no se puede registrar un bando con una mano y prismáticos en la otra, hay que
+  rediseñar. Y es también cuando se comprueba si los desfases de marea por zona son correctos.</p>
+  <div class="real ojo"><b>Ya se puede hacer.</b> La app está instalable y funciona sin cobertura, así que
+  esta fase deja de depender de nadie. Recordatorio de la §10 del <code>SETUP.md</code>: si el sitio no carga
+  desde el móvil, comprobar con otra red antes de depurar nada —el bloqueo de DIGI sobre prefijos de
+  Cloudflare no es culpa de la app—. En modo avión con la PWA instalada eso deja de importar.</div>
+  <p class="out">→ App v1.0</p>
+</div></div>
+
+<h2><span class="sec">12</span>Lo que cambió al implementar</h2>
+
+<p class="lead">Seis desviaciones respecto a lo escrito en este documento. Ninguna es cosmética: cada una
+salió de ejecutar algo y ver que no se comportaba como decía el papel.</p>
+
+<div class="grid g2">
+  <div class="card acc">
+    <span class="tag">Desviación 1</span>
+    <h4>El JS ya no vive dentro del index.html</h4>
+    <p>Este documento pedía «un solo <code>index.html</code>» con todo dentro. La CSP del sitio es
+    <code>script-src 'self'</code> <strong>sin</strong> <code>'unsafe-inline'</code>, así que el JS en línea
+    sencillamente no se ejecuta. Se separó en <code>app.js</code>.</p>
+    <p>Sigue siendo una sola página, sin framework y sin dependencias, que es lo que buscaba la decisión
+    original. Añadir <code>'unsafe-inline'</code> para salvar la letra habría sido debilitar la seguridad
+    por comodidad.</p>
+  </div>
+  <div class="card acc">
+    <span class="tag">Desviación 2</span>
+    <h4>app.js lleva versión en la URL</h4>
+    <p>Consecuencia de lo anterior, y un fallo que se introdujo al separarlo: <code>index.html</code> se
+    sirve con <code>no-cache</code>, pero <code>/app.js</code> se cachea <strong>cuatro horas en el borde</strong>.
+    Sin versión en la URL, un redespliegue habría servido JS viejo con HTML nuevo durante horas — el tipo de
+    fallo que se manifiesta como «a veces va y a veces no».</p>
+    <p>Resuelto con <code>app.js?v=2026-08-18</code>, la misma cadena en el <code>ARMAZON</code> del Service
+    Worker y <code>V</code> subido para purgar la caché anterior. <strong>Al tocar <code>app.js</code> hay que
+    subir las dos.</strong> Mismo criterio que el <code>.pmtiles</code> versionado por nombre.</p>
+  </div>
+  <div class="card acc">
+    <span class="tag">Desviación 3</span>
+    <h4>Las cabeceras de seguridad van en un include</h4>
+    <p>En nginx, cualquier <code>location</code> que declare su propio <code>add_header</code>
+    <strong>descarta todos los heredados</strong> del bloque <code>server</code>. Como casi todas fijan su
+    <code>Cache-Control</code>, la CSP desaparecía justo en <code>/</code>, <code>index.html</code>,
+    <code>sw.js</code> y <code>app.js</code>.</p>
+    <p>Ahora viven en <code>nginx/cabeceras.conf</code>, incluido explícitamente en cada bloque. Se verificó
+    ruta por ruta, no leyendo el fichero.</p>
+  </div>
+  <div class="card acc">
+    <span class="tag">Desviación 4</span>
+    <h4>El rate limit necesita clave de respaldo</h4>
+    <p><code>limit_req_zone $http_cf_connecting_ip</code> no limita nada cuando la cabecera no llega: nginx
+    <strong>ignora las peticiones cuya clave está vacía</strong>. Doce POST seguidos pasaron con 201.</p>
+    <p>Con un <code>map</code> que cae a <code>$binary_remote_addr</code> cuando falta la cabecera, el límite
+    también protege el acceso por LAN o WireGuard. Reverificado: pasan cuatro y el resto son 429.</p>
+  </div>
+  <div class="card acc">
+    <span class="tag">Desviación 5</span>
+    <h4>El contrato del reporte lo manda el servidor</h4>
+    <p>El cliente se ajustó a lo que valida <code>services/api/app.py</code>: campo honeypot llamado
+    <code>telefono</code> —el valor de <code>HONEYPOT_FIELD</code>—, marca <code>abiertoEn</code> en
+    milisegundos para el mínimo de <code>MIN_FILL_SECONDS</code>, mensaje de 10 a 2000 caracteres e
+    <code>id</code> de especie contra <code>^[a-z0-9-]{1,60}$</code>.</p>
+  </div>
+  <div class="card acc">
+    <span class="tag">Desviación 6</span>
+    <h4>El arranque son 60 especies, no 25</h4>
+    <p>La fase 2 preveía las ~25 verificadas. Se cargaron las <strong>60 completas</strong>, con 23 de
+    fenología verificada y 37 marcadas como estimadas. Es más honesto que una guía corta que aparente
+    certeza: el hueco se ve y se sabe dónde está.</p>
+  </div>
+</div>
+
+<div class="nota">
+  <p><strong>La lección que se repite.</strong> Las cuatro primeras desviaciones tienen la misma forma: algo
+  estaba escrito correctamente, se leía correcto, y no se estaba aplicando. La CSP existía y no llegaba. El
+  rate limit existía y no contaba. El <code>add_header</code> estaba puesto y no se heredaba. Ninguna se
+  habría detectado revisando la configuración: hicieron falta peticiones reales contra el origen real. Es la
+  misma lección que el servicio de mareas de la v1, cuando «comprobado en el navegador» resultó no ser
+  comprobado.</p>
+</div>
+
+<h2><span class="sec">13</span>Decisiones cerradas y cuestiones abiertas</h2>
+
+<div class="tw">
+<table>
+<thead><tr><th style="width:150px">Asunto</th><th>Estado</th></tr></thead>
+<tbody>
+<tr><td><strong>Alojamiento</strong></td><td class="ok">Cerrado — NAS Synology detrás del Cloudflare Tunnel existente, slug <code>pajaritos</code>, sin puertos de host. Configuración escrita en <code>pajaritos/SETUP.md</code></td></tr>
+<tr><td><strong>Registro de puertos</strong></td><td class="ok">Cerrado — <strong>3012 confirmado libre</strong> en el NAS el 17/08/2026. La pila no publica ningún puerto de host; queda reservado y comentado en el override</td></tr>
+<tr><td><strong>Tamaño del basemap</strong></td><td class="warn">Abierto — medir el <code>.pmtiles</code> a zoom 14 y bajar un nivel si pasa de 512 MB. El script de build aborta solo si se pasa</td></tr>
+<tr><td><strong>Mareas</strong></td><td class="ok">Cerrado y <strong>en producción</strong> — API JSON de PORTUS, estación 3329. El cron de las 04:05 publica solo: 31 días, 120 eventos, validación superada. Pendiente: revisar condiciones de reutilización y medir los desfases por zona en el campo</td></tr>
+<tr><td><strong>Geolocalización</strong></td><td class="ok">Cerrado y <strong>verificado sobre HTTPS</strong> — activada, opt-in, sin salir del dispositivo</td></tr>
+<tr><td><strong>Mapa</strong></td><td class="warn">Decidido, <strong>sin implementar</strong> — MapLibre + PMTiles de Protomaps autoalojado. Hoy hay un esquema por coordenadas que se etiqueta como tal. Pendiente: extraer el <code>.pmtiles</code>, medir el peso a zoom 14 y fijar <code>maxzoom</code></td></tr>
+<tr><td><strong>Sincronización</strong></td><td class="ok">Cerrado — sin cuentas. Exportar e importar por archivo si algún día hace falta</td></tr>
+<tr><td><strong>Cantos</strong></td><td class="ok">Fuera de la v1. El campo <code>canto</code> queda reservado en el modelo; Xeno-canto tiene material con licencia Creative Commons cuando se retome</td></tr>
+<tr><td><strong>Colaboración</strong></td><td class="ok">Cerrado — formulario que te llega a ti, con revisión manual y sin escritura automática en los datos</td></tr>
+<tr><td><strong>Almacenamiento en servidor</strong></td><td class="ok">Cerrado — SQLite para reportes, JSON en git para el contenido, IndexedDB en el dispositivo para el cuaderno. Razonado en <code>SETUP.md</code> §13. El disparador para pasar a Postgres sería la sincronización, no el volumen</td></tr>
+<tr><td><strong>Copias del NAS</strong></td><td class="warn">Abierto — <code>reportes.db</code> es el único dato no replicado en ningún dispositivo. Necesita instantánea <code>VACUUM INTO</code> programada y entrada en Hyper Backup, con restauración probada</td></tr>
+<tr><td><strong>Actualización del basemap</strong></td><td class="warn">Abierto — ¿se reextrae el PMTiles cada cuánto? Trimestral parece suficiente para senderos y caminos, y evita que los usuarios tengan que redescargar cientos de MB a menudo</td></tr>
+<tr><td><strong>Cabeceras de seguridad</strong></td><td class="ok">Cerrado — CSP, <code>X-Frame-Options</code>, <code>Referrer-Policy</code> y <code>Permissions-Policy</code> en <code>nginx/cabeceras.conf</code>, incluido en cada <code>location</code>. Verificadas ruta por ruta y en el borde</td></tr>
+<tr><td><strong>Caché del borde</strong></td><td class="ok">Cerrado — Cloudflare respeta el <code>no-store</code> de <code>/sw.js</code> (<code>cf-cache-status: BYPASS</code>), así que no hace falta regla para el Service Worker. <code>/app.js</code> se cachea 4 h y por eso va versionado en la URL</td></tr>
+<tr><td><strong>Rate limiting en el borde</strong></td><td class="warn">Abierto — nginx ya limita a 6/min con clave de respaldo, verificado. Falta la regla en Cloudflare para parar el tráfico antes de que cruce el tunnel</td></tr>
+<tr><td><strong>Aviso de reportes</strong></td><td class="warn">Abierto — <code>MAILGUN_API_KEY</code> y <code>MAILGUN_DOMAIN</code> vacíos en el <code>.env</code> del NAS. Sin ellos el reporte se guarda igual y solo se pierde el correo</td></tr>
+<tr><td><strong>Quién más lo usa</strong></td><td class="warn">Abierto — si se difunde, conviene decidir si el subdominio se indexa en buscadores y si el rate limit del formulario aguanta más de un usuario ocasional</td></tr>
+</tbody>
+</table>
+</div>
+
+<footer>
+  <p style="font-weight:650;color:var(--tinta)">Documentos relacionados</p>
+  <ul>
+    <li><strong>La aplicación, en funcionamiento</strong> — <a href="https://pajaritos.josearcos.me">pajaritos.josearcos.me</a>. Copia canónica del código en <code>~/Sites/pajaritos</code>, versionada en git y desplegada en <code>/volume1/docker/pajaritos</code>.</li>
+    <li><strong>Diario del despliegue</strong> — <code>pajaritos/SETUP.md</code> §14: las trampas que aparecieron al ejecutar, con las comprobaciones y sus resultados.</li>
+    <li><strong>Puesta en marcha en el NAS</strong> — <code>pajaritos/SETUP.md</code>, más <code>docker-compose.yml</code>, <code>nginx/pajaritos.conf</code>, los dos servicios Python y <code>scripts/build-pmtiles.sh</code>. Instancia concreta del runbook <em>NEW-PROJECT-SETUP.md</em> de la casa.</li>
+    <li><strong>Plan de la guía de observación</strong> — <code>plan-guia-observacion-odiel.html</code>. Contenido ornitológico: zonas, fenología, estructura de la guía, fuentes de imágenes.</li>
+    <li><em>Aves de la ría de Huelva</em> — Autoridad Portuaria de Huelva y SEO/BirdLife. Origen de las 60 especies de arranque, los códigos de estatus y las recomendaciones de observación.</li>
+    <li><em>Doñana y la Marisma</em> — Cuaderno de campo del Grupo Doñana Entorno, Junta de Andalucía. Modelo del cuaderno guiado.</li>
+  </ul>
+
+  <p style="font-weight:650;color:var(--tinta);margin-top:20px">Mareas</p>
+  <ul>
+    <li><strong>API usada:</strong> <code>https://poem.puertos.es/portus/Foreman/Data?code=3329&from=…&to=…&mode=ext</code> — PORTUS, Puertos del Estado. Verificada ejecutando el servicio contra la fuente en vivo el 12 de agosto de 2026: 31 días, 120 eventos, coordenadas 37,132 N / −6,834 O</li>
+    <li><a href="https://portus.puertos.es/PortusData/tablasMareas?code=3329&locale=es&scroll=true">Tabla de marea · Mareógrafo de Huelva 5</a> — la página web. Es un shell de JavaScript: <strong>no sirve para raspar</strong>, solo para consultar a mano y para leer los metadatos de la estación</li>
+    <li><a href="https://portus.puertos.es/">PORTUS</a> · <a href="https://www.puertos.es/en/services/oceanography">Servicio de oceanografía de Puertos del Estado</a> · <a href="https://bancodatos.puertos.es/BD/peticiones/Manual_Usuario_Descargaportus.pdf">Manual del servicio de descarga de datos</a></li>
+    <li><a href="https://www.puertohuelva.com/puerto/informacion-meteorologica/">Información meteorológica del Puerto de Huelva</a> — cita al Instituto Hidrográfico de la Marina como fuente</li>
+    <li>Alternativas: <a href="https://tidesatlas.com/">TidesAtlas</a> · <a href="https://stormglass.io/global-tide-api/">Stormglass</a> · <a href="https://www.worldtides.info/apidocs">WorldTides</a> · <a href="https://flaterco.com/xtide/">XTide</a></li>
+  </ul>
+
+  <p style="font-weight:650;color:var(--tinta);margin-top:20px">Mapa</p>
+  <ul>
+    <li><a href="https://protomaps.com/">Protomaps</a> · <a href="https://docs.protomaps.com/pmtiles/cli">CLI de pmtiles y comando <code>extract</code></a> · <a href="https://docs.protomaps.com/pmtiles/maplibre">PMTiles con MapLibre GL</a></li>
+    <li><a href="https://docs.protomaps.com/basemaps/downloads">Descargas del basemap</a> — builds diarios del planeta</li>
+    <li>Datos del mapa © OpenStreetMap contributors, bajo la <a href="https://www.openstreetmap.org/copyright">licencia ODbL</a></li>
+  </ul>
+
+  <p style="font-weight:650;color:var(--tinta);margin-top:20px">Imágenes y licencias</p>
+  <ul>
+    <li><a href="https://commons.wikimedia.org/wiki/Commons:Reusing_content_outside_Wikimedia">Commons: reutilización fuera de Wikimedia</a> · <a href="https://help.inaturalist.org/en/support/solutions/articles/151000173511-how-do-licenses-work-on-inaturalist-should-i-change-my-licenses-">Licencias en iNaturalist</a> · <a href="https://support.ebird.org/en/support/solutions/articles/48001064551-using-and-requesting-media">Macaulay Library</a></li>
+    <li>Recuentos y nombres de categoría en Wikimedia Commons comprobados el 12 de agosto de 2026: 4 de las 60 especies verificadas, 56 pendientes</li>
+  </ul>
+</footer>
+
+</div>
+</body>
+</html>

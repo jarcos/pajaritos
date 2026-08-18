@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plan · Guía de observación y cuaderno de notas — Marismas del Odiel y entorno</title>
+<style>
+:root{
+  --tinta:#1b2a2e; --tinta-2:#4a6068; --linea:#d8ddd4;
+  --papel:#fbfaf6; --papel-2:#f3f1e9;
+  --verde:#2f6b5f; --verde-cl:#e4efeb;
+  --sal:#b8763a; --sal-cl:#f7ece1;
+  --agua:#3b7ea1; --agua-cl:#e6f0f5;
+  --rosa:#c4607e;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--papel); color:var(--tinta);
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1040px;margin:0 auto;padding:0 28px 90px}
+
+/* ---------- portada ---------- */
+header.hero{
+  border-bottom:1px solid var(--linea); margin-bottom:44px; padding:56px 0 34px;
+  background:linear-gradient(180deg,var(--verde-cl) 0%,rgba(228,239,235,0) 100%);
+}
+.kicker{font:600 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--verde);margin:0 0 16px}
+h1{font-size:clamp(28px,4.4vw,44px);line-height:1.12;margin:0 0 14px;letter-spacing:-.02em;font-weight:640}
+.sub{font-size:19px;color:var(--tinta-2);max-width:62ch;margin:0 0 26px}
+.meta{display:flex;flex-wrap:wrap;gap:8px}
+.pill{font:600 12px/1 var(--mono);letter-spacing:.04em;padding:7px 12px;border-radius:100px;background:#fff;border:1px solid var(--linea);color:var(--tinta-2)}
+
+/* ---------- estructura ---------- */
+h2{font-size:13px;font-family:var(--mono);font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+   color:var(--verde);margin:64px 0 6px;padding-bottom:10px;border-bottom:2px solid var(--verde)}
+h2 .n{color:var(--linea);margin-right:12px}
+h3{font-size:21px;margin:34px 0 10px;letter-spacing:-.01em;font-weight:620}
+h4{font-size:15px;margin:22px 0 8px;font-weight:650}
+p{margin:0 0 14px;max-width:74ch}
+ul,ol{margin:0 0 16px;padding-left:22px;max-width:74ch}
+li{margin-bottom:7px}
+a{color:var(--agua)}
+code{font:13px var(--mono);background:var(--papel-2);padding:2px 6px;border-radius:4px}
+.lead{font-size:17.5px;color:var(--tinta-2)}
+
+/* ---------- tarjetas ---------- */
+.grid{display:grid;gap:16px;margin:22px 0}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(226px,1fr))}
+.card{background:#fff;border:1px solid var(--linea);border-radius:10px;padding:20px 22px}
+.card h4{margin-top:0}
+.card p:last-child{margin-bottom:0}
+.card .tag{font:700 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--sal);display:block;margin-bottom:9px}
+.card.acc{border-left:3px solid var(--verde)}
+
+/* ---------- tablas ---------- */
+.tw{overflow-x:auto;margin:20px 0;border:1px solid var(--linea);border-radius:10px;background:#fff}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--linea);vertical-align:top}
+thead th{background:var(--papel-2);font:700 11px/1.3 var(--mono);letter-spacing:.07em;text-transform:uppercase;
+         color:var(--tinta-2);position:sticky;top:0}
+tbody tr:last-child td{border-bottom:none}
+.sci{font-style:italic;color:var(--tinta-2);font-size:13px}
+
+/* ---------- matriz fenológica ---------- */
+.fen{border-collapse:separate;border-spacing:2px;font-size:13px;min-width:760px}
+.fen th{background:none;position:static;padding:6px 8px;border:none;text-transform:none;letter-spacing:0;
+        font:700 11px/1.2 var(--mono)}
+.fen thead th{text-align:center;width:36px;color:var(--tinta-2)}
+.fen thead th:first-child{text-align:left;width:auto;min-width:250px}
+.fen td{border:none;padding:0}
+.fen tbody th{text-align:left;font:400 13.5px/1.35 inherit;padding:5px 10px 5px 4px;min-width:250px}
+.fen tbody th em{display:block;font-size:11.5px;color:var(--tinta-2)}
+.m{display:block;height:26px;border-radius:4px;background:var(--papel-2)}
+.m1{background:#cfe2dc}          /* presente */
+.m2{background:var(--verde)}      /* máxima probabilidad */
+.m3{background:var(--sal)}        /* cría / reproducción */
+.grp td{padding:16px 4px 4px}
+.grp b{font:700 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--sal)}
+.leyenda{display:flex;flex-wrap:wrap;gap:18px;margin:16px 0 0;font-size:13px;color:var(--tinta-2)}
+.leyenda span{display:flex;align-items:center;gap:8px}
+.sw{width:22px;height:14px;border-radius:3px;display:inline-block}
+
+/* ---------- mockup cuaderno ---------- */
+.nb{background:#fff;border:1px solid var(--linea);border-radius:10px;padding:0;overflow:hidden;margin:22px 0}
+.nb-head{background:var(--verde);color:#fff;padding:14px 22px;display:flex;justify-content:space-between;
+         align-items:baseline;flex-wrap:wrap;gap:8px}
+.nb-head strong{font-size:15px;letter-spacing:.01em}
+.nb-head span{font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;opacity:.82}
+.nb-body{padding:22px}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:14px 18px;margin-bottom:22px}
+.f label{display:block;font:700 10px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;
+         color:var(--tinta-2);margin-bottom:5px}
+.f .line{border-bottom:1.5px dotted #b9c2bb;height:26px}
+.f .line.filled{border-bottom-style:solid;border-color:var(--linea);color:var(--tinta);font-size:14px;padding-top:4px}
+.tally{border:1px solid var(--linea);border-radius:8px;overflow:hidden}
+.tally table{font-size:13.5px}
+.tally thead th{background:var(--papel-2)}
+.tally td{height:34px}
+.chk{width:15px;height:15px;border:1.5px solid #a9b3ab;border-radius:3px;display:inline-block;vertical-align:-2px}
+.chk.on{background:var(--verde);border-color:var(--verde);position:relative}
+.chk.on::after{content:"✓";color:#fff;font-size:11px;position:absolute;left:2px;top:-2px}
+.sketch{margin-top:22px;border:1.5px dashed #c3ccc4;border-radius:8px;height:132px;position:relative;
+        background:repeating-linear-gradient(0deg,transparent,transparent 21px,#f0f0e8 21px,#f0f0e8 22px)}
+.sketch em{position:absolute;top:9px;left:14px;font:600 10px/1 var(--mono);letter-spacing:.09em;
+           text-transform:uppercase;color:#a4aea6;font-style:normal}
+
+/* ---------- fases ---------- */
+.fase{display:flex;gap:20px;padding:20px 0;border-bottom:1px solid var(--linea)}
+.fase:last-child{border-bottom:none}
+.fase .num{flex:0 0 44px;height:44px;border-radius:50%;background:var(--verde);color:#fff;
+           display:grid;place-items:center;font:700 16px var(--mono)}
+.fase .body{flex:1}
+.fase h4{margin:6px 0 6px}
+.fase p{margin:0;font-size:15px;color:var(--tinta-2)}
+.fase .out{margin-top:9px;font:600 11.5px/1.4 var(--mono);color:var(--sal)}
+
+/* ---------- nota ---------- */
+.nota{background:var(--sal-cl);border-left:3px solid var(--sal);border-radius:0 8px 8px 0;padding:16px 20px;margin:22px 0}
+.nota p:last-child{margin-bottom:0}
+.nota strong{color:#8f5320}
+.aqua{background:var(--agua-cl);border-left-color:var(--agua)}
+.aqua strong{color:#25607e}
+
+footer{margin-top:70px;padding-top:26px;border-top:1px solid var(--linea);font-size:13.5px;color:var(--tinta-2)}
+footer ul{list-style:none;padding:0}
+footer li{margin-bottom:9px}
+
+@media print{
+  body{background:#fff;font-size:10.5pt}
+  .wrap{max-width:none;padding:0}
+  header.hero{background:none;padding:0 0 18px}
+  h2{margin-top:26px;page-break-after:avoid}
+  h3,h4{page-break-after:avoid}
+  .card,.nb,.tw,.fase{page-break-inside:avoid}
+  .fen{min-width:0;font-size:8pt}
+  a{color:inherit;text-decoration:none}
+  .noprint{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <p class="kicker">Documento de planificación · v1</p>
+  <h1>Guía de observación y cuaderno de notas<br>Marismas del Odiel y su entorno</h1>
+  <p class="sub">Plan de trabajo para una guía de campo de nivel intermedio, ordenada por grupos de aves, con matriz de probabilidad mes a mes y cuaderno de notas en doble formato: interactivo en pantalla e imprimible en A4.</p>
+  <div class="meta">
+    <span class="pill">Huelva · Andalucía</span>
+    <span class="pill">7 zonas</span>
+    <span class="pill">Nivel intermedio de campo</span>
+    <span class="pill">12 grupos taxonómicos</span>
+    <span class="pill">Imágenes con licencia libre</span>
+    <span class="pill">12 de agosto de 2026 · v2</span>
+  </div>
+</header>
+
+<h2><span class="n">01</span>Objetivo y alcance</h2>
+
+<div class="nota aqua">
+  <p><strong>Estado, 18 de agosto de 2026.</strong> La aplicación que sirve esta guía ya está en
+  funcionamiento en <a href="https://pajaritos.josearcos.me">pajaritos.josearcos.me</a>, con las 60 especies
+  de arranque, las 7 zonas y el cuaderno de campo completo. Del plan de trabajo de la sección 07 eso cierra
+  la <strong>fase 6</strong> en su parte interactiva —falta la hoja imprimible en A4— y deja las fases
+  <strong>1, 3 y 4</strong> en borrador cargado y pendiente de contraste.</p>
+  <p>Lo que sigue mandando el ritmo es la <strong>fase 2</strong>: de las 60 especies, solo <strong>23
+  tienen la matriz mensual contrastada</strong>; las otras 37 están marcadas como estimadas y la app lo dice
+  en cada ficha. Contrastarlas con los <em>barcharts</em> de eBird, junto con verificar las 56 categorías de
+  Commons que faltan, es lo que más valor añade ahora. El detalle técnico está en la
+  <em>Especificación de la app</em>, secciones 11 y 12.</p>
+</div>
+
+<p class="lead">Una guía que responda a tres preguntas en el orden en que uno se las hace en el campo: <strong>¿dónde voy?</strong>, <strong>¿qué puedo ver hoy, en este mes y con esta marea?</strong> y <strong>¿cómo anoto lo que veo para que sirva dentro de cinco años?</strong></p>
+
+<p>Las dos fuentes que has aportado marcan el tono. La guía de la <em>ría de Huelva</em> (Autoridad Portuaria + SEO/BirdLife, ilustraciones de Juan Varela) aporta 60 fichas de especie con criterios de identificación y códigos de presencia anual —AR, ER, I, M— que conviene heredar tal cual para que ambos documentos sean compatibles. El cuaderno de campo de Doñana (<em>Doñana y la Marisma</em>, Grupo Doñana Entorno) aporta el modelo de cuaderno guiado: no una libreta en blanco, sino páginas con preguntas que dirigen la mirada.</p>
+
+<div class="grid g3">
+  <div class="card acc">
+    <span class="tag">Decisión de diseño</span>
+    <h4>Un solo sistema de códigos</h4>
+    <p>Se adopta la nomenclatura de la guía SEO/BirdLife (AR / ER / I / M) y se le añade una capa de intensidad mensual, en lugar de inventar un sistema nuevo.</p>
+  </div>
+  <div class="card acc">
+    <span class="tag">Decisión de diseño</span>
+    <h4>La marea es tan importante como el mes</h4>
+    <p>En un estuario mareal, la hora correcta pesa más que el día. Cada ficha de zona indica la fase de marea óptima, no solo la estación.</p>
+  </div>
+  <div class="card acc">
+    <span class="tag">Decisión de diseño</span>
+    <h4>Cuaderno guiado, no en blanco</h4>
+    <p>Campos fijos y comparables entre salidas para que los datos se puedan volcar a eBird o a una hoja de cálculo sin retranscribir.</p>
+  </div>
+</div>
+
+<h2><span class="n">02</span>Zonas incluidas</h2>
+
+<p>Siete zonas en tres bloques. El eje es el estuario del Odiel, pero al añadir sierra e interior la guía cubre el gradiente completo de Huelva: de la marisma mareal a la dehesa de montaña.</p>
+
+<h3>Bloque A · Estuario y litoral</h3>
+
+<div class="tw">
+<table>
+<thead><tr><th>Zona</th><th>Figura de protección</th><th>Infraestructura de observación</th><th>Ventana óptima</th></tr></thead>
+<tbody>
+<tr>
+  <td><strong>Marismas del Odiel</strong><br><span class="sci">Núcleo de la guía</span></td>
+  <td>Paraje Natural · Reserva de la Biosfera (UNESCO) · Reservas Naturales Isla de Enmedio e Isla de la Liebre</td>
+  <td>Observatorios de Calatilla, El Águila, Laguna Grande, Salinas del Pesquero, La Choza y La Gravera (Gibraleón), Isla de Bacuta. Mirador de Isla de Enmedio. Senderos: Calatilla de Bacuta, Salinas de Bacuta, Cabeza Alta, El Acebuchal, La Cascajera, Isla de Saltés</td>
+  <td>Todo el año. Espátulas y flamencos en cría, mar.–jul.; limícolas, ago.–abr.; máximo de diversidad en paso postnupcial, ago.–oct.</td>
+</tr>
+<tr>
+  <td><strong>Marismas del río Piedras y Flecha del Rompido</strong></td>
+  <td>Paraje Natural</td>
+  <td>Senderos de marisma desde El Rompido y Cartaya; flecha litoral de ~10 km accesible en barco</td>
+  <td>Invierno para pato colorado y ostrero; paso migratorio para limícolas y charranes. Bajamar imprescindible.</td>
+</tr>
+<tr>
+  <td><strong>Laguna de El Portil</strong></td>
+  <td>Reserva Natural</td>
+  <td>Observatorio y sendero perimetral corto</td>
+  <td>Invierno (anátidas, garcetas) y paso. Laguna dulce: complemento perfecto tras una mañana de marisma salada.</td>
+</tr>
+<tr>
+  <td><strong>Lagunas de Palos y Las Madres</strong><br><span class="sci">Primera de Palos, La Jara, La Mujer, Las Madres</span></td>
+  <td>Paraje Natural</td>
+  <td>Observatorios sobre Laguna Primera de Palos</td>
+  <td>Agua todo el año. Garcilla cangrejera en verano; fumarel cariblanco, pato colorado y porrón europeo en cría.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h3>Bloque B · Doñana</h3>
+
+<div class="tw">
+<table>
+<thead><tr><th>Acceso</th><th>Qué ofrece</th><th>Ventana óptima</th></tr></thead>
+<tbody>
+<tr><td><strong>C.V. José Antonio Valverde</strong> (Aznalcázar)</td><td>Observación directa sobre la marisma y las colonias de garzas y moritos desde el propio edificio</td><td>Primavera para colonias de cría; invierno con marisma inundada</td></tr>
+<tr><td><strong>C.V. La Rocina</strong> + sendero Charco de la Boca</td><td>3,5 km junto al arroyo, varios observatorios, pinar y ribera</td><td>Todo el año; paseriformes en primavera</td></tr>
+<tr><td><strong>C.V. El Acebuche</strong></td><td>Senderos y observatorios sobre la laguna de El Acebuche</td><td>Todo el año; acuáticas y anátidas</td></tr>
+<tr><td><strong>C.O. Francisco Bernis</strong> (Charco de la Boca / El Rocío)</td><td>Observación sobre la madre de las marismas del Rocío, a pie de pueblo</td><td>Invierno y primavera; excelente para fotografía</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="nota aqua">
+  <p><strong>Nota de invernada.</strong> Entre noviembre y febrero Doñana concentra los grandes contingentes: ánsar común (máximos de octubre a febrero) y grulla común, que llega hacia octubre y permanece hasta marzo. La grulla ha adelantado unas dos semanas tanto su llegada otoñal como su partida, según el seguimiento de SEO/BirdLife — un dato que merece una nota propia en la guía sobre fenología cambiante.</p>
+</div>
+
+<h3>Bloque C · Sierra e interior</h3>
+
+<div class="grid g2">
+  <div class="card">
+    <span class="tag">Zona 6</span>
+    <h4>P.N. Sierra de Aracena y Picos de Aroche</h4>
+    <p>Dehesa, castañar y roquedo. Buitre negro presente todo el año —hay observatorio específico de buitres—, junto a buitre leonado, alimoche, cigüeña negra, águila calzada, águila imperial ibérica y búho real. La Sierra Pelada es el enclave clave para buitre negro y cigüeña negra.</p>
+  </div>
+  <div class="card">
+    <span class="tag">Zona 7</span>
+    <h4>El Andévalo y embalses</h4>
+    <p>Pseudoestepa, dehesa y minas antiguas. Avutarda (En Peligro), sisón, ganga, ortega, canastera y grulla invernante. Críalo europeo desde finales del invierno. Aporta a la guía todo el grupo de aves esteparias, ausente del litoral.</p>
+  </div>
+</div>
+
+<h2><span class="n">03</span>Estructura de la guía</h2>
+
+<p>Nueve secciones. Las fichas de especie —el cuerpo del documento— van ordenadas por grupos taxonómicos, con la matriz fenológica integrada en cada ficha y repetida al final como tabla-resumen desplegable.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th style="width:34px">#</th><th>Sección</th><th>Contenido</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Cómo usar esta guía</td><td>Leyenda de códigos, escala de tamaños de referencia, cómo leer la matriz fenológica</td></tr>
+<tr><td>2</td><td>Equipo y método</td><td>Prismáticos 8×30 / 10×40, telescopio para marisma abierta, apps de canto, ropa y protección solar</td></tr>
+<tr><td>3</td><td>Ética de campo</td><td>Adaptado literalmente de las recomendaciones SEO/BirdLife: no salir de senderos, evitar ruido, extremo cuidado en época de cría, no recolectar</td></tr>
+<tr><td>4</td><td>Leer la marisma</td><td>Marea, salinidad, esteros y caños, salinas, vegetación halófila. Por qué la bajamar concentra limícolas</td></tr>
+<tr><td>5</td><td>Claves de identificación</td><td>Tamaño, hábitat, época, conducta, proporciones, marcas y cantos — los seis ejes de la guía SEO. Ampliado con confusiones frecuentes por pares</td></tr>
+<tr><td>6</td><td>Las siete zonas</td><td>Ficha por zona: acceso, observatorios, mareas, mejor hora, especies indicadoras, itinerario sugerido</td></tr>
+<tr><td>7</td><td><strong>Fichas por grupo</strong></td><td>12 grupos, ~130 especies. Cada ficha: nombre común / científico / inglés, código de presencia, matriz de 12 meses, criterios de identificación, plumajes, confusiones, conducta característica</td></tr>
+<tr><td>8</td><td>Calendario del año</td><td>Doce páginas, una por mes: qué llega, qué se va, qué está criando, qué zona visitar</td></tr>
+<tr><td>9</td><td>Cuaderno de notas</td><td>Plantillas interactivas + imprimibles (sección 05 de este plan)</td></tr>
+</tbody>
+</table>
+</div>
+
+<h4>Los doce grupos, en orden</h4>
+<ol>
+<li>Somormujos y zampullines</li>
+<li>Aves marinas — pardelas, paíños, alcatraz, álcidos, págalos</li>
+<li>Cormoranes</li>
+<li>Garzas, espátulas, moritos y cigüeñas</li>
+<li>Flamencos</li>
+<li>Anátidas — patos buceadores, de superficie y marinos</li>
+<li>Rapaces diurnas</li>
+<li>Rállidos — fochas, calamón, pollas de agua</li>
+<li>Limícolas — el grupo más extenso, subdividido por longitud y forma de pico</li>
+<li>Gaviotas</li>
+<li>Charranes, pagazas y fumareles</li>
+<li>Aves terrestres — rapaces nocturnas, esteparias, hirundínidos y paseriformes</li>
+</ol>
+
+<h2><span class="n">04</span>Sistema de fenología</h2>
+
+<p>Dos capas superpuestas. La primera es el <strong>código de presencia anual</strong> heredado de la guía SEO/BirdLife. La segunda es una <strong>matriz de doce meses</strong> con tres intensidades, que es lo que realmente responde a «¿y este fin de semana?».</p>
+
+<div class="tw">
+<table>
+<thead><tr><th style="width:60px">Código</th><th>Significado</th></tr></thead>
+<tbody>
+<tr><td><code>AR</code></td><td>Presente todo el año y reproductor</td></tr>
+<tr><td><code>ER</code></td><td>Estival y reproductor</td></tr>
+<tr><td><code>I</code></td><td>Invernante — los jóvenes de algunas especies pueden estar presentes en primavera y verano al no reproducirse todavía</td></tr>
+<tr><td><code>M</code></td><td>Presente en paso migratorio</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Muestra de la matriz</h3>
+<p>Extracto real con 24 especies de cinco grupos, para validar el formato antes de extenderlo a las ~130 especies previstas.</p>
+
+<div class="tw">
+<table class="fen">
+<thead><tr><th>Especie</th>
+<th>E</th><th>F</th><th>M</th><th>A</th><th>M</th><th>J</th><th>J</th><th>A</th><th>S</th><th>O</th><th>N</th><th>D</th></tr></thead>
+<tbody>
+
+<tr class="grp"><td colspan="13"><b>Garzas, espátulas y cigüeñas</b></td></tr>
+<tr><th>Garceta común <em>Egretta garzetta · AR</em></th>
+<td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td></tr>
+<tr><th>Garza real <em>Ardea cinerea · AR</em></th>
+<td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td></tr>
+<tr><th>Espátula común <em>Platalea leucorodia · AR</em></th>
+<td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td></tr>
+<tr><th>Cigüeña blanca <em>Ciconia ciconia · AR</em></th>
+<td><i class="m m1"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m1"></i></td><td><i class="m m2"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td></tr>
+
+<tr class="grp"><td colspan="13"><b>Flamencos</b></td></tr>
+<tr><th>Flamenco común <em>Phoenicopterus roseus · AR</em></th>
+<td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td></tr>
+
+<tr class="grp"><td colspan="13"><b>Rapaces diurnas</b></td></tr>
+<tr><th>Águila pescadora <em>Pandion haliaetus · ER + I</em></th>
+<td><i class="m m1"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m1"></i></td></tr>
+<tr><th>Milano negro <em>Milvus migrans · ER</em></th>
+<td><i class="m"></i></td><td><i class="m m1"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m1"></i></td><td><i class="m"></i></td><td><i class="m"></i></td><td><i class="m"></i></td></tr>
+<tr><th>Milano real <em>Milvus milvus · I</em></th>
+<td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m1"></i></td><td><i class="m"></i></td><td><i class="m"></i></td><td><i class="m"></i></td><td><i class="m"></i></td><td><i class="m"></i></td><td><i class="m"></i></td><td><i class="m m1"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td></tr>
+<tr><th>Aguilucho lagunero occ. <em>Circus aeruginosus · AR</em></th>
+<td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td></tr>
+<tr><th>Buitre negro <em>Aegypius monachus · AR</em> <span class="sci">Sierra</span></th>
+<td><i class="m m1"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td></tr>
+<tr><th>Cigüeña negra <em>Ciconia nigra · ER</em> <span class="sci">Sierra Pelada</span></th>
+<td><i class="m"></i></td><td><i class="m m1"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m1"></i></td><td><i class="m"></i></td><td><i class="m"></i></td><td><i class="m"></i></td></tr>
+
+<tr class="grp"><td colspan="13"><b>Limícolas</b></td></tr>
+<tr><th>Cigüeñuela común <em>Himantopus himantopus · AR</em></th>
+<td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td></tr>
+<tr><th>Avoceta común <em>Recurvirostra avosetta · AR + I</em></th>
+<td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td></tr>
+<tr><th>Chorlitejo patinegro <em>Charadrius alexandrinus · AR</em></th>
+<td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td></tr>
+<tr><th>Correlimos común <em>Calidris alpina · I</em></th>
+<td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td></tr>
+<tr><th>Correlimos zarapitín <em>Calidris ferruginea · M</em></th>
+<td><i class="m"></i></td><td><i class="m"></i></td><td><i class="m"></i></td><td><i class="m m1"></i></td><td><i class="m m2"></i></td><td><i class="m"></i></td><td><i class="m m1"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m1"></i></td><td><i class="m"></i></td><td><i class="m"></i></td></tr>
+<tr><th>Aguja colinegra <em>Limosa limosa · I + M</em></th>
+<td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m"></i></td><td><i class="m m1"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td></tr>
+<tr><th>Zarapito real <em>Numenius arquata · I</em></th>
+<td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m1"></i></td><td><i class="m"></i></td><td><i class="m"></i></td><td><i class="m"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td></tr>
+<tr><th>Vuelvepiedras común <em>Arenaria interpres · I + M</em></th>
+<td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m"></i></td><td><i class="m m1"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td></tr>
+
+<tr class="grp"><td colspan="13"><b>Gaviotas, charranes y aves marinas</b></td></tr>
+<tr><th>Gaviota de Audouin <em>Larus audouinii · M</em></th>
+<td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td></tr>
+<tr><th>Charrán patinegro <em>Sterna sandvicensis · AR</em></th>
+<td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td></tr>
+<tr><th>Charrán común <em>Sterna hirundo · ER</em></th>
+<td><i class="m"></i></td><td><i class="m"></i></td><td><i class="m"></i></td><td><i class="m m1"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m3"></i></td><td><i class="m m2"></i></td><td><i class="m m1"></i></td><td><i class="m"></i></td><td><i class="m"></i></td><td><i class="m"></i></td></tr>
+<tr><th>Alcatraz atlántico <em>Morus bassanus · I</em></th>
+<td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m"></i></td><td><i class="m"></i></td><td><i class="m"></i></td><td><i class="m"></i></td><td><i class="m m1"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td></tr>
+<tr><th>Pardela balear <em>Puffinus mauretanicus · M</em></th>
+<td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td></tr>
+<tr><th>Zampullín cuellinegro <em>Podiceps nigricollis · I</em></th>
+<td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m1"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td><td><i class="m m2"></i></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<div class="leyenda">
+  <span><i class="sw" style="background:var(--papel-2)"></i> Ausente o accidental</span>
+  <span><i class="sw m1" style="background:#cfe2dc"></i> Presente</span>
+  <span><i class="sw" style="background:var(--verde)"></i> Máxima probabilidad</span>
+  <span><i class="sw" style="background:var(--sal)"></i> Época de cría — extremar la prudencia</span>
+</div>
+
+<div class="nota">
+  <p><strong>Por validar antes de cerrar la matriz.</strong> Los meses de máxima probabilidad se han construido a partir de los códigos de la guía SEO/BirdLife, la bibliografía consultada y los patrones conocidos del Atlántico suroccidental. Antes de publicar conviene contrastar especie a especie con los <em>barcharts</em> de los hotspots de eBird del Odiel —Laguna de Calatilla, Salinas Aragonesas, Isla de Bacuta, Centro de Visitantes, Sendero Cabeza Alta— y con los anuarios ornitológicos de Doñana de la Estación Biológica. Es la tarea que más determina la utilidad real de la guía.</p>
+</div>
+
+<h2><span class="n">05</span>Cuaderno de notas</h2>
+
+<p>Doble formato, como pediste: interactivo en el navegador y con hoja de estilos de impresión para llevarlo en papel. Misma estructura de datos en ambos, para que una salida anotada a mano y otra anotada en el móvil sean comparables.</p>
+
+<div class="grid g2">
+  <div class="card">
+    <span class="tag">En pantalla</span>
+    <h4>Versión interactiva</h4>
+    <ul style="margin-bottom:0">
+      <li>Checklist marcable filtrada por zona y por mes, que oculta lo que no toca</li>
+      <li>Contador rápido por especie con botones + / −</li>
+      <li>Campos de cabecera con autorrellenado de fecha y hora</li>
+      <li>Exportación a CSV y a formato compatible con eBird</li>
+      <li>Todo en memoria durante la sesión, sin dependencias externas</li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="tag">En papel</span>
+    <h4>Versión imprimible A4</h4>
+    <ul style="margin-bottom:0">
+      <li>Cabecera de salida en un tercio de página</li>
+      <li>Tabla de conteo con 28 filas preimpresas con las especies esperables del mes</li>
+      <li>Recuadro de croquis pautado, siguiendo la recomendación de SEO/BirdLife de dibujar antes de buscar en la guía</li>
+      <li>Reverso: notas libres y ficha de «ave no identificada» con los seis ejes de identificación</li>
+    </ul>
+  </div>
+</div>
+
+<h3>Maqueta de la hoja de salida</h3>
+
+<div class="nb">
+  <div class="nb-head">
+    <strong>Hoja de salida — Marismas del Odiel</strong>
+    <span>Cuaderno · hoja 1 de 2</span>
+  </div>
+  <div class="nb-body">
+    <div class="fields">
+      <div class="f"><label>Fecha</label><div class="line filled">12 · 08 · 2026</div></div>
+      <div class="f"><label>Hora inicio / fin</label><div class="line filled">07:40 — 11:15</div></div>
+      <div class="f"><label>Zona · punto</label><div class="line filled">Obs. Calatilla</div></div>
+      <div class="f"><label>Marea</label><div class="line filled">Bajamar 09:12</div></div>
+      <div class="f"><label>Viento</label><div class="line"></div></div>
+      <div class="f"><label>Cielo · visibilidad</label><div class="line"></div></div>
+      <div class="f"><label>Temperatura</label><div class="line"></div></div>
+      <div class="f"><label>Observadores</label><div class="line"></div></div>
+    </div>
+
+    <div class="tally">
+      <table>
+        <thead><tr><th style="width:34px"></th><th>Especie</th><th style="width:82px">N.º</th><th style="width:74px">Plumaje</th><th>Conducta / notas</th></tr></thead>
+        <tbody>
+          <tr><td><i class="chk on"></i></td><td>Espátula común</td><td>34</td><td>Ad + Jv</td><td>Alimentándose, barrido de pico en estero</td></tr>
+          <tr><td><i class="chk on"></i></td><td>Flamenco común</td><td>~180</td><td>Mixto</td><td>Bando en salina, «taconeo»</td></tr>
+          <tr><td><i class="chk on"></i></td><td>Correlimos común</td><td>60+</td><td>Inv</td><td>Bando compacto en fango</td></tr>
+          <tr><td><i class="chk"></i></td><td>Águila pescadora</td><td></td><td></td><td></td></tr>
+          <tr><td><i class="chk"></i></td><td>Gaviota de Audouin</td><td></td><td></td><td></td></tr>
+          <tr><td><i class="chk"></i></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td><i class="chk"></i></td><td></td><td></td><td></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sketch"><em>Croquis · silueta, proporciones, marcas de color</em></div>
+  </div>
+</div>
+
+<div class="nota aqua">
+  <p><strong>Del cuaderno de Doñana.</strong> El cuaderno de campo del Grupo Doñana Entorno no pregunta solo «qué has visto», sino también qué has oído, olido y notado. Merece la pena incorporar tres o cuatro preguntas de observación dirigida por hoja —«¿qué está haciendo el bando cuando pasa el aguilucho?», «¿cuánto tarda la marea en cubrir el fango?»— para que el cuaderno también enseñe a mirar, no solo a contar.</p>
+</div>
+
+<h2><span class="n">06</span>Fuentes de imágenes</h2>
+
+<p class="lead">Recomendación: <strong>Wikimedia Commons como base</strong> e <strong>iNaturalist como complemento local</strong>. Aunque el proyecto sea no comercial, conviene construirlo sobre licencias que <em>también</em> permitirían el uso comercial — así el trabajo no queda bloqueado si algún día imprimes la guía para venderla o la alojas en una web con publicidad.</p>
+
+<div class="nota">
+  <p><strong>El «no comercial» tiene coste oculto.</strong> Una licencia CC BY-NC te sirve hoy, pero congela el proyecto en ese uso para siempre: no podrías vender ni un ejemplar impreso sin renegociar imagen por imagen. Y CC BY-NC-<strong>ND</strong> es peor todavía para una guía de campo, porque prohíbe obras derivadas: no podrías recortar la foto, ajustar el encuadre ni añadir flechas señalando el carácter de identificación. Para una guía, poder recortar y anotar no es opcional.</p>
+</div>
+
+<h3>Comparativa de fuentes</h3>
+
+<div class="tw">
+<table>
+<thead><tr><th>Fuente</th><th>Licencia</th><th>Cobertura</th><th>Recorte y anotación</th><th>Papel en el proyecto</th></tr></thead>
+<tbody>
+<tr>
+  <td><strong>Wikimedia Commons</strong></td>
+  <td>CC0, CC BY, CC BY-SA y dominio público. Nunca NC ni ND: es requisito de la plataforma</td>
+  <td>Buena en especies comunes, floja en aves marinas raras (ver recuentos abajo)</td>
+  <td>Sí. Con CC BY-SA, tus modificaciones deben publicarse bajo la misma licencia</td>
+  <td><strong>Capa base.</strong> Atribución obligatoria, sin restricción de uso</td>
+</tr>
+<tr>
+  <td><strong>iNaturalist</strong></td>
+  <td>CC BY-NC por defecto; parte del contenido es CC BY o CC0, y algo «todos los derechos reservados»</td>
+  <td>Muy amplia y <em>geolocalizada</em>: puedes filtrar por Huelva y obtener aves de tus propias marismas</td>
+  <td>Sí, salvo en las ND</td>
+  <td><strong>Complemento local.</strong> Filtrar siempre por «Creative Commons» antes de descargar</td>
+</tr>
+<tr>
+  <td><strong>Macaulay Library</strong> (Cornell / eBird)</td>
+  <td>Sin licencia CC general. Uso gratuito para investigación y algunos usos educativos previa solicitud; el autor conserva el copyright</td>
+  <td>Excelente, la mejor del mundo, y vinculada a la fecha exacta de observación</td>
+  <td>Solo con permiso expreso</td>
+  <td><strong>Referencia de identificación</strong> y para validar la fenología. Insegura como capa base</td>
+</tr>
+<tr>
+  <td><strong>Biodiversidad Virtual</strong></td>
+  <td>Las imágenes son propiedad de cada autor y requieren <em>autorización expresa previa</em>, caso por caso</td>
+  <td>Banco de aves ibéricas: encuadres y plumajes muy pertinentes</td>
+  <td>Solo con permiso</td>
+  <td>Para tres o cuatro <em>imágenes estrella</em> que merezcan escribir al autor</td>
+</tr>
+<tr>
+  <td><strong>Flickr</strong> (búsqueda por licencia)</td>
+  <td>Mezcla de todo, con mucho NC-ND</td>
+  <td>Variable</td>
+  <td>Bloqueado en las ND</td>
+  <td>Solo si filtras a CC BY o CC BY-SA. Descartar las ND de entrada</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h3>Cobertura verificada en Wikimedia Commons</h3>
+<p>Consulta real del 12 de agosto de 2026 sobre las especies más difíciles de la guía, para saber dónde va a doler:</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Especie</th><th>Categoría en Commons</th><th style="width:96px">Archivos</th><th>Valoración</th></tr></thead>
+<tbody>
+<tr><td>Espátula común</td><td><span class="sci">Platalea leucorodia</span></td><td>194</td><td>Sobrada</td></tr>
+<tr><td>Correlimos zarapitín</td><td><span class="sci">Calidris ferruginea</span></td><td>141</td><td>Sobrada, con plumajes nupcial e invernal</td></tr>
+<tr><td>Buitre negro</td><td><span class="sci">Aegypius monachus</span></td><td>101</td><td>Suficiente</td></tr>
+<tr><td>Cigüeña negra</td><td><span class="sci">Ciconia nigra</span></td><td>70</td><td>Suficiente</td></tr>
+<tr><td>Gaviota de Audouin</td><td><span class="sci">Ichthyaetus audouinii</span></td><td>63</td><td>Suficiente</td></tr>
+<tr><td>Paíño boreal</td><td><span class="sci">Oceanodroma leucorhoa</span></td><td>39</td><td>Justa; casi ninguna en vuelo</td></tr>
+<tr><td>Pardela balear</td><td><span class="sci">Puffinus mauretanicus</span></td><td>18</td><td><strong>Insuficiente.</strong> Además, buena parte de la categoría son fotos de <em>págalo</em> mal clasificadas</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="nota aqua">
+  <p><strong>Dos trampas detectadas al hacer las consultas.</strong></p>
+  <p>La primera es de <strong>nomenclatura</strong>: Commons sigue la taxonomía actualizada y tu PDF de SEO/BirdLife no. Buscar <span class="sci">Larus audouinii</span> devuelve cero resultados porque la categoría es <span class="sci">Ichthyaetus audouinii</span>. Y al contrario: <span class="sci">Hydrobates leucorhous</span> —el nombre hoy vigente para el paíño boreal— tampoco existe como categoría, porque Commons lo mantiene bajo <span class="sci">Oceanodroma leucorhoa</span>. Hace falta una <strong>tabla de equivalencias de nombres</strong> en el listado maestro, con al menos dos sinónimos por especie.</p>
+  <p>La segunda es de <strong>fiabilidad de la identificación</strong>. En la categoría de pardela balear la mayoría de archivos son en realidad págalos. Ninguna foto entra en la guía sin que tú confirmes la especie: en una guía de identificación, una imagen mal etiquetada enseña el error.</p>
+</div>
+
+<h3>Flujo de trabajo propuesto</h3>
+<ol>
+  <li><strong>Tabla de nombres.</strong> Para cada una de las ~130 especies: nombre común, científico vigente, sinónimo antiguo y categoría exacta de Commons.</li>
+  <li><strong>Barrido en Commons</strong> con <code>incategory:"Nombre cientifico"</code> en el espacio de nombres Archivo. Preferir CC0 y CC BY sobre CC BY-SA, para no arrastrar la obligación de compartir igual en los recortes.</li>
+  <li><strong>Relleno de huecos en iNaturalist</strong>, filtrando por licencia Creative Commons y acotando geográficamente a Huelva o al suroeste ibérico. Aquí se gana lo que Commons no da: aves en el hábitat real de la guía.</li>
+  <li><strong>Verificación de identidad</strong> especie por especie, cotejando con Macaulay Library como referencia visual.</li>
+  <li><strong>Manifiesto de atribución.</strong> Un CSV con especie, archivo, autor, licencia, URL de origen y fecha de descarga. Se genera desde él la página de créditos, en lugar de reconstruirla al final de memoria.</li>
+  <li><strong>Especies sin foto usable: placeholder «Foto pendiente».</strong> Si no hay imagen o no somos capaces de verificar la identificación, la ficha se publica con un marcador visible de foto pendiente. Ninguna foto dudosa entra «por rellenar el hueco»: en una guía de identificación, una imagen mal etiquetada enseña el error. El placeholder tiene además la ventaja de señalar el trabajo que falta, tanto a ti como a cualquiera que colabore.</li>
+</ol>
+
+<h2><span class="n">07</span>Plan de trabajo</h2>
+
+<div class="fase">
+  <div class="num">1</div>
+  <div class="body">
+    <h4>Consolidar el listado de especies</h4>
+    <p>Unificar las 60 fichas de la guía SEO/BirdLife con las especies propias de Doñana, las lagunas litorales, el Andévalo y la Sierra. Depurar nomenclatura científica según la lista SEO/BirdLife vigente —hay erratas menores en el PDF, como <span class="sci">Hydropogne</span> por <span class="sci">Hydroprogne caspia</span>.</p>
+    <p class="out">→ Listado maestro de ~130 especies con grupo, código y sinonimias</p>
+  </div>
+</div>
+<div class="fase">
+  <div class="num">2</div>
+  <div class="body">
+    <h4>Cerrar la matriz fenológica</h4>
+    <p>Rellenar los 12 meses × 130 especies y contrastar con los barcharts de eBird de los hotspots del Odiel y con los anuarios de la Estación Biológica de Doñana. Marcar explícitamente qué celdas son estimación y cuáles están respaldadas por datos.</p>
+    <p class="out">→ Matriz verificada con nivel de confianza por especie</p>
+  </div>
+</div>
+<div class="fase">
+  <div class="num">3</div>
+  <div class="body">
+    <h4>Redactar fichas de zona</h4>
+    <p>Siete fichas con acceso, coordenadas de observatorios, restricciones y autorizaciones —algunos senderos de Doñana tienen cupo—, fase de marea óptima e itinerario de media jornada. Comprobar avisos vigentes: el sendero Calatilla de Bacuta reabrió por completo el 29 de julio de 2026.</p>
+    <p class="out">→ 7 fichas de zona + mapa esquemático</p>
+  </div>
+</div>
+<div class="fase">
+  <div class="num">4</div>
+  <div class="body">
+    <h4>Redactar fichas de especie</h4>
+    <p>Criterios de identificación de nivel intermedio, con énfasis en pares de confusión: milano negro / real, aguja colinegra / colipinta, zarapito real / trinador, garceta común / grande, charrán patinegro / común, gaviota patiamarilla / sombría.</p>
+    <p class="out">→ 12 bloques de fichas con tabla de confusiones por grupo</p>
+  </div>
+</div>
+<div class="fase">
+  <div class="num">5</div>
+  <div class="body">
+    <h4>Reunir el material gráfico</h4>
+    <p>Barrido en Wikimedia Commons a partir de la tabla de sinónimos, relleno de huecos en iNaturalist filtrando por licencia y por Huelva, verificación de identidad especie a especie y manifiesto de atribución en CSV. Las especies sin foto verificable quedan con placeholder de «foto pendiente».</p>
+    <p class="out">→ Banco de imágenes verificado + página de créditos + lista de fotos pendientes</p>
+  </div>
+</div>
+<div class="fase">
+  <div class="num">6</div>
+  <div class="body">
+    <h4>Construir el cuaderno</h4>
+    <p>Versión interactiva con filtros por zona y mes, contadores y exportación; hoja de estilos de impresión A4 sin cortes de tabla. Pruebas de impresión reales antes de cerrar.</p>
+    <p class="out">→ Cuaderno HTML funcional + PDF imprimible</p>
+  </div>
+</div>
+<div class="fase">
+  <div class="num">7</div>
+  <div class="body">
+    <h4>Revisión y prueba de campo</h4>
+    <p>Revisión de nomenclatura y fenología, y una salida real al Odiel en bajamar con el cuaderno impreso para detectar lo que falta o sobra.</p>
+    <p class="out">→ Guía v1.0 lista</p>
+  </div>
+</div>
+
+<h2><span class="n">08</span>Cuestiones abiertas</h2>
+
+<ul>
+  <li><strong>Ilustraciones del PDF.</strong> Las de Juan Varela están sujetas a derechos y quedan descartadas. Resuelto en la sección 06: fotografía con licencia libre de Wikimedia e iNaturalist, más siluetas propias donde no haya foto usable.</li>
+  <li><strong>Foto o dibujo.</strong> La lámina ilustrada del PDF que aportas es didácticamente superior a la fotografía para comparar especies parecidas. ¿Merece la pena encargar o dibujar láminas de grupo —limícolas, gaviotas— aunque el resto sea fotográfico?</li>
+  <li><strong>Formato final.</strong> ¿Web navegable, PDF A5 para bolsillo, o ambos desde una única fuente?</li>
+  <li><strong>Mareas.</strong> ¿Incluir tablas de marea del puerto de Huelva para el año en curso, o remitir al servicio oficial y dejar el campo abierto en el cuaderno?</li>
+  <li><strong>Idioma.</strong> ¿Solo castellano, o nombres en inglés y científico como en la guía SEO/BirdLife —útil si la vas a compartir con visitantes extranjeros?</li>
+  <li><strong>Alcance de rarezas.</strong> Al nivel intermedio elegido, ¿se documentan las divagantes del Odiel o se dejan fuera para no engordar el volumen?</li>
+</ul>
+
+<footer>
+  <p style="font-weight:650;color:var(--tinta)">Documento complementario</p>
+  <ul>
+    <li><strong>Especificación de la app de observación</strong> — <code>especificacion-app-guia-odiel.html</code>. Arquitectura, modelo de datos, pantallas, estrategia offline y tabla de sinónimos taxonómicos de la aplicación web.</li>
+  </ul>
+
+  <p style="font-weight:650;color:var(--tinta);margin-top:20px">Fuentes</p>
+  <p style="font-size:13px">Documentos aportados</p>
+  <ul>
+    <li><em>Aves de la ría de Huelva</em> — Autoridad Portuaria de Huelva y SEO/BirdLife. Ilustraciones de Juan Varela. Textos de Carlos Dávila. 60 fichas de especie, códigos de presencia anual y recomendaciones de observación.</li>
+    <li><em>Doñana y la Marisma</em> — Cuaderno de campo, Programa de Educación Ambiental del Grupo Doñana Entorno, Consejería de Medio Ambiente, Junta de Andalucía. Autores: Iván Nieto Gil, Ana Sánchez de Mora, Manuel Salado Rodríguez, Manuela Moreno Buzón.</li>
+  </ul>
+  <p style="font-size:13px;margin-top:18px">Consultado en línea</p>
+  <ul>
+    <li><a href="https://www.juntadeandalucia.es/medioambiente/portal/web/ventanadelvisitante/detalle-buscador-mapa/-/asset_publisher/Jlbxh2qB3NwR/content/marismas-del-odiel">Marismas del Odiel — Ventana del Visitante, Junta de Andalucía</a></li>
+    <li><a href="https://www.juntadeandalucia.es/medioambiente/portal/web/ventanadelvisitante/detalle-buscador-mapa/-/asset_publisher/Jlbxh2qB3NwR/content/marismas-del-rio-piedras-y-flecha-del-rompido/255035">Marismas del río Piedras y Flecha del Rompido — Ventana del Visitante</a></li>
+    <li><a href="https://www.juntadeandalucia.es/medioambiente/portal/web/ventanadelvisitante/detalle-buscador-mapa/-/asset_publisher/Jlbxh2qB3NwR/content/lagunas-de-palos-y-las-madres-1/255035">Lagunas de Palos y Las Madres — Ventana del Visitante</a></li>
+    <li><a href="https://www.juntadeandalucia.es/medioambiente/portal/web/ventanadelvisitante/detalle-buscador-mapa/-/asset_publisher/Jlbxh2qB3NwR/content/do%C3%B1ana-1/255035">Doñana — Ventana del Visitante</a></li>
+    <li><a href="https://seo.org/ruta-9-paraje-natural-marismas-del-odiel/">Ruta 9: Paraje Natural Marismas del Odiel — SEO/BirdLife</a></li>
+    <li><a href="https://seo.org/2020/08/25/el-charran-comun-cria-por-primera-vez-en-la-reserva-de-la-biosfera-marismas-del-odiel/">El charrán común cría por primera vez en la Reserva de la Biosfera Marismas del Odiel — SEO/BirdLife</a></li>
+    <li><a href="https://seo.org/ave/espatula-comun/">Espátula común — SEO/BirdLife</a> · <a href="https://seo.org/ave/grulla-comun/">Grulla común — SEO/BirdLife</a></li>
+    <li><a href="https://ebird.org/hotspot/L10925043">eBird — Marismas del Odiel P.Nat, Laguna de Calatilla</a> · <a href="https://ebird.org/hotspot/L12299520">Isla de Bacuta</a> · <a href="https://ebird.org/hotspot/L6158538">Salinas Aragonesas</a></li>
+    <li><a href="https://turismosierradearacena.com/el-buitre-negro-senor-de-los-cielos-en-la-sierra-de-aracena/">El buitre negro en la Sierra de Aracena — Turismo Sierra de Aracena</a></li>
+    <li><a href="https://www.donanabirdguides.com/es/observacion-de-aves/andevalo-sierra-pelada/">El Andévalo y Sierra Pelada — Wild Doñana</a> · <a href="https://www.donanabirdguides.com/es/observacion-de-aves/marismas-odiel-y-reserva-de-la-bioesfera/">Marismas del Odiel — Wild Doñana</a></li>
+    <li><a href="https://wastemagazine.es/lagunadelportil.htm">Laguna de El Portil</a> y <a href="https://wastemagazine.es/flechadelrompido.htm">Flecha del Rompido</a> — Waste Magazine</li>
+    <li><a href="https://www.asociacionparquedunar.org/es/rutas-de-senderismo/78-ruta-centro-visitantes-la-rocinacentro-ornitologico-francisco-bernis.html">Ruta C.V. La Rocina – C.O. Francisco Bernis — Asociación Parque Dunar</a></li>
+  </ul>
+  <p style="font-size:13px;margin-top:18px">Imágenes y licencias</p>
+  <ul>
+    <li><a href="https://commons.wikimedia.org/wiki/Commons:Reusing_content_outside_Wikimedia">Commons: Reusing content outside Wikimedia</a> · <a href="https://commons.wikimedia.org/wiki/Commons:Reusing_content_outside_Wikimedia/licenses">Guía de licencias</a> · <a href="https://commons.wikimedia.org/wiki/Commons:Licensing">Commons: Licensing</a></li>
+    <li><a href="https://commons.wikimedia.org/wiki/Commons:Simple_media_reuse_guide">Commons: Simple media reuse guide</a> — cómo obtener la atribución lista para copiar desde la ficha de cada archivo</li>
+    <li><a href="https://help.inaturalist.org/en/support/solutions/articles/151000169918-can-i-use-the-photos-and-sounds-that-are-posted-on-inaturalist-">¿Puedo usar las fotos publicadas en iNaturalist? — Ayuda de iNaturalist</a> · <a href="https://help.inaturalist.org/en/support/solutions/articles/151000173511-how-do-licenses-work-on-inaturalist-should-i-change-my-licenses-">Cómo funcionan las licencias en iNaturalist</a></li>
+    <li><a href="https://support.ebird.org/en/support/solutions/articles/48001064551-using-and-requesting-media">Uso y solicitud de material — Macaulay Library / eBird</a> · <a href="https://www.macaulaylibrary.org/ibc-faq/">Preguntas frecuentes</a></li>
+    <li><a href="https://www.biodiversidadvirtual.org/politica.php">Política de uso de imágenes — Biodiversidad Virtual</a> · <a href="https://www.biodiversidadvirtual.org/aves/BANCO-DE-IMAGENES-DE-AVES-IBERICAS-cat21.html">Banco de imágenes de aves ibéricas</a></li>
+    <li>Recuentos de cobertura obtenidos por consulta directa a la búsqueda de Wikimedia Commons con <code>incategory:</code> el 12 de agosto de 2026</li>
+  </ul>
+</footer>
+
+</div>
+</body>
+</html>
