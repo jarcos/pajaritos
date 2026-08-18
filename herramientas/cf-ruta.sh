@@ -7,7 +7,7 @@
 # Idempotente: si la regla o el DNS ya están, no duplica.
 # El token nunca se imprime.
 set -e
-ENVF=/volume1/docker/REDACTED_STACK/.env
+ENVF=${MONITORING_ENV:?exporta MONITORING_ENV con la ruta del .env que tiene CF_API_TOKEN}
 HOST=pajaritos.josearcos.me
 DEST=http://pajaritos-web:8080
 
@@ -31,8 +31,9 @@ if [ "$OK" != "True" ]; then
   exit 2
 fi
 printf '%s' "$TUN" | j "[(t['name'],t['id']) for t in d['result']]"
-TUNNEL_ID=$(printf '%s' "$TUN" | j "[t['id'] for t in d['result'] if t['name']=='TUNNEL_NAME'][0]")
-echo "tunnel TUNNEL_NAME: ${TUNNEL_ID:-NO ENCONTRADO}"
+TUNEL=${TUNNEL_NAME:?exporta TUNNEL_NAME con el nombre del tunnel en Cloudflare Zero Trust}
+TUNNEL_ID=$(printf '%s' "$TUN" | j "[t['id'] for t in d['result'] if t['name']=='$TUNEL'][0]")
+echo "tunnel $TUNEL: ${TUNNEL_ID:-NO ENCONTRADO}"
 [ -n "$TUNNEL_ID" ] || exit 3
 
 CFG=$(api "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/cfd_tunnel/$TUNNEL_ID/configurations")

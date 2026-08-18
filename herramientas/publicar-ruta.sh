@@ -15,7 +15,7 @@ TOKEN_FILE="$HOME/.config/cloudflare/pajaritos-token"
 COPIA="$HOME/.config/cloudflare/ingress-antes-de-pajaritos.json"
 HOST=pajaritos.josearcos.me
 DEST=http://pajaritos-web:8080
-TUNEL=TUNNEL_NAME
+TUNEL=${TUNNEL_NAME:?exporta TUNNEL_NAME con el nombre del tunnel en Cloudflare Zero Trust}
 
 [ -s "$TOKEN_FILE" ] || { echo "No hay token en $TOKEN_FILE"; exit 1; }
 CF_TOKEN=$(tr -d ' \t\r\n' < "$TOKEN_FILE")
@@ -65,10 +65,10 @@ for i in json.load(sys.stdin)['result']['config']['ingress']:
 "
 
 echo "=== DNS (se resuelve en el NAS, con el token de monitoring) ==="
-ssh nas-deploy "TUNNEL_ID=$TUNNEL_ID HOST=$HOST sh -s" 2>/dev/null <<'REMOTO'
+ssh nas-deploy "TUNNEL_ID=$TUNNEL_ID HOST=$HOST MONITORING_ENV=${MONITORING_ENV:?exporta MONITORING_ENV con la ruta del .env del NAS que tiene CF_API_TOKEN} sh -s" 2>/dev/null <<'REMOTO'
 # Ojo con el tr: recortar solo CR, comillas y espacios. Un patrón descuidado
 # como tr -d '"'\'' \r' borra tambien las letras r del token.
-CF=$(sed -n 's/^CF_API_TOKEN=//p' /volume1/docker/REDACTED_STACK/.env | head -1 | tr -d '\015' | tr -d '"' | tr -d "'" | tr -d ' ')
+CF=$(sed -n 's/^CF_API_TOKEN=//p' "$MONITORING_ENV" | head -1 | tr -d '\015' | tr -d '"' | tr -d "'" | tr -d ' ')
 q() { curl -s -H "Authorization: Bearer $CF" -H "Content-Type: application/json" "$@"; }
 ZONE_ID=$(q "https://api.cloudflare.com/client/v4/zones?name=josearcos.me" \
   | python3 -c "import json,sys;print(json.load(sys.stdin)['result'][0]['id'])")

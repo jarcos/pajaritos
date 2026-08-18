@@ -42,7 +42,8 @@ echo "▸ verificando"
 pmtiles show "${SALIDA}" | head -20
 
 echo "▸ copiando al NAS"
-scp -P NAS_SSH_PORT "${SALIDA}" "nas-deploy:${DESTINO}/"
+# El puerto y el usuario salen del alias nas-deploy de ~/.ssh/config.
+scp "${SALIDA}" "nas-deploy:${DESTINO}/"
 
 cat <<NOTA
 

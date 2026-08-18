@@ -31,7 +31,7 @@ for e in d.get('errors') or []: print('  error:', e.get('code'), e.get('message'
 "
 
 echo "=== tunnels en la cuenta conocida ==="
-ACC=CF_ACCOUNT_ID
+ACC=${CF_ACCOUNT_ID:?exporta CF_ACCOUNT_ID (Cloudflare, panel de la cuenta)}
 api "https://api.cloudflare.com/client/v4/accounts/$ACC/cfd_tunnel?is_deleted=false" | py "
 import json,sys
 d=json.load(sys.stdin)

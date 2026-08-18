@@ -1,0 +1,110 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  comprobar:
+    name: datos y sintaxis
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      # Cubre los JSON, la cobertura de sinonimos.json, el versionado de
+      # app.js entre index.html y sw.js, y las referencias cruzadas.
+      - name: Datos coherentes
+        run: python3 herramientas/validar-datos.py
+
+      - name: app.js parsea
+        run: node --check app/app.js
+
+      - name: Los scripts de shell parsean
+        run: for f in herramientas/*.sh scripts/*.sh; do sh -n "$f" || exit 1; done
+
+      - name: Nada de basura de macOS en el árbol
+        run: |
+          sucio=$(git ls-files | grep -E '(^|/)\._|\.DS_Store$' || true)
+          if [ -n "$sucio" ]; then echo "ficheros AppleDouble commiteados:"; echo "$sucio"; exit 1; fi
+
+  desplegar:
+    name: desplegar al NAS
+    needs: [comprobar]
+    # Solo push a main, nunca PRs ni forks, y con el interruptor puesto.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.AUTODEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    environment: production
+    concurrency: deploy-prod
+    steps:
+      - uses: actions/checkout@v4
+
+      # El NAS no publica ningún puerto a internet: solo el tunnel de salida.
+      # El runner entra por la tailnet como nodo efímero con tag:ci.
+      - name: Entrar en la tailnet
+        uses: tailscale/github-action@v3
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+
+      - name: Clave de despliegue
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "${{ secrets.NAS_SSH_KEY }}" > ~/.ssh/nas_ci
+          chmod 600 ~/.ssh/nas_ci
+          cat >> ~/.ssh/config <<CFG
+          Host nas
+            HostName ${{ secrets.NAS_SSH_HOST }}
+            User ${{ secrets.NAS_SSH_USER }}
+            Port ${{ secrets.NAS_SSH_PORT }}
+            IdentityFile ~/.ssh/nas_ci
+            IdentitiesOnly yes
+            StrictHostKeyChecking accept-new
+          CFG
+
+      # tar y no rsync: DSM trae el servicio rsync desactivado y `rsync --server`
+      # responde «rsync service is no running (code 43)». Se manda solo lo que
+      # el NAS necesita servir o construir; .env y mapas/ viven allí y no se tocan.
+      - name: Subir el árbol
+        run: |
+          tar czf - app nginx services scripts herramientas docker-compose.yml docker-compose.override.yml \
+            | ssh nas 'cd /volume1/docker/pajaritos && tar xzf - && find . -name "._*" -delete'
+
+      - name: Levantar los contenedores
+        run: |
+          ssh nas '/usr/local/bin/docker compose -f /volume1/docker/pajaritos/docker-compose.yml \
+                   --project-directory /volume1/docker/pajaritos up -d --build'
+
+      # La puerta: si esto no pasa, el despliegue se marca en rojo aunque los
+      # ficheros ya estén copiados. Comprueba salud, y además que lo servido es
+      # lo que acabamos de subir — un copiado a medias da 200 igualmente.
+      - name: Comprobar que lo publicado es lo que se subió
+        run: |
+          set -e
+          base=https://pajaritos.josearcos.me
+          for i in 1 2 3 4 5 6 7 8 9 10; do
+            [ "$(curl -fsS --max-time 10 $base/healthz || true)" = "ok" ] && break
+            echo "healthz aún no responde ok (intento $i)"; sleep 6
+          done
+          [ "$(curl -fsS --max-time 10 $base/healthz)" = "ok" ]
+
+          v=$(grep -o 'app\.js?v=[A-Za-z0-9.-]*' app/index.html | head -1 | cut -d= -f2)
+          curl -fsS --max-time 20 -o /dev/null "$base/app.js?v=$v"
+          echo "app.js?v=$v servido"
+
+          local_sw=$(grep -o "odiel-v[0-9]*" app/sw.js | head -1)
+          remoto_sw=$(curl -fsS --max-time 10 "$base/sw.js" | grep -o "odiel-v[0-9]*" | head -1)
+          [ "$local_sw" = "$remoto_sw" ] || { echo "sw.js desfasado: repo $local_sw, servido $remoto_sw"; exit 1; }
+
+          n_local=$(python3 -c "import json;print(len(json.load(open('app/datos/sinonimos.json'))['entradas']))")
+          n_remoto=$(curl -fsS --max-time 15 "$base/datos/sinonimos.json" | python3 -c "import json,sys;print(len(json.load(sys.stdin)['entradas']))")
+          [ "$n_local" = "$n_remoto" ] || { echo "sinonimos.json desfasado: repo $n_local, servido $n_remoto"; exit 1; }
+          echo "publicado y verificado · sw $remoto_sw · $n_remoto sinónimos"

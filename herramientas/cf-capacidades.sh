@@ -2,7 +2,7 @@
 # Comprueba qué puede hacer el token de Cloudflare que ya hay en la casa.
 # El token NUNCA se imprime: solo se dice si sirve o no para cada cosa.
 set -e
-ENVF=/volume1/docker/REDACTED_STACK/.env
+ENVF=${MONITORING_ENV:?exporta MONITORING_ENV con la ruta del .env que tiene CF_API_TOKEN}
 
 CF_TOKEN=$(grep -aE '^(CLOUDFLARE_API_TOKEN|CF_API_TOKEN|CLOUDFLARE_DNS_API_TOKEN|CF_DNS_API_TOKEN)=' "$ENVF" \
   | head -1 | cut -d= -f2- | tr -d '"'"'"' \r')
