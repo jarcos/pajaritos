@@ -12,3 +12,6 @@
 snapshots/
 app/fotos/
 data/
+
+# Datos descargados de eBird: no son nuestros para redistribuir
+datos-ebird/

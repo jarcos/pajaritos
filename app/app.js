@@ -494,12 +494,13 @@ function abrirFicha(esp) {
     const cat = encodeURIComponent((sin && sin.categoriaCommons) || esp.cientifico);
     foto.append(el('a', {
       class: 'et', target: '_blank', rel: 'noopener',
-      href: `https://commons.wikimedia.org/w/index.php?search=incategory%3A%22${cat}%22&ns6=1`,
+      href: `https://commons.wikimedia.org/w/index.php?search=deepcategory%3A%22${cat}%22&ns6=1`,
       style: 'text-decoration:none',
     }, 'Foto pendiente', el('br'), el('span', { style: 'font-weight:400;text-transform:none;letter-spacing:0', text: 'Buscar en Commons ↗' })));
     $('#cf-credito').textContent = sin && !sin.commonsVerificado
       ? 'Categoría de Commons por verificar.'
-      : (sin ? `Categoría verificada: ${sin.categoriaCommons}${sin.archivos ? ` · ${sin.archivos} archivos` : ''}` : '');
+      : (sin ? `Categoría verificada: ${sin.categoriaCommons}${sin.archivos ? ` · ${sin.archivos} archivos`
+         : (sin.subcategorias ? ` · ${sin.subcategorias} subcategorías` : '')}` : '');
     $('#cf-propon').classList.remove('oculto');
   } else {
     foto.className = 'foto';
