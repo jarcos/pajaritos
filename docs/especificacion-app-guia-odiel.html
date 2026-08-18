@@ -193,6 +193,10 @@ footer ul{list-style:none;padding:0}footer li{margin-bottom:9px}
   <p>Las fases marcadas en la sección 11 reflejan lo ejecutado, no lo planeado. La sección 12 recoge
   en qué se desvió la realidad de este documento y por qué. El diario técnico completo está en
   <code>pajaritos/SETUP.md</code> §14.</p>
+  <p style="margin-bottom:0"><a href="tablero.html" style="display:inline-block;font:600 13px/1 var(--mono);
+  letter-spacing:.04em;text-decoration:none;background:var(--verde);color:#fff;padding:12px 18px;
+  border-radius:100px;margin-top:6px">Ver el tablero de tareas →</a>
+  <span style="font-size:13px;margin-left:10px">50 tareas entre hechas, en curso y pendientes, filtrables por área.</span></p>
 </div>
 
 <p class="lead">Documento complementario al <em>Plan de la guía de observación</em>. Aquí se define <strong>cómo se construye y se despliega la aplicación</strong>. El contenido ornitológico —fenología, fichas, zonas— se define en el plan.</p>
@@ -990,6 +994,7 @@ salió de ejecutar algo y ver que no se comportaba como decía el papel.</p>
 <footer>
   <p style="font-weight:650;color:var(--tinta)">Documentos relacionados</p>
   <ul>
+    <li><strong>Tablero de tareas</strong> — <a href="tablero.html">tablero.html</a>. Qué está hecho, qué está en curso y qué falta, con el motivo de cada bloqueo.</li>
     <li><strong>La aplicación, en funcionamiento</strong> — <a href="https://pajaritos.josearcos.me">pajaritos.josearcos.me</a>. Copia canónica del código en <code>~/Sites/pajaritos</code>, versionada en git y desplegada en <code>/volume1/docker/pajaritos</code>.</li>
     <li><strong>Diario del despliegue</strong> — <code>pajaritos/SETUP.md</code> §14: las trampas que aparecieron al ejecutar, con las comprobaciones y sus resultados.</li>
     <li><strong>Puesta en marcha en el NAS</strong> — <code>pajaritos/SETUP.md</code>, más <code>docker-compose.yml</code>, <code>nginx/pajaritos.conf</code>, los dos servicios Python y <code>scripts/build-pmtiles.sh</code>. Instancia concreta del runbook <em>NEW-PROJECT-SETUP.md</em> de la casa.</li>

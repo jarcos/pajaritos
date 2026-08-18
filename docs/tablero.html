@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tablero · pajaritos.josearcos.me — App de observación, Marismas del Odiel</title>
+<style>
+:root{
+  --tinta:#1b2a2e; --tinta-2:#4a6068; --tinta-3:#7d8f92; --linea:#d8ddd4;
+  --papel:#fbfaf6; --papel-2:#f3f1e9;
+  --verde:#2f6b5f; --verde-cl:#e4efeb;
+  --sal:#b8763a; --sal-cl:#f7ece1;
+  --agua:#3b7ea1; --agua-cl:#e6f0f5;
+  --rojo:#a8443f; --rojo-cl:#f8e8e6;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--papel);color:var(--tinta);
+     font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+     -webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:0 28px 80px}
+a{color:var(--agua)}
+
+header.hero{border-bottom:1px solid var(--linea);margin-bottom:26px;padding:44px 0 26px;
+  background:linear-gradient(180deg,var(--agua-cl) 0%,rgba(230,240,245,0) 100%)}
+.kicker{font:600 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--agua);margin:0 0 14px}
+h1{font-size:clamp(26px,3.6vw,38px);line-height:1.12;margin:0 0 12px;letter-spacing:-.02em;font-weight:640;
+   font-family:Georgia,"Times New Roman",serif}
+.sub{font-size:17px;color:var(--tinta-2);max-width:76ch;margin:0 0 20px}
+.volver{display:inline-block;font:600 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;
+        text-decoration:none;color:var(--agua);margin-bottom:18px}
+.volver:hover{color:var(--tinta)}
+
+/* ---------- progreso ---------- */
+.progreso{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:0 0 8px}
+.barra{flex:1;min-width:260px;height:12px;border-radius:6px;background:var(--papel-2);
+       border:1px solid var(--linea);overflow:hidden;display:flex}
+.barra i{display:block;height:100%}
+.barra .b-hecho{background:var(--verde)}
+.barra .b-curso{background:var(--sal)}
+.cifra{font:700 26px/1 Georgia,serif}
+.cifra small{font:400 13px/1 var(--mono);color:var(--tinta-2);margin-left:6px}
+
+/* ---------- barra de herramientas ---------- */
+.barra-h{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:18px 0 6px;
+         padding:14px 0;border-top:1px solid var(--linea);border-bottom:1px solid var(--linea)}
+.barra-h .et{font:700 10px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--tinta-3);
+             margin-right:4px}
+.filtro{font:600 12px/1 var(--mono);letter-spacing:.04em;padding:7px 12px;border-radius:100px;
+        background:#fff;border:1px solid var(--linea);color:var(--tinta-2);cursor:pointer}
+.filtro:hover{border-color:var(--tinta-3)}
+.filtro[aria-pressed="true"]{background:var(--tinta);border-color:var(--tinta);color:var(--papel)}
+.barra-h .der{margin-left:auto;display:flex;gap:8px;align-items:center}
+.aviso{font:400 11.5px/1.5 var(--mono);color:var(--tinta-3);margin:10px 0 0}
+
+/* ---------- tablero ---------- */
+.tablero{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px;align-items:start}
+@media (max-width:1000px){.tablero{grid-template-columns:1fr}}
+.col{background:var(--papel-2);border:1px solid var(--linea);border-radius:12px;padding:14px;min-height:140px}
+.col.sobre{border-color:var(--agua);background:var(--agua-cl)}
+.col > h2{display:flex;align-items:center;gap:10px;margin:0 0 12px;
+  font:700 12px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase}
+.col .n{margin-left:auto;font:700 12px/1 var(--mono);background:#fff;border:1px solid var(--linea);
+        border-radius:100px;padding:5px 10px;color:var(--tinta-2)}
+.col-hecho > h2{color:var(--verde)}
+.col-curso > h2{color:var(--sal)}
+.col-pendiente > h2{color:var(--tinta-2)}
+.punto{width:10px;height:10px;border-radius:50%;flex:0 0 10px}
+.col-hecho .punto{background:var(--verde)}
+.col-curso .punto{background:var(--sal)}
+.col-pendiente .punto{background:var(--tinta-3)}
+
+.tarea{background:#fff;border:1px solid var(--linea);border-radius:9px;padding:12px 13px;margin-bottom:9px;
+       cursor:grab;position:relative}
+.tarea:active{cursor:grabbing}
+.tarea.arrastrando{opacity:.4}
+.tarea.oculta{display:none}
+.col-hecho .tarea{border-left:3px solid var(--verde)}
+.col-curso .tarea{border-left:3px solid var(--sal)}
+.col-pendiente .tarea{border-left:3px solid var(--linea)}
+.tarea h3{margin:0 0 5px;font-size:14.5px;line-height:1.35;font-weight:640}
+.tarea p{margin:0;font-size:12.5px;line-height:1.5;color:var(--tinta-2)}
+.tarea .pie{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:9px}
+.chip{font:700 9.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;
+      padding:4px 7px;border-radius:4px;background:var(--papel-2);color:var(--tinta-2);border:1px solid var(--linea)}
+.chip.fase{background:var(--agua-cl);border-color:#c6dce6;color:var(--agua)}
+.chip.bloq{background:var(--rojo-cl);border-color:#e8c4c0;color:var(--rojo)}
+.chip.fecha{background:var(--verde-cl);border-color:#c9e0d8;color:var(--verde)}
+.vacio{font:400 12.5px/1.5 var(--mono);color:var(--tinta-3);padding:8px 2px}
+
+footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--linea);font-size:13.5px;color:var(--tinta-2)}
+footer ul{list-style:none;padding:0}
+footer li{margin-bottom:8px}
+
+@media print{
+  body{background:#fff}
+  .barra-h,.volver{display:none}
+  .tablero{grid-template-columns:repeat(3,1fr);gap:10px}
+  .tarea{page-break-inside:avoid}
+  header.hero{background:none;padding:0 0 16px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <a class="volver" href="especificacion-app-guia-odiel.html">← Volver a la especificación</a>
+  <p class="kicker">Tablero del proyecto · actualizado el 18 de agosto de 2026</p>
+  <h1>Qué está hecho y qué falta</h1>
+  <p class="sub">Vista de tareas de <strong>pajaritos.josearcos.me</strong>, la app de observación de las
+  Marismas del Odiel. Refleja el estado tras el despliegue: cada tarjeta apunta a la fase de la sección 11
+  de la especificación. Las tarjetas se pueden arrastrar entre columnas y el cambio se guarda en este
+  navegador.</p>
+
+  <div class="progreso">
+    <div class="cifra" id="pct">—<small>completado</small></div>
+    <div class="barra"><i class="b-hecho" id="b1"></i><i class="b-curso" id="b2"></i></div>
+    <div class="cifra" id="totales" style="font:400 13px/1.4 var(--mono);color:var(--tinta-2)"></div>
+  </div>
+</header>
+
+<div class="barra-h">
+  <span class="et">Área</span>
+  <div id="filtros" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+  <div class="der">
+    <button class="filtro" id="btn-reset">Restablecer</button>
+    <button class="filtro" id="btn-copiar">Copiar resumen</button>
+  </div>
+</div>
+<p class="aviso" id="aviso">La fuente de verdad sigue siendo la especificación y <code>SETUP.md</code>. Este tablero es una vista.</p>
+
+<div class="tablero">
+  <section class="col col-hecho"   data-col="hecho"><h2><i class="punto"></i>Hecho<span class="n" id="n-hecho">0</span></h2><div class="lista" id="c-hecho"></div></section>
+  <section class="col col-curso"   data-col="curso"><h2><i class="punto"></i>En curso · parcial<span class="n" id="n-curso">0</span></h2><div class="lista" id="c-curso"></div></section>
+  <section class="col col-pendiente" data-col="pendiente"><h2><i class="punto"></i>Pendiente<span class="n" id="n-pendiente">0</span></h2><div class="lista" id="c-pendiente"></div></section>
+</div>
+
+<footer>
+  <p style="font-weight:650;color:var(--tinta)">Documentos del proyecto</p>
+  <ul>
+    <li><strong>Especificación de la app</strong> — <a href="especificacion-app-guia-odiel.html">especificacion-app-guia-odiel.html</a>. Arquitectura, modelo de datos, pantallas, fases y desviaciones.</li>
+    <li><strong>Plan de la guía de observación</strong> — <a href="plan-guia-observacion-odiel.html">plan-guia-observacion-odiel.html</a>. Contenido ornitológico: zonas, fenología, fuentes de imágenes.</li>
+    <li><strong>Puesta en marcha y diario del despliegue</strong> — <code>pajaritos/SETUP.md</code>, secciones 1 a 13 y el diario en la 14.</li>
+    <li><strong>La aplicación</strong> — <a href="https://pajaritos.josearcos.me">pajaritos.josearcos.me</a></li>
+  </ul>
+</footer>
+
+</div>
+
+<script>
+"use strict";
+/* Tareas del proyecto. e: hecho | curso | pendiente · a: área · f: fase de la §11
+   x: chip extra (fecha de cierre o motivo del bloqueo). */
+const AREAS = {
+  infra:     'Infraestructura',
+  app:       'Aplicación',
+  datos:     'Datos',
+  servicio:  'Servicios',
+  contenido: 'Contenido',
+  operacion: 'Operación',
+  docs:      'Documentación',
+};
+
+const TAREAS = [
+  // ─────────────────────────────── hecho
+  { id:'t01', e:'hecho', a:'infra', f:'F1', x:'18 ago', t:'Copia canónica del proyecto en ~/Sites/pajaritos',
+    d:'Sacada de la carpeta efímera de Claude-Work y versionada en git. Cinco commits.' },
+  { id:'t02', e:'hecho', a:'infra', f:'F1', x:'17 ago', t:'Pila desplegada en el NAS',
+    d:'Tres contenedores en /volume1/docker/pajaritos. web y api healthy; solo pajaritos-web en la red tunnel y ningún puerto de host.' },
+  { id:'t03', e:'hecho', a:'infra', f:'F1', x:'17 ago', t:'.env generado en el NAS con secretos propios',
+    d:'chmod 600, INTERNAL_TOKEN generado con openssl. Los secretos no se transportaron: se crearon allí.' },
+  { id:'t04', e:'hecho', a:'infra', f:'F1', x:'18 ago', t:'Ruta del tunnel publicada y CNAME creado',
+    d:'pajaritos.josearcos.me → pajaritos-web:8080, insertada antes del catch-all sin tocar las seis existentes. DNS proxied al tunnel.' },
+  { id:'t05', e:'hecho', a:'infra', f:'F1', x:'arreglo', t:'Cabeceras de seguridad en cada location',
+    d:'add_header no se hereda en las location que declaran el suyo: la CSP no llegaba a /, index.html, sw.js ni app.js. Ahora en nginx/cabeceras.conf.' },
+  { id:'t06', e:'hecho', a:'infra', f:'F1', x:'arreglo', t:'Rate limit con clave de respaldo',
+    d:'Con CF-Connecting-IP vacía nginx no contabilizaba y el límite quedaba desactivado fuera del borde. Un map cae a $binary_remote_addr. Pasan 4, el resto 429.' },
+  { id:'t07', e:'hecho', a:'infra', f:'F1', x:'arreglo', t:'nas-deploy apuntando a NAS_MDNS_HOST',
+    d:'El NAS había cambiado de IP por DHCP y la config de SSH apuntaba a otra máquina. El nombre mDNS no baila.' },
+  { id:'t08', e:'hecho', a:'infra', f:'F1', x:'18 ago', t:'Verificación sobre HTTPS con navegador real',
+    d:'Service Worker registrado y activated, contexto seguro, Geolocation disponible, sin violaciones de CSP ni errores de consola.' },
+
+  { id:'t09', e:'hecho', a:'app', f:'F2', t:'Las seis pantallas del wireframe 2a',
+    d:'Hoy, Guía, Mapa, Cuaderno y Ajustes, más la ficha de especie. Barra de cinco destinos, profundidad máxima 2.' },
+  { id:'t10', e:'hecho', a:'app', f:'F2', t:'Capas de detalle y hojas',
+    d:'Ficha de especie, ficha de zona, detalle de salida, hoja de confirmación, modo de conteo, filtros, cerrar y guardar.' },
+  { id:'t11', e:'hecho', a:'app', f:'F2', t:'Los ocho estados del bloque D',
+    d:'Sin conexión con y sin caché, marea caducada, ubicación denegada, cuaderno vacío, filtro sin resultados, descarga en progreso y reporte encolado.' },
+  { id:'t12', e:'hecho', a:'app', f:'F2', t:'Gestos del wireframe, sin inventar ninguno',
+    d:'Pulsación larga de 500 ms solo en el contador, arrastre abajo para cerrar, arrastre izquierda con deshacer de 5 s, pellizco solo en el mapa. Sin doble toque ni dos dedos.' },
+  { id:'t13', e:'hecho', a:'app', f:'F2', t:'Fenología legible sin depender del color',
+    d:'Cuatro estados por altura y trama, con leyenda. La estimada al 55 % de opacidad, filete punteado y etiqueta en cursiva.' },
+  { id:'t14', e:'hecho', a:'app', f:'F6', t:'Cuaderno con persistencia local',
+    d:'IndexedDB para salidas y cola, localStorage para preferencias y borrador. Contador de un toque con modo exacto y estimación.' },
+  { id:'t15', e:'hecho', a:'app', f:'F6', t:'Registro de ave sin identificar con croquis',
+    d:'Lienzo libre a dedo con deshacer y borrar, chips de rasgos multiselección y nota. Dibujar primero, buscar en la guía después.' },
+  { id:'t16', e:'hecho', a:'app', f:'F6', t:'Exportación a CSV y JSON, e importación',
+    d:'CSV con BOM para Excel y columna propia que distingue conteo exacto de estimación. Recordatorio de copia cada 10 salidas.' },
+  { id:'t17', e:'hecho', a:'app', f:'F8', t:'Service Worker con las tres estrategias',
+    d:'Precarga del armazón, red primero para las mareas, caché primero para fotos y teselas. /api/ nunca se cachea.' },
+  { id:'t18', e:'hecho', a:'app', f:'F8', t:'PWA instalable',
+    d:'manifest.webmanifest, iconos normal y maskable, standalone y navigator.storage.persist().' },
+  { id:'t19', e:'hecho', a:'app', f:'F8', t:'Cola de reportes diferidos',
+    d:'Si no hay cobertura el reporte se guarda en IndexedDB y se envía al recuperar red. Sin notificación de éxito.' },
+  { id:'t20', e:'hecho', a:'app', f:'F8', x:'arreglo', t:'app.js externo por la CSP, y versionado',
+    d:'script-src self sin unsafe-inline impide el JS en línea. Y el borde cachea app.js 4 h: sin versión en la URL, un redespliegue serviría JS viejo con HTML nuevo.' },
+  { id:'t21', e:'hecho', a:'app', f:'F7', t:'Placeholder «foto pendiente» enlazado a Commons',
+    d:'Mismo alto que la foto y marco continuo, para que se lea como decisión y no como fallo. Pulsable, con la categoría de sinonimos.json.' },
+  { id:'t22', e:'hecho', a:'app', f:'F5', t:'Mapa esquemático con los 17 puntos',
+    d:'Retícula de medio grado, capas conmutables de observatorios, senderos y zonas, etiquetas sin solapes. Se anuncia como esquema, no aparenta basemap.' },
+  { id:'t23', e:'hecho', a:'app', f:'F5', t:'Geolocalización opt-in',
+    d:'Permiso al pulsar, nunca al arrancar. Detecta el punto más cercano y watchPosition solo con el mapa abierto. Las coordenadas no salen del dispositivo.' },
+
+  { id:'t24', e:'hecho', a:'datos', f:'F4', t:'especies.json con las 60 de arranque',
+    d:'Grupo, estatus, fenología, hábitat, marea óptima, zonas, identificación, conducta y pares de confusión.' },
+  { id:'t25', e:'hecho', a:'datos', f:'F4', t:'23 fenologías verificadas y 37 marcadas como estimadas',
+    d:'Transcritas de la matriz del plan. Las estimadas lo dicen en la ficha en vez de aparentar certeza.' },
+  { id:'t26', e:'hecho', a:'datos', f:'F4', t:'zonas.json con las 7 zonas',
+    d:'Protección, ventana óptima, itinerario, avisos, marea óptima y desfase respecto al mareógrafo.' },
+  { id:'t27', e:'hecho', a:'datos', f:'F4', t:'puntos.geojson con 17 observatorios y centros',
+    d:'Coordenadas aproximadas declaradas como tales, con tipo, zona y marea óptima por punto.' },
+  { id:'t28', e:'hecho', a:'datos', f:'F4', t:'sinonimos.json con las 4 categorías verificadas',
+    d:'Equivalencias entre el PDF de SEO/BirdLife, la taxonomía vigente y la categoría real de Commons.' },
+
+  { id:'t29', e:'hecho', a:'servicio', f:'F3', x:'en producción', t:'Servicio de mareas publicando solo',
+    d:'Cron de las 04:05 contra la API JSON de PORTUS. 31 días, 120 eventos, validación y escritura atómica. Reagrupado por fecha local verificado.' },
+  { id:'t30', e:'hecho', a:'servicio', f:'F8', x:'en producción', t:'Endpoint POST /api/reporte',
+    d:'201 con reporte válido, honeypot aceptado en silencio sin guardar, inyección en tipo descartada por lista cerrada, rate limit mordiendo.' },
+
+  { id:'t31', e:'hecho', a:'docs', f:'—', t:'Diario del despliegue en SETUP.md §14',
+    d:'Las trampas que aparecieron al ejecutar, con las comprobaciones y sus resultados.' },
+  { id:'t32', e:'hecho', a:'docs', f:'—', t:'Especificación v3 con el estado real',
+    d:'Sección 11 reescrita con lo ejecutado y sección 12 nueva con las seis desviaciones.' },
+
+  // ─────────────────────────────── en curso / parcial
+  { id:'t33', e:'curso', a:'datos', f:'F4', x:'4 de 60', t:'Verificar las categorías de Commons',
+    d:'Faltan 56. Mecánico pero imprescindible: buscar el nombre equivocado devuelve cero resultados y la ficha se queda sin foto.' },
+  { id:'t34', e:'curso', a:'datos', f:'F4', x:'lo que más pesa', t:'Contrastar las 37 fenologías estimadas',
+    d:'Con los barcharts de eBird de los hotspots del Odiel. Es lo que más determina la utilidad real de la guía.' },
+  { id:'t35', e:'curso', a:'contenido', f:'F4', t:'Revisar los textos de identificación',
+    d:'Los de las 60 fichas son borradores, no material cotejado con el PDF de la Autoridad Portuaria.' },
+  { id:'t36', e:'curso', a:'app', f:'F5', x:'bloquea el mapa', t:'Extraer el .pmtiles de Huelva y medir su peso',
+    d:'A zoom 14, para fijar el maxzoom por debajo de los 512 MB que cachea el plan gratuito de Cloudflare. El script aborta solo si se pasa.' },
+  { id:'t37', e:'curso', a:'app', f:'F8', t:'Descarga previa enganchada a peticiones Range',
+    d:'Hoy la barra de Ajustes mueve un contador, no bytes. Por trozos y no en un GET único: los túneles cortan las descargas largas.' },
+  { id:'t38', e:'curso', a:'operacion', f:'F8', t:'Credenciales de Mailgun en el .env del NAS',
+    d:'Vacías a propósito. Sin ellas el reporte se guarda igual en SQLite y solo se pierde el aviso por correo.' },
+
+  // ─────────────────────────────── pendiente
+  { id:'t39', e:'pendiente', a:'contenido', f:'F7', t:'Banco de imágenes de las 60 especies',
+    d:'Descarga de Commons e iNaturalist, verificación especie a especie, conversión a WebP y manifiesto de atribución en CSV.' },
+  { id:'t40', e:'pendiente', a:'app', f:'F5', x:'depende de medir', t:'MapLibre + PMTiles en el cliente',
+    d:'Sustituir el esquema por el basemap real, servido con HTTP Range y gzip desactivado para que devuelva 206 y no el fichero entero.' },
+  { id:'t41', e:'pendiente', a:'app', f:'F6', t:'Hoja imprimible A4 del cuaderno',
+    d:'Cabecera de salida, 28 filas preimpresas con lo esperable del mes y recuadro de croquis. Con pruebas de impresión reales.' },
+  { id:'t42', e:'pendiente', a:'operacion', f:'—', t:'Rate limiting en el borde de Cloudflare',
+    d:'nginx ya limita, pero pararlo en el borde evita que el tráfico cruce el tunnel hasta el NAS.' },
+  { id:'t43', e:'pendiente', a:'operacion', f:'—', x:'dato único', t:'Instantánea de reportes.db en Hyper Backup',
+    d:'Es el único dato del proyecto que no existe en ningún otro sitio. VACUUM INTO programado, alta en Hyper Backup y restauración probada.' },
+  { id:'t44', e:'pendiente', a:'operacion', f:'—', t:'Sonda de uptime en monitoring/blackbox',
+    d:'Apuntando a la raíz, no a /healthz, si se usa UptimeRobot.' },
+  { id:'t45', e:'pendiente', a:'app', f:'F9', x:'la única que cuenta', t:'Prueba de campo en el Odiel en bajamar',
+    d:'Con el móvil en modo avión y la PWA instalada. Si no se puede registrar un bando con una mano y prismáticos en la otra, hay que rediseñar.' },
+  { id:'t46', e:'pendiente', a:'datos', f:'F3', t:'Medir los desfases de marea por zona',
+    d:'+25 min en el Piedras y +60 en Doñana son estimaciones. Es el dato que ninguna app comercial da y que hace que esta valga la pena.' },
+  { id:'t47', e:'pendiente', a:'operacion', f:'—', t:'Decidir si el subdominio se indexa',
+    d:'El sitio es público por diseño. Si se difunde, revisar también si el rate limit aguanta más de un usuario ocasional.' },
+  { id:'t48', e:'pendiente', a:'contenido', f:'—', t:'Ampliar de 60 a ~130 especies',
+    d:'Doñana, lagunas litorales, Andévalo y Sierra. Se añaden al mismo especies.json sin tocar la aplicación.' },
+  { id:'t49', e:'pendiente', a:'contenido', f:'—', t:'Calendario del año, doce páginas',
+    d:'Una por mes: qué llega, qué se va, qué está criando y qué zona visitar.' },
+  { id:'t50', e:'pendiente', a:'contenido', f:'—', x:'fuera de la v1', t:'Cantos de las especies',
+    d:'El campo canto queda reservado en el modelo. Xeno-canto tiene material con licencia Creative Commons cuando se retome.' },
+];
+
+/* ------------------------------------------------------------------ estado */
+const CLAVE = 'odiel.tablero.v1';
+const COLS = ['hecho', 'curso', 'pendiente'];
+let movidas = {};
+try { movidas = JSON.parse(localStorage.getItem(CLAVE)) || {}; } catch { movidas = {}; }
+let areaActiva = null;
+
+const estadoDe = t => movidas[t.id] || t.e;
+const guardar = () => { try { localStorage.setItem(CLAVE, JSON.stringify(movidas)); } catch {} };
+
+/* ------------------------------------------------------------------ pintar */
+function tarjeta(t) {
+  const el = document.createElement('article');
+  el.className = 'tarea';
+  el.draggable = true;
+  el.dataset.id = t.id;
+  el.dataset.area = t.a;
+  const chips = [`<span class="chip">${AREAS[t.a]}</span>`];
+  if (t.f && t.f !== '—') chips.push(`<span class="chip fase">${t.f}</span>`);
+  if (t.x) chips.push(`<span class="chip ${/bloquea|depende|único|pesa/.test(t.x) ? 'bloq' : 'fecha'}">${t.x}</span>`);
+  el.innerHTML = `<h3>${t.t}</h3><p>${t.d}</p><div class="pie">${chips.join('')}</div>`;
+  el.addEventListener('dragstart', ev => {
+    ev.dataTransfer.setData('text/plain', t.id);
+    ev.dataTransfer.effectAllowed = 'move';
+    el.classList.add('arrastrando');
+  });
+  el.addEventListener('dragend', () => el.classList.remove('arrastrando'));
+  return el;
+}
+
+function pintar() {
+  COLS.forEach(c => { document.getElementById('c-' + c).innerHTML = ''; });
+  const cuenta = { hecho: 0, curso: 0, pendiente: 0 };
+  TAREAS.forEach(t => {
+    const e = estadoDe(t);
+    cuenta[e]++;
+    if (areaActiva && t.a !== areaActiva) return;
+    document.getElementById('c-' + e).append(tarjeta(t));
+  });
+  COLS.forEach(c => {
+    document.getElementById('n-' + c).textContent = cuenta[c];
+    const caja = document.getElementById('c-' + c);
+    if (!caja.children.length) {
+      const v = document.createElement('p');
+      v.className = 'vacio';
+      v.textContent = areaActiva ? 'Nada en esta área.' : 'Nada aquí.';
+      caja.append(v);
+    }
+  });
+  const total = TAREAS.length;
+  document.getElementById('pct').innerHTML =
+    `${Math.round(cuenta.hecho / total * 100)} %<small>completado</small>`;
+  document.getElementById('b1').style.width = `${cuenta.hecho / total * 100}%`;
+  document.getElementById('b2').style.width = `${cuenta.curso / total * 100}%`;
+  document.getElementById('totales').textContent =
+    `${cuenta.hecho} hechas · ${cuenta.curso} en curso · ${cuenta.pendiente} pendientes · ${total} en total`;
+  document.title = `Tablero (${cuenta.hecho}/${total}) · pajaritos.josearcos.me`;
+}
+
+/* ------------------------------------------------------------- interacción */
+document.querySelectorAll('.col').forEach(col => {
+  col.addEventListener('dragover', ev => { ev.preventDefault(); col.classList.add('sobre'); });
+  col.addEventListener('dragleave', () => col.classList.remove('sobre'));
+  col.addEventListener('drop', ev => {
+    ev.preventDefault();
+    col.classList.remove('sobre');
+    const id = ev.dataTransfer.getData('text/plain');
+    const t = TAREAS.find(x => x.id === id);
+    if (!t) return;
+    const destino = col.dataset.col;
+    if (destino === t.e) delete movidas[id]; else movidas[id] = destino;
+    guardar(); pintar();
+  });
+});
+
+const cajaF = document.getElementById('filtros');
+Object.entries(AREAS).forEach(([k, nombre]) => {
+  const b = document.createElement('button');
+  b.className = 'filtro';
+  b.textContent = `${nombre} (${TAREAS.filter(t => t.a === k).length})`;
+  b.setAttribute('aria-pressed', 'false');
+  b.addEventListener('click', () => {
+    areaActiva = areaActiva === k ? null : k;
+    [...cajaF.children].forEach((x, i) =>
+      x.setAttribute('aria-pressed', String(Object.keys(AREAS)[i] === areaActiva)));
+    pintar();
+  });
+  cajaF.append(b);
+});
+
+document.getElementById('btn-reset').addEventListener('click', () => {
+  movidas = {}; guardar();
+  areaActiva = null;
+  [...cajaF.children].forEach(x => x.setAttribute('aria-pressed', 'false'));
+  pintar();
+  document.getElementById('aviso').textContent = 'Restablecido al estado del 18 de agosto de 2026.';
+});
+
+document.getElementById('btn-copiar').addEventListener('click', async () => {
+  const linea = e => TAREAS.filter(t => estadoDe(t) === e).map(t => `- [${t.f}] ${t.t}`).join('\n');
+  const txt = `Tablero pajaritos.josearcos.me\n\nHECHO\n${linea('hecho')}\n\n`
+            + `EN CURSO\n${linea('curso')}\n\nPENDIENTE\n${linea('pendiente')}\n`;
+  try {
+    await navigator.clipboard.writeText(txt);
+    document.getElementById('aviso').textContent = 'Resumen copiado al portapapeles.';
+  } catch {
+    document.getElementById('aviso').textContent = 'El navegador no deja copiar desde file://. Abre la consola: el resumen está ahí.';
+    console.log(txt);
+  }
+});
+
+pintar();
+</script>
+</body>
+</html>
