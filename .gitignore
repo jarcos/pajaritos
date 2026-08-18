@@ -15,3 +15,6 @@ data/
 
 # Datos descargados de eBird: no son nuestros para redistribuir
 datos-ebird/
+
+# Runbook de infraestructura: solo local, nunca al repo publico
+SETUP.md
