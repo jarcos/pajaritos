@@ -6,9 +6,11 @@
      · fotos y teselas  → «cache first», se acumulan según se usan
      · /api/            → nunca se cachea
 */
-const V = 'odiel-v1';
+// Al cambiar V se purgan las cachés viejas en `activate`. Súbelo siempre que
+// cambie la lista de abajo o la versión de app.js.
+const V = 'odiel-v2';
 const ARMAZON = [
-  './', 'index.html', 'app.js', 'manifest.webmanifest', 'icono.svg',
+  './', 'index.html', 'app.js?v=2026-08-18', 'manifest.webmanifest', 'icono.svg',
   'datos/especies.json', 'datos/zonas.json', 'datos/puntos.geojson', 'datos/sinonimos.json',
 ];
 
