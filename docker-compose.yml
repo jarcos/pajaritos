@@ -21,7 +21,9 @@ services:
       - ./nginx/pajaritos.conf:/etc/nginx/conf.d/default.conf:ro
       - ./nginx/cabeceras.conf:/etc/nginx/cabeceras.conf:ro
       - ./app:/srv/app:ro                  # index.html, JSON de contenido, fotos
-      - pajaritos-mapas:/srv/mapas:ro      # huelva-<fecha>.pmtiles
+      - ./mapas:/srv/mapas:ro              # huelva-<fecha>.pmtiles · bind, no volumen
+                                          # named: el .pmtiles se copia con scp desde
+                                          # el Mac y tiene que caer donde nginx mira
       - pajaritos-datos:/srv/datos:ro      # mareas.json escrito por el servicio de mareas
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:8080/healthz"]
@@ -83,4 +85,3 @@ networks:
 volumes:
   pajaritos-reportes:       # reportes.db → dato ÚNICO, SÍ necesita backup
   pajaritos-datos:          # mareas.json → se regenera a diario, NO necesita backup
-  pajaritos-mapas:          # .pmtiles   → regenerable, NO necesita backup

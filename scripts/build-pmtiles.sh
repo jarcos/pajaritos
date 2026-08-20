@@ -6,11 +6,19 @@
 # NO descarga los ~127 GB del planeta: `pmtiles extract` lee por rangos HTTP
 # solo los tiles del recuadro pedido.
 #
-# ⚠️ EL LÍMITE QUE MANDA: Cloudflare (plan gratuito) solo cachea ficheros de
-# hasta 512 MB. Un .pmtiles más grande deja de cachearse y CADA petición de
-# rango viaja por el tunnel hasta el NAS. Además se han reportado resets de
-# stream HTTP/2 en descargas largas a través de Cloudflare Tunnel. Conclusión:
-# el archivo debe quedar por debajo de 512 MB; si se pasa, bajar MAXZOOM.
+# EL LÍMITE QUE SE TEMÍA NO ERA EL LÍMITE. Medido el 20/08/2026 sobre el build
+# del 17/08 y este mismo recuadro:
+#
+#     z14 → 21 MB      z15 → 39 MB      z16 → 39 MB (idénticos)
+#
+# z16 pesa lo mismo que z15 porque el build diario del planeta de Protomaps
+# TERMINA en z15: pedir más devuelve exactamente los mismos 26 514 tiles. Así
+# que 39 MB es el máximo posible para Huelva, trece veces por debajo de los
+# 512 MB que cachea Cloudflare en el plan gratuito. El techo que condicionó el
+# diseño no aprieta; el que manda es el de la fuente.
+#
+# Se conserva la comprobación de tamaño por si algún día cambia el recuadro o
+# Protomaps sube su maxzoom.
 #
 set -euo pipefail
 
@@ -18,7 +26,7 @@ FECHA_BUILD="${FECHA_BUILD:-$(date -u -d '3 days ago' +%Y%m%d 2>/dev/null || dat
 # Recuadro de la provincia de Huelva: cubre Odiel, Piedras, El Portil,
 # Palos y Las Madres, Doñana occidental, el Andévalo y la Sierra de Aracena.
 BBOX="${BBOX:--7.55,36.75,-6.10,38.30}"
-MAXZOOM="${MAXZOOM:-14}"
+MAXZOOM="${MAXZOOM:-15}"   # 15 es el techo de la fuente, no una elección
 LIMITE_MB="${LIMITE_MB:-512}"
 SALIDA="huelva-${FECHA_BUILD}-z${MAXZOOM}.pmtiles"
 DESTINO="${DESTINO:-/volume1/docker/pajaritos/mapas}"
@@ -43,15 +51,19 @@ pmtiles show "${SALIDA}" | head -20
 
 echo "▸ copiando al NAS"
 # El puerto y el usuario salen del alias nas-deploy de ~/.ssh/config.
-scp "${SALIDA}" "nas-deploy:${DESTINO}/"
+# -O fuerza el protocolo SCP clásico. Sin él, el scp de OpenSSH ≥9 habla SFTP
+# y el sshd del Synology no trae ese subsistema: falla con «subsystem request
+# failed on channel 0». Es la misma familia de sorpresa que el rsync capado.
+scp -O "${SALIDA}" "nas-deploy:${DESTINO}/"
+
+echo "▸ apuntando actual.pmtiles"
+ssh nas-deploy "ln -sfn ${DESTINO}/${SALIDA} ${DESTINO}/actual.pmtiles"
 
 cat <<NOTA
 
-✓ Listo. Ahora, en el NAS:
+✓ Listo. actual.pmtiles ya apunta a ${SALIDA}.
 
-    ln -sfn ${DESTINO}/${SALIDA} ${DESTINO}/actual.pmtiles
-
-  Y en la app, apuntar a  pmtiles:///mapas/${SALIDA}
+  En la app, apuntar a  pmtiles:///mapas/${SALIDA}
   (nombre versionado ⇒ inmutable ⇒ cacheable un año en el borde).
 
   Recuerda purgar el caché de Cloudflare solo si reutilizas un nombre. Si el
