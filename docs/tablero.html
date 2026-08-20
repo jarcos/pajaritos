@@ -220,7 +220,7 @@ const TAREAS = [
     d:'Protección, ventana óptima, itinerario, avisos, marea óptima y desfase respecto al mareógrafo.' },
   { id:'t27', e:'hecho', a:'datos', f:'F4', t:'puntos.geojson con 17 observatorios y centros',
     d:'Coordenadas aproximadas declaradas como tales, con tipo, zona y marea óptima por punto.' },
-  { id:'t28', e:'hecho', a:'datos', f:'F4', t:'sinonimos.json con las 4 categorías verificadas',
+  { id:'t28', e:'hecho', a:'datos', f:'F4', t:'sinonimos.json con las 60 entradas',
     d:'Equivalencias entre el PDF de SEO/BirdLife, la taxonomía vigente y la categoría real de Commons.' },
 
   { id:'t29', e:'hecho', a:'servicio', f:'F3', x:'en producción', t:'Servicio de mareas publicando solo',
@@ -233,11 +233,16 @@ const TAREAS = [
   { id:'t32', e:'hecho', a:'docs', f:'—', t:'Especificación v3 con el estado real',
     d:'Sección 11 reescrita con lo ejecutado y sección 12 nueva con las seis desviaciones.' },
 
+  { id:'t51', e:'hecho', a:'infra', f:'—', t:'CI/CD: push a main despliega al NAS',
+    d:'Repo público jarcos/pajaritos. El runner entra por la tailnet con tag:ci y sube el árbol con tar sobre ssh, porque DSM trae el servicio rsync apagado. La puerta de salida compara el sw servido y el número de sinónimos con los del repo: un copiado a medias también responde 200.' },
+  { id:'t52', e:'hecho', a:'infra', f:'—', t:'validar-datos.py como puerta de CI',
+    d:'Exige que toda especie tenga entrada en sinonimos.json y que la versión de app.js coincida en index.html y en la lista ARMAZON de sw.js. Las dos comprobaciones existen porque las dos cosas estaban rotas.' },
+
   // ─────────────────────────────── en curso / parcial
-  { id:'t33', e:'curso', a:'datos', f:'F4', x:'4 de 60', t:'Verificar las categorías de Commons',
-    d:'Faltan 56. Mecánico pero imprescindible: buscar el nombre equivocado devuelve cero resultados y la ficha se queda sin foto.' },
+  { id:'t33', e:'hecho', a:'datos', f:'F4', x:'60 de 60', t:'Verificar las categorías de Commons',
+    d:'verificar-commons.py contra la API: existe, no redirige y tiene contenido. Descubrió que Podiceps nigricollis es un contenedor puro (10 subcategorías, 0 archivos) y que incategory: devolvía cero; la ficha busca ahora con deepcategory:.' },
   { id:'t34', e:'curso', a:'datos', f:'F4', x:'lo que más pesa', t:'Contrastar las 37 fenologías estimadas',
-    d:'Con los barcharts de eBird de los hotspots del Odiel. Es lo que más determina la utilidad real de la guía.' },
+    d:'Con los barcharts de eBird de los hotspots del Odiel. Es lo que más determina la utilidad real de la guía. contrastar-fenologia.py ya está escrito y probado; espera los TSV de «Download Histogram Data» en datos-ebird/, que solo se bajan con sesión iniciada.' },
   { id:'t35', e:'curso', a:'contenido', f:'F4', t:'Revisar los textos de identificación',
     d:'Los de las 60 fichas son borradores, no material cotejado con el PDF de la Autoridad Portuaria.' },
   { id:'t36', e:'curso', a:'app', f:'F5', x:'bloquea el mapa', t:'Extraer el .pmtiles de Huelva y medir su peso',
