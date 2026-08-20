@@ -1,7 +1,7 @@
 {
  "version": "2026-08-17",
  "fuente": "60 especies de arranque · Aves de la ría de Huelva (Autoridad Portuaria de Huelva + SEO/BirdLife)",
- "nota": "La fenología marcada como 'verificado' procede de la matriz del plan de la guía. El resto entra como 'estimado' con presencia genérica y debe contrastarse con los barcharts de eBird de los hotspots del Odiel antes de darse por buena.",
+ "nota": "La fenología marcada como 'verificado' procede de la matriz del plan de la guía. El resto entra como 'estimado' con presencia genérica y debe contrastarse con los barcharts de eBird de los hotspots del Odiel antes de darse por buena. · Las estimadas con patrón sólido llevan matriz derivada de los barcharts de eBird del Odiel (20/08/2026, herramientas/contrastar-fenologia.py). Siguen marcadas como estimadas a propósito: el barchart mide detectabilidad y la matriz del plan, abundancia.",
  "grupos": [
   {
    "id": "anatidas",
@@ -112,18 +112,18 @@
     "I"
    ],
    "meses": [
+    2,
     1,
     1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
     1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1
+    2
    ],
    "confianza": "estimado",
    "zonas": [
@@ -146,7 +146,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "gavia-stellata",
@@ -439,6 +440,8 @@
     "I"
    ],
    "meses": [
+    2,
+    2,
     1,
     1,
     1,
@@ -447,10 +450,8 @@
     1,
     1,
     1,
-    1,
-    1,
-    1,
-    1
+    2,
+    2
    ],
    "confianza": "estimado",
    "zonas": [
@@ -479,7 +480,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "egretta-garzetta",
@@ -979,18 +981,18 @@
     "AR"
    ],
    "meses": [
+    2,
+    2,
+    2,
     1,
     1,
+    0,
+    0,
+    0,
     1,
     1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1
+    2,
+    2
    ],
    "confianza": "estimado",
    "zonas": [
@@ -1019,7 +1021,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "gallinula-chloropus",
@@ -1032,12 +1035,12 @@
    ],
    "meses": [
     1,
+    2,
     1,
     1,
     1,
     1,
-    1,
-    1,
+    2,
     1,
     1,
     1,
@@ -1071,7 +1074,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "himantopus-himantopus",
@@ -1205,9 +1209,9 @@
     1,
     1,
     1,
-    1,
-    1,
-    1,
+    2,
+    2,
+    2,
     1,
     1
    ],
@@ -1240,7 +1244,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "charadrius-alexandrinus",
@@ -1310,15 +1315,15 @@
     1,
     1,
     1,
+    2,
     1,
     1,
     1,
     1,
     1,
-    1,
-    1,
-    1,
-    1
+    2,
+    2,
+    2
    ],
    "confianza": "estimado",
    "zonas": [
@@ -1343,7 +1348,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "calidris-alba",
@@ -1356,6 +1362,7 @@
     "M"
    ],
    "meses": [
+    2,
     1,
     1,
     1,
@@ -1363,11 +1370,10 @@
     1,
     1,
     1,
+    2,
+    2,
     1,
-    1,
-    1,
-    1,
-    1
+    2
    ],
    "confianza": "estimado",
    "zonas": [
@@ -1396,7 +1402,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "calidris-ferruginea",
@@ -1573,6 +1580,7 @@
     "M"
    ],
    "meses": [
+    2,
     1,
     1,
     1,
@@ -1581,10 +1589,9 @@
     1,
     1,
     1,
-    1,
-    1,
-    1,
-    1
+    2,
+    2,
+    2
    ],
    "confianza": "estimado",
    "zonas": [
@@ -1614,7 +1621,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "numenius-phaeopus",
@@ -1633,8 +1641,8 @@
     1,
     1,
     1,
-    1,
-    1,
+    2,
+    2,
     1,
     1,
     1
@@ -1667,7 +1675,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "numenius-arquata",
@@ -1740,9 +1749,9 @@
     1,
     1,
     1,
-    1,
-    1,
-    1,
+    2,
+    2,
+    2,
     1,
     1
    ],
@@ -1773,7 +1782,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "tringa-nebularia",
@@ -1786,6 +1796,9 @@
     "M"
    ],
    "meses": [
+    2,
+    2,
+    2,
     1,
     1,
     1,
@@ -1793,11 +1806,8 @@
     1,
     1,
     1,
-    1,
-    1,
-    1,
-    1,
-    1
+    2,
+    2
    ],
    "confianza": "estimado",
    "zonas": [
@@ -1831,7 +1841,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "tringa-totanus",
@@ -1844,18 +1855,18 @@
     "I"
    ],
    "meses": [
+    2,
     1,
     1,
     1,
     1,
     1,
     1,
+    2,
     1,
     1,
     1,
-    1,
-    1,
-    1
+    2
    ],
    "confianza": "estimado",
    "zonas": [
@@ -1889,7 +1900,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "arenaria-interpres",
@@ -1959,11 +1971,11 @@
     1,
     1,
     1,
+    2,
     1,
     1,
     1,
-    1,
-    1
+    2
    ],
    "confianza": "estimado",
    "zonas": [
@@ -1997,7 +2009,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "larus-melanocephalus",
@@ -2016,8 +2029,8 @@
     1,
     1,
     1,
-    1,
-    1,
+    2,
+    2,
     1,
     1,
     1,
@@ -2052,7 +2065,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "larus-audouinii",
@@ -2118,6 +2132,7 @@
     "M"
    ],
    "meses": [
+    2,
     1,
     1,
     1,
@@ -2125,11 +2140,10 @@
     1,
     1,
     1,
-    1,
-    1,
-    1,
-    1,
-    1
+    2,
+    2,
+    2,
+    2
    ],
    "confianza": "estimado",
    "zonas": [
@@ -2163,7 +2177,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "larus-michahellis",
@@ -2179,10 +2194,10 @@
     1,
     1,
     1,
-    1,
-    1,
-    1,
-    1,
+    2,
+    2,
+    2,
+    2,
     1,
     1,
     1,
@@ -2220,7 +2235,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "hydroprogne-caspia",
@@ -2242,8 +2258,8 @@
     1,
     1,
     1,
-    1,
-    1,
+    2,
+    2,
     1
    ],
    "confianza": "estimado",
@@ -2269,7 +2285,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "sterna-sandvicensis",
@@ -2388,18 +2405,18 @@
     "ER"
    ],
    "meses": [
+    0,
+    0,
     1,
     1,
     1,
+    2,
+    2,
+    2,
     1,
     1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1
+    0,
+    0
    ],
    "confianza": "estimado",
    "zonas": [
@@ -2424,7 +2441,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "alca-torda",
@@ -2533,18 +2551,18 @@
     "ER"
    ],
    "meses": [
+    0,
+    0,
+    1,
+    1,
+    2,
+    2,
+    2,
     1,
     1,
     1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1
+    0,
+    0
    ],
    "confianza": "estimado",
    "zonas": [
@@ -2577,7 +2595,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "hirundo-rustica",
@@ -2590,16 +2609,16 @@
    ],
    "meses": [
     1,
+    2,
+    2,
+    2,
+    2,
+    2,
     1,
     1,
     1,
     1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
+    0,
     1
    ],
    "confianza": "estimado",
@@ -2634,7 +2653,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "delichon-urbicum",
@@ -2649,15 +2669,15 @@
     1,
     1,
     1,
+    2,
+    2,
+    2,
+    2,
     1,
     1,
     1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1
+    0,
+    0
    ],
    "confianza": "estimado",
    "zonas": [
@@ -2690,7 +2710,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "motacilla-flava",
@@ -2706,15 +2727,15 @@
     1,
     1,
     1,
+    2,
+    2,
+    2,
+    2,
+    2,
     1,
     1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1
+    0,
+    0
    ],
    "confianza": "estimado",
    "zonas": [
@@ -2748,7 +2769,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "motacilla-alba",
@@ -2761,6 +2783,7 @@
     "I"
    ],
    "meses": [
+    2,
     1,
     1,
     1,
@@ -2769,10 +2792,9 @@
     1,
     1,
     1,
-    1,
-    1,
-    1,
-    1
+    2,
+    2,
+    2
    ],
    "confianza": "estimado",
    "zonas": [
@@ -2806,7 +2828,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "erithacus-rubecula",
@@ -2819,18 +2842,18 @@
     "I"
    ],
    "meses": [
+    2,
     1,
     1,
     1,
+    0,
+    0,
+    0,
+    0,
     1,
     1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1
+    2,
+    2
    ],
    "confianza": "estimado",
    "zonas": [
@@ -2859,7 +2882,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "phoenicurus-ochruros",
@@ -2871,18 +2895,18 @@
     "I"
    ],
    "meses": [
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
     1,
     1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1
+    2
    ],
    "confianza": "estimado",
    "zonas": [
@@ -2911,7 +2935,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "saxicola-rubicola",
@@ -2923,18 +2948,18 @@
     "AR"
    ],
    "meses": [
+    2,
     1,
     1,
     1,
+    0,
+    0,
+    0,
     1,
     1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1
+    2,
+    2,
+    2
    ],
    "confianza": "estimado",
    "zonas": [
@@ -2963,7 +2988,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "turdus-merula",
@@ -2985,8 +3011,8 @@
     1,
     1,
     1,
-    1,
-    1
+    2,
+    2
    ],
    "confianza": "estimado",
    "zonas": [
@@ -3020,7 +3046,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "pica-pica",
@@ -3032,6 +3059,8 @@
     "AR"
    ],
    "meses": [
+    2,
+    2,
     1,
     1,
     1,
@@ -3041,9 +3070,7 @@
     1,
     1,
     1,
-    1,
-    1,
-    1
+    2
    ],
    "confianza": "estimado",
    "zonas": [
@@ -3072,7 +3099,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "sturnus-unicolor",
@@ -3093,9 +3121,9 @@
     1,
     1,
     1,
-    1,
-    1,
-    1
+    2,
+    2,
+    2
    ],
    "confianza": "estimado",
    "zonas": [
@@ -3129,7 +3157,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "passer-domesticus",
@@ -3144,9 +3173,9 @@
     1,
     1,
     1,
-    1,
-    1,
-    1,
+    2,
+    2,
+    2,
     1,
     1,
     1,
@@ -3180,7 +3209,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   },
   {
    "id": "carduelis-carduelis",
@@ -3192,18 +3222,18 @@
     "AR"
    ],
    "meses": [
+    2,
+    2,
     1,
     1,
     1,
     1,
     1,
+    0,
     1,
     1,
-    1,
-    1,
-    1,
-    1,
-    1
+    2,
+    2
    ],
    "confianza": "estimado",
    "zonas": [
@@ -3232,7 +3262,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "fuenteFenologia": "barcharts de eBird de 3 hotspots del Odiel, 789 listas, contrastado el 20/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación."
   }
  ]
 }
