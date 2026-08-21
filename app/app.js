@@ -513,6 +513,14 @@ function abrirFicha(esp) {
   $('#cf-fencaja').classList.toggle('estimada', !verificado);
   $('#cf-marca').className = verificado ? 'marca ver' : 'marca est';
   $('#cf-marca').textContent = verificado ? '✓ Fenología verificada' : '≈ Fenología estimada';
+  // La marca es binaria, y con eso una matriz sacada de 789 listas de eBird se
+  // leía igual que doce meses genéricos. Esta línea dice de dónde sale cada
+  // una. Se prefirió a un tercer estado visual: la barra ya codifica cuatro
+  // estados por altura y trama, y tres niveles de confianza encima son doce
+  // combinaciones que aprender para leerla con el sol de cara.
+  $('#cf-fenfuente').textContent = verificado
+    ? 'Matriz transcrita del plan de la guía.'
+    : (esp.fuenteFenologia || esp.notaFenologia || 'Presencia genérica, sin datos.');
   const fen = vaciar($('#cf-fen'));
   const mesHoy = ahoraLocal().mes;
   esp.meses.forEach((m, i) => fen.append(el('i', {

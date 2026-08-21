@@ -100,7 +100,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "notaFenologia": "Sin fenología: los hotspots del Odiel son marisma y laguna, y no sale en ninguno. El barchart de la provincia confirma que está en Huelva, pero su denominador incluye listas de interior y no sirve para fechar. Necesita un punto de seawatch."
   },
   {
    "id": "mergus-serrator",
@@ -193,7 +194,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "notaFenologia": "Sin fenología: los hotspots del Odiel son marisma y laguna, y no sale en ninguno. El barchart de la provincia confirma que está en Huelva, pero su denominador incluye listas de interior y no sirve para fechar. Necesita un punto de seawatch."
   },
   {
    "id": "podiceps-nigricollis",
@@ -337,7 +339,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "notaFenologia": "Sin fenología: los hotspots del Odiel son marisma y laguna, y no sale en ninguno. El barchart de la provincia confirma que está en Huelva, pero su denominador incluye listas de interior y no sirve para fechar. Necesita un punto de seawatch."
   },
   {
    "id": "morus-bassanus",
@@ -428,7 +431,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "notaFenologia": "Sin fenología: los hotspots del Odiel son marisma y laguna, y no sale en ninguno. El barchart de la provincia confirma que está en Huelva, pero su denominador incluye listas de interior y no sirve para fechar. Necesita un punto de seawatch."
   },
   {
    "id": "phalacrocorax-carbo",
@@ -2487,7 +2491,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "notaFenologia": "Sin fenología: los hotspots del Odiel son marisma y laguna, y no sale en ninguno. El barchart de la provincia confirma que está en Huelva, pero su denominador incluye listas de interior y no sirve para fechar. Necesita un punto de seawatch."
   },
   {
    "id": "tyto-alba",
@@ -2539,7 +2544,8 @@
     "autor": null,
     "licencia": null,
     "origen": null
-   }
+   },
+   "notaFenologia": "Sin fenología: aparece en el 0 % de las listas de eBird del Odiel porque nadie las hace de noche. Ningún barchart lo va a resolver; haría falta bibliografía o el atlas."
   },
   {
    "id": "apus-apus",

@@ -267,6 +267,12 @@ html[data-tema="oscuro"] .btn.pri{color:#14140F}
 .foto .et{font:700 11px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--tinta-2);
           background:var(--sup);border:1.5px solid var(--tinta);border-radius:var(--r-s);padding:8px 12px;text-align:center}
 .credito{margin-top:6px;font:400 10px/1.4 var(--mono);color:var(--mudo)}
+/* De dónde sale la matriz mensual. La marca de arriba solo sabe decir
+   verificada o estimada, y con eso una matriz sacada de 789 listas se leía
+   igual que doce meses inventados. Esto lo distingue sin añadir un tercer
+   estado visual, que serían doce combinaciones que aprender para leer una
+   barra con el sol de cara. */
+.procedencia{font:400 10px/1.45 var(--mono);color:var(--mudo)}
 .sec{display:flex;flex-direction:column;gap:8px}
 .sec p{font-size:15px;line-height:1.55;color:var(--tinta-2)}
 .conf{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid var(--linea);
@@ -691,13 +697,14 @@ html[data-tema="oscuro"] .btn.pri{color:#14140F}
           <span class="rot">Fenología</span><span id="cf-marca"></span>
         </div>
         <div class="fen" id="cf-fen" style="--h:44px"></div>
-        <div class="meses"><span>E</span><span>F</span><span>M</span><span>A</span><span>M</span><span>J</span><span>J</span><span>A</span><span>S</span><span>O</span><span>N</span><span>D</span></div>
+                <div class="meses"><span>E</span><span>F</span><span>M</span><span>A</span><span>M</span><span>J</span><span>J</span><span>A</span><span>S</span><span>O</span><span>N</span><span>D</span></div>
         <div class="leyenda">
           <span><i style="height:5px"></i>Ausente</span>
           <span><i style="height:11px;background:var(--linea-2)"></i>Presente</span>
           <span><i style="height:24px;background:var(--tinta);border-bottom-color:var(--tinta)"></i>Máxima</span>
           <span><i style="height:18px;border-bottom-color:var(--tinta);background:repeating-linear-gradient(45deg,var(--tinta) 0 2px,transparent 2px 5px),var(--relleno-3)"></i>Cría</span>
         </div>
+        <div class="procedencia" id="cf-fenfuente"></div>
       </div>
       <div class="sec"><span class="rot">Identificación</span><p id="cf-ident"></p></div>
       <div class="sec"><span class="rot">Conducta · plumajes</span><p id="cf-cond"></p></div>
@@ -790,6 +797,6 @@ html[data-tema="oscuro"] .btn.pri{color:#14140F}
 <!-- Versionado en la URL: index.html va con no-cache pero app.js se cachea en
      el borde 4 h. Sin esta marca, un redespliegue serviria JS viejo con HTML
      nuevo. Mismo criterio que el .pmtiles versionado por nombre. -->
-<script src="app.js?v=2026-08-18b" defer></script>
+<script src="app.js?v=2026-08-21" defer></script>
 </body>
 </html>
