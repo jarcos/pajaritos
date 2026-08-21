@@ -1,6 +1,6 @@
 {
  "type": "FeatureCollection",
- "nota": "Coordenadas aproximadas (precisión ~100 m), pendientes de afinar con GPS en la primera salida.",
+ "nota": "Coordenadas aproximadas (precisión ~100 m), pendientes de afinar con GPS en la primera salida. · Coordenadas: 6 tomadas de OpenStreetMap el 21/08/2026 (misma fuente que dibuja el basemap, así que el pin cae sobre la casilla que el mapa pinta). Las demás siguen siendo aproximadas a ~100 m y esperan el GPS de la primera salida.",
  "features": [
   {
    "type": "Feature",
@@ -83,8 +83,8 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -6.98,
-     37.26
+     -7.00034,
+     37.25509
     ]
    },
    "properties": {
@@ -94,7 +94,8 @@
     "zona": "odiel",
     "mareaOptima": "bajamar",
     "nota": "",
-    "precision": "aproximada"
+    "precision": "OSM",
+    "fuenteCoordenadas": "OpenStreetMap node/8090578692 «La Choza», 21/08/2026; movida 1881 m"
    }
   },
   {
@@ -178,8 +179,8 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -7.044,
-     37.211
+     -7.04508,
+     37.21135
     ]
    },
    "properties": {
@@ -189,7 +190,8 @@
     "zona": "portil",
     "mareaOptima": "indiferente",
     "nota": "",
-    "precision": "aproximada"
+    "precision": "OSM",
+    "fuenteCoordenadas": "OpenStreetMap node/1302626586 «Laguna del Portil», 21/08/2026; movida 103 m"
    }
   },
   {
@@ -216,8 +218,8 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -6.523,
-     37.123
+     -6.49646,
+     37.12379
     ]
    },
    "properties": {
@@ -227,7 +229,8 @@
     "zona": "donana",
     "mareaOptima": "indiferente",
     "nota": "Sendero Charco de la Boca, 3,5 km con varios observatorios.",
-    "precision": "aproximada"
+    "precision": "OSM",
+    "fuenteCoordenadas": "OpenStreetMap way/222325270 «Centro de Visitantes La Rocina», 21/08/2026; movida 2355 m"
    }
   },
   {
@@ -235,8 +238,8 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -6.58,
-     37.047
+     -6.56619,
+     37.04661
     ]
    },
    "properties": {
@@ -246,7 +249,8 @@
     "zona": "donana",
     "mareaOptima": "indiferente",
     "nota": "",
-    "precision": "aproximada"
+    "precision": "OSM",
+    "fuenteCoordenadas": "OpenStreetMap way/176649210 «Centro de Visitantes El Acebuche», 21/08/2026; movida 1226 m"
    }
   },
   {
@@ -254,8 +258,8 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -6.484,
-     37.131
+     -6.48015,
+     37.12752
     ]
    },
    "properties": {
@@ -265,7 +269,8 @@
     "zona": "donana",
     "mareaOptima": "indiferente",
     "nota": "A pie de El Rocío, sobre la madre de las marismas. Excelente para fotografía.",
-    "precision": "aproximada"
+    "precision": "OSM",
+    "fuenteCoordenadas": "OpenStreetMap node/1736103438 «Observatorio de Aves Francisco Bernis», 21/08/2026; movida 516 m"
    }
   },
   {
@@ -273,8 +278,8 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -6.266,
-     37.053
+     -6.37672,
+     37.07361
     ]
    },
    "properties": {
@@ -284,7 +289,8 @@
     "zona": "donana",
     "mareaOptima": "indiferente",
     "nota": "Colonias de garzas y moritos visibles desde el propio edificio.",
-    "precision": "aproximada"
+    "precision": "OSM",
+    "fuenteCoordenadas": "OpenStreetMap node/2123776641 «Centro de Visitantes José Antonio Valverde», 21/08/2026; movida 10088 m"
    }
   },
   {
