@@ -364,6 +364,9 @@ def main() -> int:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--barcharts", required=True, metavar="DIR",
                     help="carpeta con los .txt/.tsv descargados de eBird")
+    ap.add_argument("--extra", metavar="DIR",
+                    help="fuente secundaria (p. ej. el barchart de la provincia) que "
+                         "SOLO se usa para las especies sin fila en la principal")
     ap.add_argument("--datos", default=None, help="carpeta app/datos")
     ap.add_argument("--escribir", action="store_true", help="actualiza especies.json")
     ap.add_argument("--informe", metavar="FICHERO.md")
@@ -392,6 +395,32 @@ def main() -> int:
             return _fallo(str(e))
 
     listas, frecuencias = agregar(cargados)
+
+    # Fuente secundaria: los tres hotspots del Odiel son marisma y laguna, así
+    # que el negrón, el colimbo, la pardela, el paíño, el págalo y el alca no
+    # salen en ninguno.
+    #
+    # OJO: sirve para SABER QUE ESTÁN, no para fechar cuándo. Se probó con el
+    # barchart de la provincia (27 000 listas) y la fenología que sale no vale:
+    # el denominador va lleno de listas de interior y marisma donde un ave
+    # pelágica no puede aparecer, así que la frecuencia se diluye hasta el
+    # ruido. El alca salía con pico en mayo y junio —un par de salidas
+    # pelágicas -- cuando es invernante. Por eso lo que venga de aquí se
+    # informa pero NUNCA se escribe. Para fecharlas hace falta un barchart de
+    # un hotspot de seawatch, con denominador de gente mirando al mar.
+    listas_x: list[float] | None = None
+    frec_x: dict[str, list[float]] = {}
+    if args.extra:
+        f_x = sorted([q for q in Path(args.extra).glob("*")
+                      if q.suffix.lower() in (".txt", ".tsv", ".csv")])
+        if not f_x:
+            return _fallo(f"--extra {args.extra}: no hay ficheros de barchart")
+        try:
+            listas_x, frec_x = agregar([leer_barchart(q) for q in f_x])
+        except FuenteRota as e:
+            return _fallo(str(e))
+        print(f"[ok] secundaria: {sum(listas_x):.0f} listas · {len(frec_x)} especies",
+              file=sys.stderr)
     esfuerzo = listas_por_mes(listas)
     print(f"[ok] agregado: {sum(esfuerzo):.0f} listas · "
           f"mes más flojo {min(esfuerzo):.0f}, mejor {max(esfuerzo):.0f}", file=sys.stderr)
@@ -404,14 +433,26 @@ def main() -> int:
 
     for esp in doc["especies"]:
         antes = list(esp["meses"])
+        fuente, l_uso, f_uso = "los hotspots del Odiel", listas, frecuencias
         clave_esp = buscar(esp, sinonimos.get(esp["id"]), frecuencias)
+        if clave_esp is None and frec_x:
+            clave_esp = buscar(esp, sinonimos.get(esp["id"]), frec_x)
+            if clave_esp is not None:
+                fuente, l_uso, f_uso = "el barchart de la provincia", listas_x, frec_x
+                avisos_extra = True
         if clave_esp is None:
             filas.append((esp, antes, None, None, None, ["sin fila en el barchart"], False))
             cambios["sin_datos"] += 1
             continue
-        frec = por_mes(frecuencias[clave_esp], listas)
-        nuevos, avisos = a_estados(frec, esfuerzo, esp["meses"])
-        solido, porque = patron_solido(frec, esfuerzo)
+        esf_uso = listas_por_mes(l_uso)
+        frec = por_mes(f_uso[clave_esp], l_uso)
+        nuevos, avisos = a_estados(frec, esf_uso, esp["meses"])
+        solido, porque = patron_solido(frec, esf_uso)
+        if f_uso is not frecuencias:
+            solido = False
+            avisos.insert(0, "solo aparece en la fuente secundaria, cuyo denominador "
+                             "incluye listas de interior: confirma que está, no cuándo. "
+                             "Necesita un hotspot de seawatch")
         if porque:
             avisos.append(porque)
 
@@ -432,8 +473,8 @@ def main() -> int:
         if args.escribir and solido:
             esp["meses"] = nuevos
             esp["fuenteFenologia"] = (
-                f"barcharts de eBird de {len(ficheros)} hotspots del Odiel, "
-                f"{sum(esfuerzo):.0f} listas, contrastado el {date.today():%d/%m/%Y}. "
+                f"eBird, {fuente}, {sum(listas_por_mes(l_uso)):.0f} listas, "
+                f"contrastado el {date.today():%d/%m/%Y}. "
                 f"Mide detectabilidad, no abundancia: sigue siendo estimación.")
 
     for esp, antes, frec, nuevos, clave, avisos, sube in filas:
