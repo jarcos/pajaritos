@@ -1230,10 +1230,18 @@ function pintarTarjetaMapa() {
     : 'Selecciona un punto';
   $('#mapa-cercano-nom').textContent = sel ? sel.nombre : '—';
   $('#mapa-cercano-nota').textContent = sel
-    ? `${sel.nota || ''}${sel.nota ? ' · ' : ''}Marea óptima: ${sel.mareaOptima}. Coordenadas ${sel.precision}.`
+    ? `${sel.nota || ''}${sel.nota ? ' · ' : ''}Marea óptima: ${sel.mareaOptima}. ${textoPrecision(sel)}`
     : 'Toca un punto del mapa para ver su ficha y empezar una salida ahí.';
   $('#btn-ver-zona').disabled = !sel; $('#btn-salida-aqui').disabled = !sel;
 }
+
+/* La precisión de la coordenada se dice con palabras, porque de ella depende
+   si te fías del pin para llegar de noche a un observatorio. */
+const textoPrecision = p => ({
+  'OSM': 'Coordenada tomada de OpenStreetMap.',
+  'provisional (OSM)': 'Coordenada provisional: es un observatorio real de OpenStreetMap, pero falta confirmar en campo que sea este.',
+  'aproximada': 'Coordenada aproximada, a unos 100 m.',
+}[p.precision] || `Coordenadas ${p.precision}.`);
 
 function distancia([lo1, la1], [lo2, la2]) {
   const R = 6371000, r = Math.PI / 180;

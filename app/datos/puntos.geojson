@@ -7,8 +7,8 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -6.9345,
-     37.2447
+     -6.9687,
+     37.25363
     ]
    },
    "properties": {
@@ -18,7 +18,8 @@
     "zona": "odiel",
     "mareaOptima": "bajamar",
     "nota": "El clásico del Odiel. Laguna de Calatilla, espátulas y limícolas con la marea bajando.",
-    "precision": "aproximada"
+    "precision": "provisional (OSM)",
+    "fuenteCoordenadas": "observatorio sin nombre a 58 m del «Área recreativa Calatilla» (node/4815032343), el ancla de Calatilla más cercana. Movida 3186 m el 21/08/2026. Qué observatorio es exactamente cada uno no lo dice OSM: confirmar en campo."
    }
   },
   {
@@ -26,8 +27,8 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -6.952,
-     37.228
+     -6.97406,
+     37.2464
     ]
    },
    "properties": {
@@ -37,7 +38,8 @@
     "zona": "odiel",
     "mareaOptima": "bajamar",
     "nota": "Sobre los esteros; buena luz a primera hora.",
-    "precision": "aproximada"
+    "precision": "provisional (OSM)",
+    "fuenteCoordenadas": "way/766698571 «Observatorio de aves», a 155 m del panel «El águila pescadora en Marismas del Odiel» (node/7161352182). Movida 2828 m el 21/08/2026. Qué observatorio es exactamente cada uno no lo dice OSM: confirmar en campo."
    }
   },
   {
@@ -122,8 +124,8 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -6.921,
-     37.221
+     -6.94778,
+     37.25523
     ]
    },
    "properties": {
@@ -133,7 +135,8 @@
     "zona": "odiel",
     "mareaOptima": "bajamar",
     "nota": "Sendero de salinas; colonia de charrán común desde 2020, no salir del trazado en cría.",
-    "precision": "aproximada"
+    "precision": "provisional (OSM)",
+    "fuenteCoordenadas": "node/11964888916 «Isla Bacuta». Movida 4484 m el 21/08/2026. Qué observatorio es exactamente cada uno no lo dice OSM: confirmar en campo."
    }
   },
   {
@@ -141,8 +144,8 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -6.906,
-     37.178
+     -6.98476,
+     37.23016
     ]
    },
    "properties": {
@@ -152,7 +155,8 @@
     "zona": "odiel",
     "mareaOptima": "bajamar",
     "nota": "Reserva Natural: se observa desde fuera, sin acceso.",
-    "precision": "aproximada"
+    "precision": "provisional (OSM)",
+    "fuenteCoordenadas": "way/181916518, marisma «Isla de Enmedio»; el mirador se observa desde fuera, así que la posición exacta del punto de observación sigue sin fijar. Movida 9072 m el 21/08/2026. Qué observatorio es exactamente cada uno no lo dice OSM: confirmar en campo."
    }
   },
   {
