@@ -140,6 +140,13 @@ html[data-tema="oscuro"] .btn.pri{color:#14140F}
 .fen.mini i{border-bottom-width:1px}
 /* estimada: opacidad 55 % + filete punteado + etiqueta en cursiva */
 .fen-caja.estimada .fen{opacity:.55}
+/* Sin fenología no se dibuja gráfico: ni barras, ni meses, ni leyenda. Queda
+   la marca y la línea que explica por qué. Doce barras iguales serían una
+   afirmación («está los doce meses»), no una ausencia de dato. */
+.fen-caja.sin-dato .fen,
+.fen-caja.sin-dato .meses,
+.fen-caja.sin-dato .leyenda{display:none}
+.fen.mini.sin-dato{border-bottom:1px dashed var(--linea);align-self:center;height:0}
 .fen-caja.estimada .fen i{border-bottom-style:dotted}
 .meses{display:flex;gap:2px;margin-top:4px}
 .meses span{flex:1;text-align:center;font:600 9px/1 var(--mono);color:var(--mudo)}
@@ -797,6 +804,6 @@ html[data-tema="oscuro"] .btn.pri{color:#14140F}
 <!-- Versionado en la URL: index.html va con no-cache pero app.js se cachea en
      el borde 4 h. Sin esta marca, un redespliegue serviria JS viejo con HTML
      nuevo. Mismo criterio que el .pmtiles versionado por nombre. -->
-<script src="app.js?v=2026-08-21" defer></script>
+<script src="app.js?v=2026-08-21b" defer></script>
 </body>
 </html>

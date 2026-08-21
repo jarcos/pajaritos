@@ -252,7 +252,12 @@ function esperables(mes, zid, marea) {
 
 /* --- fragmentos reutilizables --------------------------------------------- */
 function fenMini(esp) {
+  // Sin dato no se dibuja nada. Doce barras iguales no dicen «no sé»: dicen
+  // «está los doce meses», que para un colimbo chico es falso y además
+  // contradice al texto de su propia ficha. Un hueco es más honesto que un
+  // gráfico verosímil, y deja el sitio ocupado para que la lista no baile.
   const f = el('div', { class: 'fen mini', 'aria-hidden': 'true' });
+  if (esp.notaFenologia) { f.classList.add('sin-dato'); return f; }
   esp.meses.forEach(m => f.append(el('i', { dataset: { m: String(m) } })));
   if (esp.confianza !== 'verificado') { f.style.opacity = '.55'; }
   return f;
@@ -510,9 +515,12 @@ function abrirFicha(esp) {
   }
 
   const verificado = esp.confianza === 'verificado';
+  const sinDato = !!esp.notaFenologia;
   $('#cf-fencaja').classList.toggle('estimada', !verificado);
-  $('#cf-marca').className = verificado ? 'marca ver' : 'marca est';
-  $('#cf-marca').textContent = verificado ? '✓ Fenología verificada' : '≈ Fenología estimada';
+  $('#cf-fencaja').classList.toggle('sin-dato', sinDato);
+  $('#cf-marca').className = sinDato ? 'marca est' : (verificado ? 'marca ver' : 'marca est');
+  $('#cf-marca').textContent = sinDato ? '— Sin fenología'
+    : (verificado ? '✓ Fenología verificada' : '≈ Fenología estimada');
   // La marca es binaria, y con eso una matriz sacada de 789 listas de eBird se
   // leía igual que doce meses genéricos. Esta línea dice de dónde sale cada
   // una. Se prefirió a un tercer estado visual: la barra ya codifica cuatro
@@ -523,7 +531,7 @@ function abrirFicha(esp) {
     : (esp.fuenteFenologia || esp.notaFenologia || 'Presencia genérica, sin datos.');
   const fen = vaciar($('#cf-fen'));
   const mesHoy = ahoraLocal().mes;
-  esp.meses.forEach((m, i) => fen.append(el('i', {
+  if (!sinDato) esp.meses.forEach((m, i) => fen.append(el('i', {
     dataset: { m: String(m) }, title: `${cap(MESES[i])}: ${['ausente', 'presente', 'máxima probabilidad', 'época de cría'][m]}`,
     style: i === mesHoy ? 'outline:2px solid var(--azul);outline-offset:1px' : null,
   })));
