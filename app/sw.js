@@ -8,10 +8,16 @@
 */
 // Al cambiar V se purgan las cachés viejas en `activate`. Súbelo siempre que
 // cambie la lista de abajo o la versión de app.js.
-const V = 'odiel-v7';
+const V = 'odiel-v8';
 const ARMAZON = [
-  './', 'index.html', 'app.js?v=2026-08-21c', 'manifest.webmanifest', 'icono.svg',
+  './', 'index.html', 'app.js?v=2026-08-21d', 'manifest.webmanifest', 'icono.svg',
   'datos/especies.json', 'datos/zonas.json', 'datos/puntos.geojson', 'datos/sinonimos.json',
+  // El motor del mapa entra en la precarga a propósito: 388 KB comprimidos que
+  // se pagan en casa con wifi. Una app para la marisma sin cobertura no puede
+  // depender de bajarse MapLibre justo cuando no hay red. El .pmtiles NO está
+  // aquí: son 41 MB y tienen su propia descarga, con su barra y su permiso.
+  'vendor/maplibre-gl-5.24.0-csp.js', 'vendor/maplibre-gl-5.24.0-csp-worker.js',
+  'vendor/maplibre-gl-5.24.0.css', 'vendor/pmtiles-4.5.0.js',
 ];
 
 self.addEventListener('install', ev => {

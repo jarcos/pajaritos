@@ -141,6 +141,10 @@ function aplicarDatos(d) {
 /* --- tema ----------------------------------------------------------------- */
 function ponerTema(t) {
   document.documentElement.dataset.tema = t;
+  // El basemap lee sus colores del CSS, así que hay que reconstruir el estilo
+  // al cambiar de modo. Si no, el mapa se queda en modo día dentro de una app
+  // en modo noche, que en el campo es justo lo que no quieres.
+  if (typeof mapa !== 'undefined' && mapa) { try { mapa.setStyle(estiloMapa()); } catch (e) { /* aún cargando */ } }
   Pref.esc('tema', t);
   $$('#aj-tema button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.tema === t)));
   const c = { claro: '#EFEDE7', oscuro: '#14140F', exterior: '#ffffff' }[t];
@@ -1027,85 +1031,186 @@ $('#si-guardar').addEventListener('click', () => {
   brindis('Guardada para resolver en casa');
 });
 
-/* --- mapa esquemático ------------------------------------------------------ */
-/* MapLibre + PMTiles es el destino (spec §04). Hasta que el .pmtiles esté
-   medido y servido, se dibujan los puntos reales sobre sus coordenadas. */
+/* --- mapa: MapLibre + PMTiles ---------------------------------------------
+   Sustituye al esquema por coordenadas. El basemap es el .pmtiles de Huelva
+   servido desde el propio NAS con peticiones Range: sin claves, sin terceros
+   y sin que nadie sepa dónde mira el usuario.
+
+   LAS LIBRERÍAS SE CARGAN AL ABRIR EL MAPA, NO AL ARRANCAR. Son 388 KB
+   comprimidos, y quien abre la app para mirar la marea no tiene por qué
+   pagarlos. El Service Worker sí las precarga, así que en el campo ya están
+   en caché aunque no haya red: el coste se paga en casa, con wifi, y el
+   beneficio se cobra en la marisma.
+
+   El build `-csp` de MapLibre existe justamente para cabeceras como la
+   nuestra: script clásico, sin eval, y el worker declarado a mano desde el
+   propio origen con setWorkerUrl. */
+const MAPLIBRE = {
+  css: 'vendor/maplibre-gl-5.24.0.css',
+  js: 'vendor/maplibre-gl-5.24.0-csp.js',
+  worker: 'vendor/maplibre-gl-5.24.0-csp-worker.js',
+  pmtiles: 'vendor/pmtiles-4.5.0.js',
+  basemap: 'mapas/actual.pmtiles',
+};
+let cargando = null;
+function cargarMapLibre() {
+  if (cargando) return cargando;
+  const meter = (tag, at) => new Promise((ok, mal) => {
+    const n = el(tag, { ...at, onload: () => ok(), onerror: () => mal(new Error(at.src || at.href)) });
+    document.head.append(n);
+  });
+  cargando = (async () => {
+    await meter('link', { rel: 'stylesheet', href: MAPLIBRE.css });
+    await meter('script', { src: MAPLIBRE.js });
+    await meter('script', { src: MAPLIBRE.pmtiles });
+    maplibregl.setWorkerUrl(MAPLIBRE.worker);          // CSP: nada de blob:
+    maplibregl.addProtocol('pmtiles', new pmtiles.Protocol().tile);
+  })();
+  return cargando;
+}
+
+/* Colores del mapa = colores de la app. Se leen del CSS en vez de repetirlos
+   aquí, para que los tres modos de pantalla (día, exterior, noche) arrastren
+   también al basemap y no quede una isla con su propia paleta. */
+function tinta(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+
+/* Estilo mínimo, escrito a mano contra lo que el .pmtiles trae de verdad en
+   el Odiel: landuse/wetland es la marisma, water/basin son las salinas y
+   roads/footway son los senderos. Un tema genérico traería comercios,
+   gasolineras y etiquetas urbanas, que aquí son ruido y además pesan. */
+function estiloMapa() {
+  const papel = tinta('--papel'), relleno = tinta('--relleno'), linea = tinta('--linea');
+  const linea2 = tinta('--linea-2'), texto = tinta('--tinta-2'), mudo = tinta('--mudo');
+  const azul = tinta('--azul'), verde = tinta('--ok');
+  const fuente = { type: 'vector', url: `pmtiles://${MAPLIBRE.basemap}`, attribution: '© OpenStreetMap · Protomaps' };
+  const capa = (id, tipo, capaFuente, filtro, paint, extra = {}) =>
+    ({ id, type: tipo, source: 'basemap', 'source-layer': capaFuente, ...(filtro ? { filter: filtro } : {}), paint, ...extra });
+
+  return {
+    version: 8,
+    glyphs: null,                       // sin servidor de glifos: las etiquetas
+    sources: { basemap: fuente },       // van con la fuente del sistema
+    layers: [
+      { id: 'fondo', type: 'background', paint: { 'background-color': papel } },
+      capa('tierra', 'fill', 'earth', null, { 'fill-color': relleno }),
+
+      // Vegetación y arena, muy apagadas: son contexto, no protagonistas.
+      capa('bosque', 'fill', 'landuse', ['in', ['get', 'kind'], ['literal', ['wood', 'forest', 'scrub', 'meadow', 'grass']]],
+           { 'fill-color': verde, 'fill-opacity': 0.10 }),
+      capa('playa', 'fill', 'landuse', ['==', ['get', 'kind'], 'beach'],
+           { 'fill-color': '#D9CFB4', 'fill-opacity': 0.55 }),
+
+      // LA MARISMA. Es el motivo de la guía, así que se distingue del resto
+      // del verde con su propia tinta y un borde tenue.
+      capa('marisma', 'fill', 'landuse', ['==', ['get', 'kind'], 'wetland'],
+           { 'fill-color': azul, 'fill-opacity': 0.13 }),
+      capa('marisma-borde', 'line', 'landuse', ['==', ['get', 'kind'], 'wetland'],
+           { 'line-color': azul, 'line-opacity': 0.35, 'line-width': 0.8 }),
+
+      // Lo construido, en gris de fondo: el polígono industrial de Huelva es
+      // una referencia visual enorme para orientarse desde los observatorios.
+      capa('urbano', 'fill', 'landuse', ['in', ['get', 'kind'], ['literal', ['residential', 'industrial', 'commercial', 'retail']]],
+           { 'fill-color': linea2, 'fill-opacity': 0.45 }),
+
+      // Agua. Las balsas de salinas (basin) van un punto más claras que el
+      // río, que es como se ven desde arriba y ayuda a situarse.
+      capa('agua', 'fill', 'water', ['!=', ['get', 'kind'], 'basin'], { 'fill-color': azul, 'fill-opacity': 0.45 }),
+      capa('salinas', 'fill', 'water', ['==', ['get', 'kind'], 'basin'], { 'fill-color': azul, 'fill-opacity': 0.26 }),
+      capa('salinas-borde', 'line', 'water', ['==', ['get', 'kind'], 'basin'],
+           { 'line-color': azul, 'line-opacity': 0.5, 'line-width': 0.6 }),
+      capa('canales', 'line', 'water', ['==', ['geometry-type'], 'LineString'],
+           { 'line-color': azul, 'line-opacity': 0.55, 'line-width': ['interpolate', ['linear'], ['zoom'], 10, 0.6, 15, 2.5] }),
+
+      capa('carretera', 'line', 'roads', ['in', ['get', 'kind'], ['literal', ['motorway', 'major_road']]],
+           { 'line-color': linea2, 'line-width': ['interpolate', ['linear'], ['zoom'], 9, 0.8, 15, 4] }),
+      capa('calle', 'line', 'roads', ['==', ['get', 'kind'], 'minor_road'],
+           { 'line-color': linea, 'line-width': ['interpolate', ['linear'], ['zoom'], 12, 0.5, 15, 2] }),
+
+      // SENDEROS. Discontinuos y en tinta, no en gris: son por donde se anda,
+      // y en una marisma saber si hay paso o no cambia la salida entera.
+      capa('sendero', 'line', 'roads', ['in', ['get', 'kind'], ['literal', ['footway', 'path', 'cycleway', 'track']]],
+           { 'line-color': mudo, 'line-width': ['interpolate', ['linear'], ['zoom'], 12, 0.8, 16, 2],
+             'line-dasharray': [2, 2], 'line-opacity': 0.8 }),
+
+      capa('edificio', 'fill', 'buildings', null,
+           { 'fill-color': linea2, 'fill-opacity': ['interpolate', ['linear'], ['zoom'], 14, 0, 16, 0.5] }),
+    ].filter(Boolean),
+  };
+}
+
+/* Los 17 puntos NO son una capa del basemap: son marcadores HTML. Así llevan
+   su etiqueta con la tipografía de la app y sin necesitar un servidor de
+   glifos —que sería otra dependencia y otro par de MB en la precarga—, y de
+   paso siguen siendo botones de verdad, con foco y tamaño de toque. */
+let mapa = null, marcadores = [], marcaPos = null;
+
+function marcadorPunto(p) {
+  const sel = E.mapa.sel === p.id;
+  const n = el('button', {
+    class: 'pin' + (sel ? ' sel' : '') + ' t-' + p.tipo, type: 'button',
+    'aria-label': p.nombre, title: p.nombre,
+  }, el('i'), el('span', { text: p.nombre }));
+  n.addEventListener('click', ev => {
+    ev.stopPropagation();
+    E.mapa.sel = p.id;
+    pintarMapa();
+  });
+  return n;
+}
+
 function pintarMapa() {
-  const svg = $('#svg-mapa');
   const caps = vaciar($('#mapa-capas'));
   [['observatorio', 'Observatorios'], ['sendero', 'Senderos'], ['zona', 'Zonas']].forEach(([k, et]) =>
     caps.append(el('button', { class: 'chip' + (E.mapa.capas[k] ? ' on' : ''), type: 'button',
       onclick: () => { E.mapa.capas[k] = !E.mapa.capas[k]; pintarMapa(); } }, et)));
 
-  const pts = E.puntos.filter(p => E.mapa.capas.observatorio || p.tipo !== 'observatorio')
-                      .filter(p => E.mapa.capas.sendero || p.tipo !== 'sendero');
-  const lons = pts.map(p => p.lon), lats = pts.map(p => p.lat);
-  const pad = 0.12;
-  const x0 = Math.min(...lons) - pad, x1 = Math.max(...lons) + pad;
-  const y0 = Math.min(...lats) - pad, y1 = Math.max(...lats) + pad;
-  const z = E.mapa.zoom;
-  const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
-  const px = v => 200 + ((v - cx) / (x1 - x0)) * 380 * z;
-  const py = v => 230 - ((v - cy) / (y1 - y0)) * 420 * z;
+  pintarTarjetaMapa();
 
-  vaciar(svg);
-  const ns = 'http://www.w3.org/2000/svg';
-  const mk = (t, at) => { const n = document.createElementNS(ns, t);
-    for (const [k, v] of Object.entries(at)) if (v !== null) n.setAttribute(k, v); return n; };
-  svg.append(mk('rect', { x: 0, y: 0, width: 400, height: 460, fill: 'var(--relleno)' }));
-  // retícula de referencia, medio grado
-  for (let g = Math.ceil(x0 * 2) / 2; g < x1; g += 0.5)
-    svg.append(mk('line', { x1: px(g), y1: 0, x2: px(g), y2: 460, stroke: 'var(--linea)', 'stroke-width': 1 }));
-  for (let g = Math.ceil(y0 * 2) / 2; g < y1; g += 0.5)
-    svg.append(mk('line', { x1: 0, y1: py(g), x2: 400, y2: py(g), stroke: 'var(--linea)', 'stroke-width': 1 }));
-
-  if (E.mapa.capas.zona) E.zonas.forEach(zn => {
-    if (!zn.centro) return;
-    svg.append(mk('circle', { cx: px(zn.centro[0]), cy: py(zn.centro[1]), r: 26 * z,
-      fill: 'none', stroke: 'var(--linea-2)', 'stroke-width': 1.5, 'stroke-dasharray': '4 4' }));
-  });
-  // El seleccionado se dibuja el último para quedar por encima.
-  const orden = pts.slice().sort((a, b) => (a.id === E.mapa.sel) - (b.id === E.mapa.sel));
-  // Los propios marcadores ocupan sitio: ninguna etiqueta se dibuja encima de un punto.
-  const puestas = pts.map(q => ({ x: px(q.lon) - 10, y: py(q.lat) - 10, w: 20, h: 20 }));
-  const selP = pts.find(q => q.id === E.mapa.sel);
-  if (selP) puestas.unshift({ x: px(selP.lon) + 10, y: py(selP.lat) - 6, w: 90, h: 13 });
-  orden.forEach(p => {
-    const X = px(p.lon), Y = py(p.lat), sel = E.mapa.sel === p.id;
-    const g = mk('g', { style: 'cursor:pointer' });
-    const tit = mk('title', {}); tit.textContent = p.nombre; g.append(tit);
-    g.append(mk('circle', { cx: X, cy: Y, r: sel ? 11 : 7,
-      fill: sel ? 'var(--azul)' : 'var(--sup)', stroke: 'var(--tinta)', 'stroke-width': 2 }));
-    if (p.tipo === 'centro') g.append(mk('rect', { x: X - 3, y: Y - 3, width: 6, height: 6, fill: 'var(--tinta)' }));
-
-    let et = p.nombre.replace(/^Observatorio de |^Observatorio del |^C\.V\. |^C\.O\. |^Mirador de /, '');
-    if (et.length > 22) et = et.slice(0, 21) + '…';
-    const ancho = et.length * 5.8 + 8, alto = 13;
-    const derecha = X + 13 + ancho < 396;              // si no cabe, la etiqueta va a la izquierda
-    const ex = derecha ? X + 13 : X - 13 - ancho;
-    const caja = { x: ex, y: Y - 6, w: ancho, h: alto };
-    const mio = { x: X - 10, y: Y - 10, w: 20, h: 20 };
-    const choca = puestas.some(q => q !== mio && !(caja.x > q.x + q.w || caja.x + caja.w < q.x
-                                   || caja.y > q.y + q.h || caja.y + caja.h < q.y)
-                                 && !(Math.abs(q.x - mio.x) < 1 && Math.abs(q.y - mio.y) < 1));
-    if (sel || (!choca && z > 0.9)) {
-      puestas.push(caja);
-      g.append(mk('rect', { x: caja.x - 3, y: caja.y, width: ancho, height: alto,
-        rx: 3, fill: 'var(--sup)', opacity: .88 }));
-      const t = mk('text', { x: ex, y: Y + 4, 'font-size': 9.5,
-        fill: sel ? 'var(--tinta)' : 'var(--tinta-2)', 'font-family': 'var(--mono)',
-        'font-weight': sel ? 700 : 400 });
-      t.textContent = et;
-      g.append(t);
+  cargarMapLibre().then(() => {
+    if (!mapa) {
+      const lons = E.puntos.map(p => p.lon), lats = E.puntos.map(p => p.lat);
+      mapa = new maplibregl.Map({
+        container: 'mapa-gl',
+        style: estiloMapa(),
+        bounds: [[Math.min(...lons), Math.min(...lats)], [Math.max(...lons), Math.max(...lats)]],
+        fitBoundsOptions: { padding: 36 },
+        attributionControl: false,       // la atribución ya está en el HTML
+        maxZoom: 15,                     // el techo del .pmtiles; más allá no hay dato
+        dragRotate: false,               // el norte se queda arriba: en el campo
+        pitchWithRotate: false,          // se compara con el mapa de papel
+        touchZoomRotate: true,
+      });
+      mapa.touchZoomRotate.disableRotation();
+      mapa.on('error', e => {
+        // Un basemap que no carga no puede dejar la pantalla en blanco sin decirlo.
+        console.warn('[mapa]', e && e.error && e.error.message);
+        $('#mapa-aviso').textContent = 'El basemap no ha cargado. Los puntos siguen en su sitio.';
+        $('#mapa-aviso').classList.remove('oculto');
+      });
+      mapa.on('load', () => $('#mapa-aviso').classList.add('oculto'));
     }
-    g.addEventListener('click', () => { E.mapa.sel = p.id; pintarMapa(); });
-    svg.append(g);
-  });
-  if (E.ubicacion.coords) {
-    const [lo, la] = E.ubicacion.coords;
-    svg.append(mk('circle', { cx: px(lo), cy: py(la), r: 7, fill: 'var(--azul)', stroke: 'var(--sup)', 'stroke-width': 3 }));
-  }
+    marcadores.forEach(m => m.remove());
+    marcadores = E.puntos
+      .filter(p => E.mapa.capas.observatorio || p.tipo !== 'observatorio')
+      .filter(p => E.mapa.capas.sendero || p.tipo !== 'sendero')
+      .map(p => new maplibregl.Marker({ element: marcadorPunto(p), anchor: 'bottom' })
+        .setLngLat([p.lon, p.lat]).addTo(mapa));
 
+    if (E.ubicacion.coords) {
+      if (marcaPos) marcaPos.remove();
+      marcaPos = new maplibregl.Marker({ element: el('div', { class: 'pos-yo', 'aria-label': 'Tu posición' }) })
+        .setLngLat(E.ubicacion.coords).addTo(mapa);
+    }
+    const sel = E.puntos.find(p => p.id === E.mapa.sel);
+    if (sel) mapa.easeTo({ center: [sel.lon, sel.lat], duration: 400 });
+  }).catch(err => {
+    console.warn('[mapa] no se pudieron cargar las librerías', err);
+    $('#mapa-aviso').textContent = 'No se ha podido cargar el mapa. Prueba con conexión y quedará guardado.';
+    $('#mapa-aviso').classList.remove('oculto');
+  });
+}
+
+function pintarTarjetaMapa() {
   const sel = E.puntos.find(p => p.id === E.mapa.sel);
   const z0 = sel ? zonaId(sel.zona) : null;
   $('#mapa-sub').textContent = z0 ? `${z0.nombre} · ${E.puntos.filter(p => p.zona === z0.id).length} puntos`
@@ -1119,14 +1224,15 @@ function pintarMapa() {
     : 'Toca un punto del mapa para ver su ficha y empezar una salida ahí.';
   $('#btn-ver-zona').disabled = !sel; $('#btn-salida-aqui').disabled = !sel;
 }
+
 function distancia([lo1, la1], [lo2, la2]) {
   const R = 6371000, r = Math.PI / 180;
   const dφ = (la2 - la1) * r, dλ = (lo2 - lo1) * r;
   const a = Math.sin(dφ / 2) ** 2 + Math.cos(la1 * r) * Math.cos(la2 * r) * Math.sin(dλ / 2) ** 2;
   return 2 * R * Math.asin(Math.sqrt(a));
 }
-$('#mapa-mas').addEventListener('click', () => { E.mapa.zoom = Math.min(3, E.mapa.zoom * 1.4); pintarMapa(); });
-$('#mapa-menos').addEventListener('click', () => { E.mapa.zoom = Math.max(0.5, E.mapa.zoom / 1.4); pintarMapa(); });
+$('#mapa-mas').addEventListener('click', () => mapa && mapa.zoomIn());
+$('#mapa-menos').addEventListener('click', () => mapa && mapa.zoomOut());
 $('#mapa-pos').addEventListener('click', pedirUbicacion);
 $('#btn-ver-zona').addEventListener('click', () => {
   const p = E.puntos.find(x => x.id === E.mapa.sel); if (p) abrirZona(zonaId(p.zona));
@@ -1137,23 +1243,11 @@ $('#btn-salida-aqui').addEventListener('click', () => {
   Pref.esc('zona', p.zona); prepararSalida(p.zona);
   setTimeout(() => { $('#he-punto').value = p.id; }, 0);
 });
-/* Pellizco: solo en el mapa. */
-(() => {
-  const caja = $('#lienzo-mapa'); const act = new Map(); let d0 = null, z0 = 1;
-  caja.addEventListener('pointerdown', e => act.set(e.pointerId, e));
-  caja.addEventListener('pointermove', e => {
-    if (!act.has(e.pointerId)) return;
-    act.set(e.pointerId, e);
-    if (act.size !== 2) return;
-    const [a, b] = [...act.values()];
-    const d = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
-    if (d0 === null) { d0 = d; z0 = E.mapa.zoom; return; }
-    E.mapa.zoom = Math.max(0.5, Math.min(3, z0 * (d / d0)));
-    pintarMapa();
-  });
-  ['pointerup', 'pointercancel', 'pointerleave'].forEach(t =>
-    caja.addEventListener(t, e => { act.delete(e.pointerId); if (act.size < 2) d0 = null; }));
-})();
+/* El pellizco lo lleva ahora MapLibre, que además hace inercia y doble toque
+   como se espera de un mapa. El manejador a mano que había aquí escalaba un
+   SVG; dejarlo puesto habría significado dos cosas peleándose por el mismo
+   gesto. El wireframe sigue cumpliéndose: pellizco SOLO en el mapa, porque
+   MapLibre solo existe dentro de #lienzo-mapa. */
 
 /* --- geolocalización (opt-in, nunca sale del dispositivo) ----------------- */
 let vigilando = null;

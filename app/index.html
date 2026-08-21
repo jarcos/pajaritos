@@ -292,7 +292,32 @@ html[data-tema="oscuro"] .btn.pri{color:#14140F}
 /* --- mapa ----------------------------------------------------------------- */
 #lienzo-mapa{position:relative;flex:1 1 auto;min-height:320px;border:1px solid var(--linea);border-radius:var(--r);
              overflow:hidden;background:var(--relleno);touch-action:none}
-#lienzo-mapa svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+/* --- mapa MapLibre -------------------------------------------------------- */
+#mapa-gl{position:absolute;inset:0}
+#mapa-gl canvas{outline:none}
+/* MapLibre pinta sobre fondo transparente si el estilo tarda; este color evita
+   el parpadeo blanco al abrir la pestaña en modo noche. */
+#lienzo-mapa{background:var(--papel)}
+
+/* Los 17 puntos son botones, no iconos: 44 px de área de toque, foco visible
+   y etiqueta legible sin necesitar servidor de glifos. */
+.pin{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:0;padding:6px 4px;cursor:pointer;
+     font:600 10px/1.2 var(--mono);color:var(--tinta-2);min-width:44px;min-height:44px;justify-content:flex-end}
+.pin i{width:12px;height:12px;border-radius:50%;background:var(--sup);border:2.5px solid var(--tinta);display:block}
+.pin.t-sendero i{border-radius:2px;transform:rotate(45deg)}
+.pin.t-centro i{border-radius:3px}
+.pin span{max-width:96px;text-align:center;background:var(--sup);padding:1px 4px;border-radius:3px;
+          border:1px solid var(--linea);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pin.sel i{background:var(--azul);border-color:var(--azul);width:16px;height:16px}
+.pin.sel span{border-color:var(--azul);color:var(--azul);font-weight:700}
+.pin:focus-visible{outline:2px solid var(--azul);outline-offset:2px;border-radius:6px}
+.pos-yo{width:16px;height:16px;border-radius:50%;background:var(--azul);border:3px solid var(--sup);
+        box-shadow:0 0 0 1px var(--azul)}
+
+/* Un basemap que no carga no puede dejar la pantalla en blanco sin explicarse. */
+#mapa-aviso{position:absolute;left:10px;right:10px;top:10px;z-index:2;
+            background:var(--sup);border:1px solid var(--linea);border-radius:var(--r);
+            padding:8px 10px;font:400 12px/1.4 var(--mono);color:var(--tinta-2)}
 .mapa-ctl{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:6px;z-index:3}
 .mapa-ctl button{width:var(--tap);height:var(--tap);border:2px solid var(--tinta);border-radius:var(--r-s);
                  background:var(--sup);font:700 20px/1 var(--sans);display:grid;place-items:center}
@@ -441,8 +466,8 @@ html[data-tema="oscuro"] .btn.pri{color:#14140F}
         <div class="sub" id="mapa-sub">—</div>
       </div>
       <div id="lienzo-mapa">
-        <svg id="svg-mapa" viewBox="0 0 400 460" preserveAspectRatio="xMidYMid slice" aria-label="Mapa esquemático de puntos de observación"></svg>
-        <div class="mapa-nota">Esquema por coordenadas · basemap PMTiles pendiente</div>
+        <div id="mapa-gl" aria-label="Mapa de los puntos de observación"></div>
+        <div id="mapa-aviso" class="oculto"></div>
         <div class="mapa-ctl">
           <button id="mapa-mas" aria-label="Acercar">+</button>
           <button id="mapa-menos" aria-label="Alejar">−</button>
@@ -805,6 +830,6 @@ html[data-tema="oscuro"] .btn.pri{color:#14140F}
 <!-- Versionado en la URL: index.html va con no-cache pero app.js se cachea en
      el borde 4 h. Sin esta marca, un redespliegue serviria JS viejo con HTML
      nuevo. Mismo criterio que el .pmtiles versionado por nombre. -->
-<script src="app.js?v=2026-08-21c" defer></script>
+<script src="app.js?v=2026-08-21d" defer></script>
 </body>
 </html>
