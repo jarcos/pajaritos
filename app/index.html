@@ -311,6 +311,8 @@ html[data-tema="oscuro"] .btn.pri{color:#14140F}
 .pin.sel i{background:var(--azul);border-color:var(--azul);width:16px;height:16px}
 .pin.sel span{border-color:var(--azul);color:var(--azul);font-weight:700}
 .pin:focus-visible{outline:2px solid var(--azul);outline-offset:2px;border-radius:6px}
+#lienzo-mapa.lejos .pin span{display:none}
+#lienzo-mapa.lejos .pin.sel span{display:block}
 .pos-yo{width:16px;height:16px;border-radius:50%;background:var(--azul);border:3px solid var(--sup);
         box-shadow:0 0 0 1px var(--azul)}
 
@@ -830,6 +832,6 @@ html[data-tema="oscuro"] .btn.pri{color:#14140F}
 <!-- Versionado en la URL: index.html va con no-cache pero app.js se cachea en
      el borde 4 h. Sin esta marca, un redespliegue serviria JS viejo con HTML
      nuevo. Mismo criterio que el .pmtiles versionado por nombre. -->
-<script src="app.js?v=2026-08-21d" defer></script>
+<script src="app.js?v=2026-08-21e" defer></script>
 </body>
 </html>

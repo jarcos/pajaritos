@@ -1088,8 +1088,13 @@ function estiloMapa() {
 
   return {
     version: 8,
-    glyphs: null,                       // sin servidor de glifos: las etiquetas
-    sources: { basemap: fuente },       // van con la fuente del sistema
+    // Sin `glyphs`. La clave no admite null --el estilo entero se rechaza con
+    // «glyphs: string expected, null found» y el mapa se queda en blanco-- y
+    // omitirla es lo correcto aquí: no hay capas de texto porque las etiquetas
+    // las ponen los marcadores HTML, con la tipografía de la app. El precio es
+    // que el basemap no rotula ríos ni parajes; si algún día hace falta,
+    // Protomaps publica un paquete de glifos que habría que autoalojar.
+    sources: { basemap: fuente },
     layers: [
       { id: 'fondo', type: 'background', paint: { 'background-color': papel } },
       capa('tierra', 'fill', 'earth', null, { 'fill-color': relleno }),
@@ -1188,6 +1193,11 @@ function pintarMapa() {
         $('#mapa-aviso').classList.remove('oculto');
       });
       mapa.on('load', () => $('#mapa-aviso').classList.add('oculto'));
+      // Con 17 puntos juntos, las etiquetas se solapan al alejarse y el mapa
+      // se vuelve ilegible justo en la vista de conjunto. Por debajo de z12
+      // solo queda el punto; el nombre lo lleva la tarjeta de abajo.
+      const ajustarEtiquetas = () => $('#lienzo-mapa').classList.toggle('lejos', mapa.getZoom() < 12);
+      mapa.on('zoom', ajustarEtiquetas); mapa.on('load', ajustarEtiquetas);
     }
     marcadores.forEach(m => m.remove());
     marcadores = E.puntos

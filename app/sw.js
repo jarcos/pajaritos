@@ -8,9 +8,9 @@
 */
 // Al cambiar V se purgan las cachés viejas en `activate`. Súbelo siempre que
 // cambie la lista de abajo o la versión de app.js.
-const V = 'odiel-v8';
+const V = 'odiel-v9';
 const ARMAZON = [
-  './', 'index.html', 'app.js?v=2026-08-21d', 'manifest.webmanifest', 'icono.svg',
+  './', 'index.html', 'app.js?v=2026-08-21e', 'manifest.webmanifest', 'icono.svg',
   'datos/especies.json', 'datos/zonas.json', 'datos/puntos.geojson', 'datos/sinonimos.json',
   // El motor del mapa entra en la precarga a propósito: 388 KB comprimidos que
   // se pagan en casa con wifi. Una app para la marisma sin cobertura no puede
