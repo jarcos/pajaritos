@@ -36,11 +36,12 @@ from __future__ import annotations
 
 import json
 import os
+import ssl
+import smtplib
 import re
+from email.message import EmailMessage
 import sqlite3
 import time
-import urllib.parse
-import urllib.request
 from contextlib import closing
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -158,26 +159,47 @@ def guardar(r: dict) -> int:
 
 
 def avisar(r: dict, rid: int) -> None:
-    """Aviso por Mailgun EU. Si falla, el reporte YA está en la base de datos:
-    el correo es una comodidad, no el almacenamiento."""
-    clave, dominio = os.environ.get("MAILGUN_API_KEY"), os.environ.get("MAILGUN_DOMAIN")
+    """Aviso por SMTP. Si falla, el reporte YA está en la base de datos: el
+    correo es una comodidad, no el almacenamiento.
+
+    POR QUÉ SMTP Y NO LA API DE MAILGUN. La primera versión usaba la API HTTP
+    con MAILGUN_API_KEY. Al ir a configurarla apareció que Mailgun solo enseña
+    el secreto de una clave en el momento de crearla —el panel guarda el Key
+    ID, no el valor— y la cuenta ya tenía sus dos claves gastadas, una de
+    ellas en uso. Las credenciales SMTP, en cambio, ya estaban funcionando en
+    biblioHack y en monitoring, así que esto no añade ningún secreto nuevo al
+    inventario: reutiliza el que ya se mantiene y se rota.
+
+    Se aceptan los dos juegos de nombres que hay en la casa: SMTP_USER/
+    SMTP_PASS (monitoring) y SMTP_USERNAME/SMTP_PASSWORD (biblioHack).
+    """
+    servidor = os.environ.get("SMTP_HOST")
+    usuario = os.environ.get("SMTP_USER") or os.environ.get("SMTP_USERNAME")
+    clave = os.environ.get("SMTP_PASS") or os.environ.get("SMTP_PASSWORD")
     destino = os.environ.get("ALERT_EMAIL")
-    if not (clave and dominio and destino):
-        log("info", "aviso omitido: Mailgun sin configurar")
+    if not (servidor and usuario and clave and destino):
+        log("info", "aviso omitido: SMTP sin configurar")
         return
-    base = os.environ.get("MAILGUN_BASE_URL", "https://api.eu.mailgun.net/v3")
-    cuerpo = urllib.parse.urlencode({
-        "from": f"pajaritos <noreply@{dominio}>",
-        "to": destino,
-        "subject": f"[pajaritos] reporte #{rid}: {r['tipo']} · {r['especie'] or 'general'}",
-        "text": json.dumps(r, ensure_ascii=False, indent=1),
-    }).encode()
-    req = urllib.request.Request(f"{base}/{dominio}/messages", data=cuerpo, method="POST")
-    import base64
-    req.add_header("Authorization", "Basic " + base64.b64encode(f"api:{clave}".encode()).decode())
+    puerto = int(os.environ.get("SMTP_PORT", "587"))
+    remite = os.environ.get("SMTP_FROM", usuario)
+
+    msg = EmailMessage()
+    msg["From"] = f"pajaritos <{remite}>"
+    msg["To"] = destino
+    msg["Subject"] = f"[pajaritos] reporte #{rid}: {r['tipo']} · {r['especie'] or 'general'}"
+    msg.set_content(json.dumps(r, ensure_ascii=False, indent=1))
+
     try:
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            log("info", "aviso enviado", status=resp.status, id=rid)
+        # Timeout corto a propósito: esto corre dentro de la petición del
+        # usuario y el reporte ya está guardado. Más vale un correo perdido
+        # que dejar colgada la respuesta de quien está en el campo.
+        with smtplib.SMTP(servidor, puerto, timeout=10) as s:
+            s.ehlo()
+            s.starttls(context=ssl.create_default_context())
+            s.ehlo()
+            s.login(usuario, clave)
+            s.send_message(msg)
+        log("info", "aviso enviado", id=rid, destino=destino)
     except Exception as e:                          # noqa: BLE001
         log("warn", "aviso falló", error=f"{type(e).__name__}: {e}", id=rid)
 
