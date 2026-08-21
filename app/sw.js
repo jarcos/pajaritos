@@ -8,9 +8,12 @@
 */
 // Al cambiar V se purgan las cachés viejas en `activate`. Súbelo siempre que
 // cambie la lista de abajo o la versión de app.js.
-const V = 'odiel-v11';
+const V = 'odiel-v12';
+// El mapa vive en su propia caché, sin versión: son 41 MB que el usuario ha
+// descargado a mano y no se tiran por subir V. `activate` la deja en paz.
+const C_MAPA = 'odiel-mapa';
 const ARMAZON = [
-  './', 'index.html', 'app.js?v=2026-08-21f', 'manifest.webmanifest', 'icono.svg',
+  './', 'index.html', 'app.js?v=2026-08-21g', 'manifest.webmanifest', 'icono.svg',
   'datos/especies.json', 'datos/zonas.json', 'datos/puntos.geojson', 'datos/sinonimos.json',
   // El motor del mapa entra en la precarga a propósito: 388 KB comprimidos que
   // se pagan en casa con wifi. Una app para la marisma sin cobertura no puede
@@ -31,13 +34,40 @@ self.addEventListener('install', ev => {
 self.addEventListener('activate', ev => {
   ev.waitUntil((async () => {
     const claves = await caches.keys();
-    await Promise.all(claves.filter(k => k !== V).map(k => caches.delete(k)));
+    await Promise.all(claves.filter(k => k !== V && k !== C_MAPA).map(k => caches.delete(k)));
     await self.clients.claim();
   })());
 });
 
 const esFoto = u => u.pathname.includes('/fotos/');
 const esTesela = u => u.pathname.endsWith('.pmtiles');
+
+/* El .pmtiles se guarda entero, en una sola entrada y como 200, porque la
+   Cache API rechaza por especificación guardar una respuesta 206. Aquí se
+   sirven los rangos que pide pmtiles cortando ese cuerpo: Blob.slice es
+   perezoso, no copia los 41 MB en memoria. Si no está guardado, a la red. */
+async function servirMapa(req, url) {
+  const guardada = await (await caches.open(C_MAPA)).match(url.pathname);
+  if (!guardada) return fetch(req);              // sin descargar: rango a la red
+
+  const rango = req.headers.get('range');
+  if (!rango) return guardada;
+
+  const m = /bytes=(\d+)-(\d*)/.exec(rango);
+  if (!m) return guardada;
+  const cuerpo = await guardada.blob();
+  const ini = Number(m[1]);
+  const fin = m[2] ? Math.min(Number(m[2]), cuerpo.size - 1) : cuerpo.size - 1;
+  if (ini >= cuerpo.size || fin < ini) {
+    return new Response(null, { status: 416,
+      headers: { 'Content-Range': `bytes */${cuerpo.size}` } });
+  }
+  return new Response(cuerpo.slice(ini, fin + 1), { status: 206, headers: {
+    'Content-Type': 'application/octet-stream',
+    'Content-Range': `bytes ${ini}-${fin}/${cuerpo.size}`,
+    'Content-Length': String(fin - ini + 1),
+    'Accept-Ranges': 'bytes' } });
+}
 
 self.addEventListener('fetch', ev => {
   const req = ev.request;
@@ -58,13 +88,16 @@ self.addEventListener('fetch', ev => {
     return;
   }
 
-  // Fotos y teselas: caché primero; se acumulan con el uso.
-  if (esFoto(url) || esTesela(url)) {
+  // Mapa: entrada única guardada por la descarga previa, servida por rangos.
+  if (esTesela(url)) { ev.respondWith(servirMapa(req, url)); return; }
+
+  // Fotos: caché primero; se acumulan con el uso.
+  if (esFoto(url)) {
     ev.respondWith((async () => {
       const hit = await caches.match(req);
       if (hit) return hit;
       const r = await fetch(req);
-      if (r.ok || r.status === 206) (await caches.open(V)).put(req, r.clone()).catch(() => {});
+      if (r.ok) ev.waitUntil((await caches.open(V)).put(req, r.clone()));
       return r;
     })());
     return;

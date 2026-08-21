@@ -1343,17 +1343,31 @@ async function vaciarCola() {
 const TRAMOS = [
   { k: 'app', nom: 'Interfaz y datos de la guía', mb: 0.45, fijo: true },
   { k: 'fotos', nom: 'Fotos de especie', mb: 0 },
-  { k: 'mapa', nom: 'Teselas del mapa', mb: 0 },
+  { k: 'mapa', nom: 'Mapa de Huelva sin conexión', mb: 0 },
   { k: 'mareas', nom: 'Mareas descargadas', mb: 0.04, fijo: true },
 ];
-function pintarAjustes() {
+let tamMapa = 0;                        // lo que dice el servidor que pesa el mapa
+async function pintarAjustes() {
   const pend = E.especies.filter(e => e.foto.estado === 'pendiente').length;
   $('#aj-descarga-txt').textContent =
     `${E.especies.length - pend} fotos · mapa de Huelva · mareas de ${diasRestantes()} días · ${pend} fichas con foto pendiente`;
 
   const desc = Pref.leer('descargado', {});
   TRAMOS[1].mb = (desc.fotos || 0) * 0.12;
-  TRAMOS[2].mb = desc.mapa || 0;
+  // El mapa se mide contra la caché real, no contra lo que anotamos: si el
+  // navegador tira la caché por falta de espacio, aquí tiene que notarse.
+  const guardado = await mapaGuardado();
+  TRAMOS[2].mb = guardado / 1048576;
+  // Y antes de pedirle a nadie que se descargue algo, decirle cuánto pesa. El
+  // dato sale del servidor (un Range de un byte), no de una constante que
+  // envejece con cada rebuild del .pmtiles.
+  if (!guardado && !tamMapa && navigator.onLine) {
+    try { tamMapa = await tamanoMapa(); } catch { /* sin red: se dirá luego */ }
+  }
+  if (!descarga) {
+    $('#btn-descargar').textContent = guardado ? 'Volver a descargar'
+      : tamMapa ? `Descargar · ${(tamMapa / 1048576).toFixed(0)} MB` : 'Descargar';
+  }
   const total = TRAMOS.reduce((n, t) => n + t.mb, 0);
   $('#aj-total').textContent = total >= 1 ? `${total.toFixed(0)} MB` : `${Math.round(total * 1024)} KB`;
   const cont = vaciar($('#aj-tramos'));
@@ -1361,9 +1375,11 @@ function pintarAjustes() {
     el('div', { class: 'txt' }, el('div', { class: 'nom', text: t.nom }),
       el('div', { class: 'mb', text: t.mb >= 1 ? `${t.mb.toFixed(0)} MB` : `${Math.round(t.mb * 1024)} KB` })),
     t.fijo || !t.mb ? el('span', { class: 'mb', text: t.fijo ? 'imprescindible' : 'sin descargar' })
-      : el('button', { type: 'button', text: 'Borrar', onclick: () => {
-          const d = Pref.leer('descargado', {}); delete d[t.k === 'fotos' ? 'fotos' : 'mapa'];
-          Pref.esc('descargado', d); pintarAjustes(); brindis(`${t.nom}: borrado`); } }))));
+      : el('button', { type: 'button', text: 'Borrar', onclick: async () => {
+          const d = Pref.leer('descargado', {});
+          if (t.k === 'mapa') await borrarMapa();      // liberar de verdad los 41 MB
+          delete d[t.k === 'fotos' ? 'fotos' : 'mapa'];
+          Pref.esc('descargado', d); await pintarAjustes(); brindis(`${t.nom}: borrado`); } }))));
 
   $('#aj-ubi').setAttribute('aria-checked', String(E.ubicacion.estado === 'on'));
   $('#aj-ubi-est').textContent = { on: 'Activada', off: 'Desactivada', denegada: 'Denegada por el navegador',
@@ -1402,35 +1418,102 @@ $('#btn-remarea').addEventListener('click', async () => {
 });
 $('#sc-volver').addEventListener('click', () => { cerrarCapa(); ir('hoy'); });
 
-/* --- descarga previa por trozos ------------------------------------------- */
-/* Por trozos y no en un único GET: los túneles cortan las descargas largas. */
-let descarga = null;
-$('#btn-descargar').addEventListener('click', () => {
-  if (descarga) { pararDescarga(); return; }
-  const totalMB = 268;                          // por medir con el .pmtiles real
-  let hechoMB = 0;
+/* --- descarga previa del basemap ------------------------------------------
+   Por tramos y no en un único GET: los túneles cortan las descargas largas, y
+   además así hay barra de progreso honesta y se puede pausar.
+
+   LO QUE SE GUARDA ES EL FICHERO ENTERO, EN UNA SOLA ENTRADA DE CACHÉ. No los
+   tramos sueltos, porque la Cache API RECHAZA por especificación guardar una
+   respuesta 206 —el `cache.put` lanza— y eso era justo lo que el sw intentaba
+   hacer con un `.catch(() => {})` que se comía el error. Resultado: el mapa no
+   se guardaba nunca y la barra de «descarga» era un contador inventado. Ahora
+   el fichero se arma aquí y el Service Worker sirve los rangos cortándolo. */
+const MAPA_URL = 'mapas/actual.pmtiles';
+const TROZO = 4 * 1024 * 1024;          // bastante para que el túnel no se
+                                        // aburra, poco para no perder mucho
+                                        // si se corta a mitad
+// Caché aparte y SIN versión: el mapa son 41 MB que el usuario ha bajado a
+// propósito, y no puede evaporarse cada vez que subimos V por tocar el CSS.
+// El `activate` del sw la respeta explícitamente.
+const CACHE_MAPA = 'odiel-mapa';
+let descarga = null;                    // { partes, hechos, total, parar }
+
+async function tamanoMapa() {
+  // Un Range de un byte devuelve el total en Content-Range sin traerse nada.
+  const r = await fetch(MAPA_URL, { headers: { Range: 'bytes=0-0' } });
+  const m = /\/(\d+)$/.exec(r.headers.get('content-range') || '');
+  if (!m) throw new Error('el servidor no responde a peticiones de rango');
+  return Number(m[1]);
+}
+
+// Lo que hay guardado de verdad, no lo que dijimos que guardamos.
+async function mapaGuardado() {
+  if (!('caches' in self)) return 0;
+  const r = await (await caches.open(CACHE_MAPA)).match(MAPA_URL);
+  return r ? Number(r.headers.get('content-length') || 0) : 0;
+}
+
+async function borrarMapa() {
+  await (await caches.open(CACHE_MAPA)).delete(MAPA_URL);
+  descarga = null;
+}
+
+function pintarProgreso(hechos, total) {
+  $('#aj-barra').style.width = `${total ? (hechos / total) * 100 : 0}%`;
+  const mb = n => (n / 1048576).toFixed(n < 10485760 ? 1 : 0);
+  $('#aj-progreso-txt').textContent = `${mb(hechos)} de ${mb(total)} MB · mapa de Huelva`;
+}
+
+async function descargarMapa() {
+  const total = await tamanoMapa();
+  const est = descarga || { partes: [], hechos: 0, total, parar: false };
+  est.total = total; est.parar = false;
+  descarga = est;
   $('#aj-progreso').classList.remove('oculto');
   $('#btn-descargar').textContent = 'Descargando…';
   $('#btn-pausar').textContent = 'Pausar';
-  const tramo = () => {
-    hechoMB = Math.min(totalMB, hechoMB + 6);
-    $('#aj-barra').style.width = `${(hechoMB / totalMB) * 100}%`;
-    $('#aj-progreso-txt').textContent = `${hechoMB} de ${totalMB} MB · mapa de Huelva`;
-    if (hechoMB >= totalMB) {
-      pararDescarga();
-      Pref.esc('descargado', { ...Pref.leer('descargado', {}), mapa: totalMB, fotos: E.especies.length });
-      pintarAjustes(); brindis('Descarga completa · listo para el campo');
-    }
-  };
-  descarga = setInterval(tramo, 220);
-});
-function pararDescarga() {
-  clearInterval(descarga); descarga = null;
+  pintarProgreso(est.hechos, total);
+
+  while (est.hechos < total && !est.parar) {
+    const fin = Math.min(est.hechos + TROZO - 1, total - 1);
+    const r = await fetch(MAPA_URL, { headers: { Range: `bytes=${est.hechos}-${fin}` } });
+    if (r.status !== 206 && r.status !== 200) throw new Error(`HTTP ${r.status}`);
+    est.partes.push(await r.blob());
+    est.hechos = fin + 1;
+    pintarProgreso(est.hechos, total);
+  }
+  if (est.parar) return;                         // pausada: las partes se quedan
+
+  // Se guarda como 200 con el cuerpo entero: un 206 aquí lanzaría.
+  await (await caches.open(CACHE_MAPA)).put(MAPA_URL, new Response(
+    new Blob(est.partes, { type: 'application/octet-stream' }),
+    { headers: { 'Content-Type': 'application/octet-stream',
+                 'Content-Length': String(total), 'Accept-Ranges': 'bytes' } }));
+  descarga = null;
   $('#btn-descargar').textContent = 'Descargar';
-  $('#btn-pausar').textContent = 'Reanudar';
+  $('#btn-pausar').textContent = 'Pausar';
+  await pintarAjustes();
+  brindis('Mapa descargado · listo para el campo sin cobertura');
 }
+
+function pausarDescarga() {
+  if (descarga) descarga.parar = true;
+  $('#btn-descargar').textContent = 'Descargar';
+  $('#btn-pausar').textContent = descarga ? 'Reanudar' : 'Pausar';
+}
+
+$('#btn-descargar').addEventListener('click', async () => {
+  if (descarga && !descarga.parar) { pausarDescarga(); return; }
+  try { await descargarMapa(); }
+  catch (e) {
+    pausarDescarga();
+    // Que falle no puede dejar la barra girando en silencio.
+    $('#aj-progreso-txt').textContent = `No se pudo descargar: ${e.message}`;
+    brindis('Descarga interrumpida · se reanuda donde estaba');
+  }
+});
 $('#btn-pausar').addEventListener('click', () => {
-  if (descarga) { pararDescarga(); brindis('Descarga pausada · sigue donde la dejaste'); }
+  if (descarga && !descarga.parar) { pausarDescarga(); brindis('Descarga pausada · sigue donde la dejaste'); }
   else $('#btn-descargar').click();
 });
 
