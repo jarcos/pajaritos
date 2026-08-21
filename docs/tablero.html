@@ -263,8 +263,10 @@ const TAREAS = [
   // ─────────────────────────────── pendiente
   { id:'t39', e:'pendiente', a:'contenido', f:'F7', t:'Banco de imágenes de las 60 especies',
     d:'Descarga de Commons e iNaturalist, verificación especie a especie, conversión a WebP y manifiesto de atribución en CSV.' },
-  { id:'t40', e:'curso', a:'app', f:'F5', x:'librerías dentro', t:'MapLibre + PMTiles en el cliente',
-    d:'Sustituir el esquema por el basemap real, servido con HTTP Range y gzip desactivado para que devuelva 206 y no el fichero entero. Vendorizadas maplibre-gl 5.24 (build CSP) y pmtiles 4.5: la 6 es solo ESM y arranca su worker desde un blob:, que worker-src self bloquea. 388 KB comprimidos, el 1 % de los 41 MB del basemap que dibujan, así que van a la precarga del SW. Queda el estilo, escrito a mano —agua, marisma, salinas, caminos— en vez de un tema genérico lleno de comercios y etiquetas urbanas.' },
+  { id:'t40', e:'hecho', a:'app', f:'F5', x:'en producción', t:'MapLibre + PMTiles en el cliente',
+    d:'El esquema por coordenadas ya es historia: basemap real servido desde el NAS con peticiones Range. Estilo escrito a mano tras preguntarle al .pmtiles qué trae en el Odiel —landuse/wetland es la marisma, water/basin las salinas, roads/footway los senderos—, colores leídos del CSS para que los tres modos de pantalla arrastren al mapa, y los 17 puntos como marcadores HTML en vez de capa vectorial, que así llevan etiqueta sin servidor de glifos y siguen siendo botones. Librerías precargadas por el SW pero cargadas al abrir el mapa: 388 KB que no paga quien solo mira la marea.' },
+  { id:'t57', e:'pendiente', a:'app', f:'F5', x:'sin rótulos', t:'Glifos para los nombres del basemap',
+    d:'El estilo va sin la clave glyphs, así que el mapa no rotula ríos ni parajes: los únicos nombres son los de nuestros 17 puntos. Protomaps publica un paquete de glifos que habría que autoalojar, con lo que eso suma a la precarga. Decidir si compensa.' },
   { id:'t41', e:'pendiente', a:'app', f:'F6', t:'Hoja imprimible A4 del cuaderno',
     d:'Cabecera de salida, 28 filas preimpresas con lo esperable del mes y recuadro de croquis. Con pruebas de impresión reales.' },
   { id:'t42', e:'pendiente', a:'operacion', f:'—', t:'Rate limiting en el borde de Cloudflare',
