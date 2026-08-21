@@ -45,6 +45,8 @@ jobs:
     concurrency: deploy-prod
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2          # para saber qué cambió respecto al commit anterior
 
       # El NAS no publica ningún puerto a internet: solo el tunnel de salida.
       # El runner entra por la tailnet como nodo efímero con tag:ci.
@@ -78,7 +80,30 @@ jobs:
           tar czf - app nginx services scripts herramientas docker-compose.yml docker-compose.override.yml \
             | ssh nas 'cd /volume1/docker/pajaritos && tar xzf - && find . -name "._*" -delete'
 
+      # Los estáticos viven en un bind mount: nginx sirve el contenido nuevo sin
+      # reiniciar nada. Recrear los contenedores en cada push tiraba el sitio
+      # unos segundos por nada — y eso fue lo que hizo fallar la comprobación
+      # del run 32503658690. Solo se tocan si cambia la infraestructura.
+      - name: ¿Hace falta tocar los contenedores?
+        id: infra
+        run: |
+          if git rev-parse HEAD^ >/dev/null 2>&1; then
+            cambios=$(git diff --name-only HEAD^ HEAD)
+          else
+            cambios="(sin commit anterior, se asume que sí)"
+          fi
+          echo "$cambios"
+          if git rev-parse HEAD^ >/dev/null 2>&1 \
+             && ! echo "$cambios" | grep -qE '^(docker-compose|nginx/|services/)'; then
+            echo "tocar=no" >> "$GITHUB_OUTPUT"
+            echo "→ solo contenido: nginx lo sirve sin reiniciar"
+          else
+            echo "tocar=si" >> "$GITHUB_OUTPUT"
+            echo "→ cambia la infraestructura: se recrean los contenedores"
+          fi
+
       - name: Levantar los contenedores
+        if: steps.infra.outputs.tocar == 'si'
         run: |
           ssh nas '/usr/local/bin/docker compose -f /volume1/docker/pajaritos/docker-compose.yml \
                    --project-directory /volume1/docker/pajaritos up -d --build'
@@ -88,13 +113,24 @@ jobs:
       # lo que acabamos de subir — un copiado a medias da 200 igualmente.
       - name: Comprobar que lo publicado es lo que se subió
         run: |
-          set -e
           base=https://pajaritos.josearcos.me
-          for i in 1 2 3 4 5 6 7 8 9 10; do
-            [ "$(curl -fsS --max-time 10 $base/healthz || true)" = "ok" ] && break
-            echo "healthz aún no responde ok (intento $i)"; sleep 6
+
+          # OJO con `set -e` y `[ ... ] && break`: cuando el test falla, la
+          # lista AND devuelve != 0 y el script entero aborta en la primera
+          # vuelta. El bucle parecía reintentar y no reintentaba nada. Con
+          # `if` la condición queda exenta, que es justo para lo que existe.
+          ok=0
+          for i in $(seq 1 15); do
+            if [ "$(curl -fsS --max-time 10 "$base/healthz" || true)" = "ok" ]; then
+              ok=1; break
+            fi
+            echo "healthz aún no responde ok (intento $i de 15)"
+            sleep 6
           done
-          [ "$(curl -fsS --max-time 10 $base/healthz)" = "ok" ]
+          if [ "$ok" != 1 ]; then
+            echo "healthz no respondió ok tras 15 intentos"; exit 1
+          fi
+          echo "healthz ok al intento $i"
 
           v=$(grep -o 'app\.js?v=[A-Za-z0-9.-]*' app/index.html | head -1 | cut -d= -f2)
           curl -fsS --max-time 20 -o /dev/null "$base/app.js?v=$v"
