@@ -251,8 +251,8 @@ const TAREAS = [
     d:'El .pmtiles se sirve con immutable y max-age de un año, pero Cloudflare no lo cachea: .pmtiles no está entre las extensiones estáticas por defecto. Hoy CADA petición de rango cruza el tunnel hasta el NAS, que es justo lo que el análisis de los 512 MB quería evitar. Hace falta una Cache Rule sobre /mapas/*.' },
   { id:'t37', e:'curso', a:'app', f:'F8', t:'Descarga previa enganchada a peticiones Range',
     d:'Hoy la barra de Ajustes mueve un contador, no bytes. Por trozos y no en un GET único: los túneles cortan las descargas largas.' },
-  { id:'t38', e:'curso', a:'operacion', f:'F8', t:'Credenciales de Mailgun en el .env del NAS',
-    d:'Vacías a propósito. Sin ellas el reporte se guarda igual en SQLite y solo se pierde el aviso por correo.' },
+  { id:'t53b', e:'hecho', a:'operacion', f:'F8', x:'por SMTP', t:'Avisos de reportes configurados en el NAS',
+    d:'Se descarto la API de Mailgun: solo ensena el secreto de una key al crearla y la cuenta ya tenia sus dos gastadas. avisar() pasa a smtplib con STARTTLS en el 587 y reutiliza las credenciales que ya funcionan en biblioHack y en monitoring, asi que no hay secreto nuevo que mantener. Conexion y autenticacion verificadas desde dentro del contenedor.' },
 
   // ─────────────────────────────── pendiente
   { id:'t39', e:'pendiente', a:'contenido', f:'F7', t:'Banco de imágenes de las 60 especies',
