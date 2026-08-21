@@ -241,8 +241,15 @@ function proximaMarea(zid) {
 
 /* --- probabilidad --------------------------------------------------------- */
 const estadoMes = (esp, mes) => esp.meses[mes] ?? 0;
+// Las que no tienen fenología no pueden entrar en ninguna afirmación sobre un
+// mes concreto. Su matriz es doce unos, que no significa «está todo el año»
+// sino «no se sabe»: colarlas en el cuaderno precargado de julio o en el
+// filtro de «especies de este mes» sería inventarse el dato por la puerta de
+// atrás, justo después de haber quitado el gráfico por lo mismo.
+const sinFenologia = esp => !!esp.notaFenologia;
 function esperables(mes, zid, marea) {
   return E.especies.filter(e => {
+    if (sinFenologia(e)) return false;
     if (estadoMes(e, mes) < 1) return false;
     if (zid && !e.zonas.includes(zid)) return false;
     if (marea && marea !== 'indiferente' && e.marea !== 'indiferente' && e.marea !== marea) return false;
@@ -350,7 +357,7 @@ function etiquetaFiltro(k, v) {
 function aplicaFiltros(omitir = null) {
   const f = E.filtros;
   return E.especies.filter(e => {
-    if (f.mes !== null && omitir !== 'mes' && estadoMes(e, f.mes) < 1) return false;
+    if (f.mes !== null && omitir !== 'mes' && (sinFenologia(e) || estadoMes(e, f.mes) < 1)) return false;
     if (f.zona && omitir !== 'zona' && !e.zonas.includes(f.zona)) return false;
     if (f.marea && omitir !== 'marea' && f.marea !== 'indiferente'
         && e.marea !== 'indiferente' && e.marea !== f.marea) return false;
@@ -371,6 +378,13 @@ function pintarGuia() {
   const res = aplicaFiltros();
   const activos = Object.entries(E.filtros).filter(([, v]) => v !== null && v !== undefined);
   $('#guia-sub').textContent = activos.length ? `Filtrado · ${res.length} especies` : `${res.length} especies`;
+
+  // Al filtrar por mes desaparecen las que no tienen fenología. Callárselo
+  // haría pensar que no existen; decirlo cuesta una línea.
+  const ocultas = E.filtros.mes !== null ? E.especies.filter(sinFenologia).length : 0;
+  $('#guia-sinfen').textContent = ocultas
+    ? `${ocultas} especies sin fenología no se muestran al filtrar por mes.` : '';
+  $('#guia-sinfen').classList.toggle('oculto', !ocultas);
 
   const cont = vaciar($('#guia-lista'));
   $('#guia-vacia').classList.toggle('oculto', res.length > 0);
