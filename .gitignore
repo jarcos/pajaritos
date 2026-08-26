@@ -18,3 +18,7 @@ datos-ebird/
 
 # Runbook de infraestructura: solo local, nunca al repo publico
 SETUP.md
+
+# Bytecode de Python (herramientas y tests)
+__pycache__/
+*.py[cod]

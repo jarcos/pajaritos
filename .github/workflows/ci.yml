@@ -27,7 +27,13 @@ jobs:
         run: node --check app/app.js
 
       - name: Los scripts de shell parsean
-        run: for f in herramientas/*.sh scripts/*.sh; do sh -n "$f" || exit 1; done
+        run: for f in herramientas/*.sh scripts/*.sh pruebas/*.sh; do sh -n "$f" || exit 1; done
+
+      # La suite. Sin dependencias: unittest de la stdlib y `node --test`, que
+      # viene en Node. En local es lo mismo que `pruebas/puerta.sh` corre al
+      # final.
+      - name: Suite de tests
+        run: sh pruebas/correr.sh
 
       - name: Nada de basura de macOS en el árbol
         run: |

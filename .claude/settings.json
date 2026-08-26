@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sh pruebas/puerta.sh)",
+      "Bash(sh pruebas/correr.sh)",
+      "Bash(./pruebas/puerta.sh)",
+      "Bash(./pruebas/correr.sh)",
+      "Bash(python3 herramientas/validar-datos.py:*)",
+      "Bash(python3 -m unittest:*)",
+      "Bash(node --test:*)",
+      "Bash(node --check:*)",
+      "Bash(sh -n:*)",
+      "Bash(python3 herramientas/contrastar-fenologia.py:*)",
+      "Bash(python3 herramientas/verificar-commons.py:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git ls-files:*)",
+      "Bash(git stash:*)"
+    ],
+    "deny": [
+      "Bash(herramientas/verificar.sh)",
+      "Bash(sh herramientas/verificar.sh)",
+      "Bash(docker compose down -v:*)",
+      "Bash(gh variable set AUTODEPLOY_ENABLED:*)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)"
+    ]
+  }
+}
