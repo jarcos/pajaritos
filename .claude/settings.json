@@ -20,7 +20,10 @@
       "Bash(git log:*)",
       "Bash(git show:*)",
       "Bash(git ls-files:*)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "Bash(sh pruebas/commit-en-verde.sh:*)",
+      "Bash(sh pruebas/comprobar-features.sh)",
+      "Bash(./pruebas/comprobar-features.sh)"
     ],
     "deny": [
       "Bash(herramientas/verificar.sh)",

@@ -16,7 +16,12 @@ python3 herramientas/validar-datos.py
 
 echo
 echo "-- 2/6 · app.js parsea ----------------------------------"
-node --check app/app.js && echo "ok"
+# OJO: con `cmd && echo ok`, set -e NO para el guion cuando cmd falla —
+# el fallo va a la izquierda de un && y bash lo considera una condicion.
+# Esta puerta dijo "PUERTA EN VERDE" con app.js sintacticamente roto el
+# 28-08-2026. Un guardia que nunca has visto parar no guarda nada.
+node --check app/app.js || { echo "app.js no parsea"; exit 1; }
+echo "ok"
 
 echo
 echo "-- 3/6 · los .sh parsean --------------------------------"

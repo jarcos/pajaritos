@@ -5,7 +5,8 @@ export PATH=/usr/local/bin:$PATH
 cd /volume1/docker/pajaritos
 
 echo "=== validando la composicion ==="
-docker compose config --quiet && echo "compose OK"
+docker compose config --quiet || { echo "el compose no valida"; exit 1; }
+echo "compose OK"
 
 echo "=== construyendo ==="
 docker compose build 2>&1 | tail -15
