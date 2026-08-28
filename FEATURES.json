@@ -38,22 +38,28 @@
       "titulo": "Tests de las funciones de mareas",
       "porque": "El desfase de una zona respecto al mareógrafo decide a qué hora mandas a alguien a la marisma. Y `diasRestantes() < 1` es lo que avisa de que la predicción caducó: una marea de hace cinco días es peor que ninguna.",
       "detalle": "Con `node --test`. Cubrir diaMarea (aplica el desfase y envuelve por medianoche), proximaMarea (devuelve la siguiente, y marca `pasada` cuando ya no quedan) y diasRestantes (negativo si no hay estación).",
-      "check": "node --test pruebas/js/ 2>&1 | grep -qE '^# fail 0' && node --test pruebas/js/ 2>&1 | grep -qE 'diaMarea|proximaMarea'",
+      "check": "f=$(find pruebas/js -name \"*.test.js\"); [ -n \"$f\" ] && node --test $f 2>&1 | grep -qE \"^# fail 0\" && [ \"$(node --test $f 2>&1 | grep -cE '^ok .*(diaMarea|proximaMarea|diasRestantes|estacionDe)')\" -ge 3 ]",
       "depende_de": [
         "p1"
       ],
-      "hecha": false
+      "hecha": true,
+      "check_anterior_roto": "node --test pruebas/js/ 2>&1 | grep -qE '^# fail 0' && node --test pruebas/js/ 2>&1 | grep -qE 'diaMarea|proximaMarea'",
+      "fecha": "2026-08-28",
+      "notas": "Hecha, pero el trabajo entro de rebote con p1: al extraer logica.js hubo que probar diaMarea, proximaMarea, estacionDe y estacionDeclarada, que es exactamente esta tarea. El check anterior (guardado en check_anterior_roto) no podia pasar NUNCA: invocaba `node --test pruebas/js/`, que en node 22 muere con MODULE_NOT_FOUND. Jose autorizo arreglarlo el 28-08-2026; yo pare antes de tocarlo porque editar un check para que pase es la clausula de parada principal del bucle."
     },
     {
       "id": "p3",
       "titulo": "Tests de fenología y probabilidad",
       "porque": "Una especie con notaFenologia es una especie SIN dato: su matriz de doce meses es de relleno. Si se cuela en esperables(), la app se inventa el dato por la puerta de atrás — justo después de haber quitado el gráfico por lo mismo. Esto necesita un test que lo impida para siempre.",
       "detalle": "esperables() excluye las de sinFenologia; filtra por mes, zona y marea; y estadoMes devuelve 0 para meses sin dato en vez de romper.",
-      "check": "node --test pruebas/js/ 2>&1 | grep -qE '^# fail 0' && node --test pruebas/js/ 2>&1 | grep -qE 'esperables|fenolog'",
+      "check": "f=$(find pruebas/js -name \"*.test.js\"); [ -n \"$f\" ] && node --test $f 2>&1 | grep -qE \"^# fail 0\" && [ \"$(node --test $f 2>&1 | grep -cE '^ok .*(esperables|fenolog|aplicaFiltros)')\" -ge 3 ]",
       "depende_de": [
         "p1"
       ],
-      "hecha": false
+      "hecha": true,
+      "check_anterior_roto": "node --test pruebas/js/ 2>&1 | grep -qE '^# fail 0' && node --test pruebas/js/ 2>&1 | grep -qE 'esperables|fenolog'",
+      "fecha": "2026-08-28",
+      "notas": "Igual que p2: los tests de esperables y aplicaFiltros entraron con p1. Mismo check roto, misma autorizacion."
     },
     {
       "id": "p4",
@@ -96,6 +102,14 @@
       "hecha": true,
       "notas": "El sitio lo eligio Jose el 28-08-2026 entre CI, verificar.sh o los dos: CI, porque corre solo en cada push y no necesita saber nada de como esta montado el NAS. El check cambio con esa decision, no para poner en verde algo rojo: la mitad ya hecha (comprobar-desplegado.sh y sus 6 tests) no se toca. Al enchufarlo, el propio check cazo un comentario mio que citaba la linea vieja literalmente: para un grep, un comentario que reproduce el codigo y el codigo son lo mismo. Reescrito en prosa.",
       "fecha": "2026-08-28"
+    },
+    {
+      "id": "p8",
+      "titulo": "comprobar-features.sh detecta checks que fallan por motivos estructurales",
+      "porque": "p2 y p3 estuvieron rojas desde que se escribieron por un MODULE_NOT_FOUND, no por el estado del repo. comprobar-features.sh no lo vio: comprueba que un pendiente este rojo, no POR QUE esta rojo. Un check que no puede pasar nunca es tan inutil como uno que pasa siempre, y encima es invisible porque parece disciplina. Con un bucle desatendido esto es peor: la tarea se queda pendiente para siempre y el tablero dice que todo va bien.",
+      "check": "grep -q \"estructural\\|MODULE_NOT_FOUND\\|command not found\" pruebas/comprobar-features.sh",
+      "depende_de": [],
+      "hecha": false
     }
   ]
 }

@@ -194,3 +194,34 @@ tareas como hechas es, mecánicamente, editar un `check` para que pase — la
 cláusula de parada más importante que tiene este bucle. Que yo esté convencido
 de tener razón es exactamente la situación para la que existe la cláusula.
 Decide José.
+
+## 2026-08-28 · p2 y p3 · HECHAS (checks arreglados con autorización)
+
+José autorizó arreglar los dos `check` rotos. El anterior queda guardado en
+`check_anterior_roto` dentro de cada entrada: el historial de lo que se creía
+que se estaba comprobando vale tanto como el de lo comprobado.
+
+**Un check nuevo no vale hasta que se le ha visto ponerse rojo.** Cuatro
+comprobaciones, y las dos últimas son las que importan porque prueban que los
+checks son **independientes** y no dos formas de decir «la suite pasa»:
+
+| situación | p2 | p3 |
+|---|---|---|
+| un test roto | rojo | rojo |
+| ningún `.test.js` | rojo | rojo |
+| suite **sin** tests de mareas | **rojo** | verde |
+| suite **sin** fenología ni filtros | verde | **rojo** |
+
+**Lo que cazó el tercer mutante, y era mío.** La primera versión del check de
+p2 buscaba `marea` a secas, y eso casaba con `esperables: «indiferente» en la
+especie pasa cualquier marea` — un test de filtros. p2 se ponía verde sin un
+solo test de mareas. Afinado a nombres de función: `diaMarea|proximaMarea|
+diasRestantes|estacionDe`.
+
+**Y un corte mal hecho, también mío.** El primer intento de quitar «todo lo de
+mareas» cortaba por `estacionDeclarada` y dejaba dentro los tests de
+`estacionDe`. p2 seguía verde y con razón. El mutante no probaba lo que yo
+creía: hay que mirar la salida, no la intención.
+
+Queda **p8**: que `comprobar-features.sh` distinga un check rojo por el estado
+del repo de uno rojo porque el comando ni siquiera arranca.
