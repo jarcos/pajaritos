@@ -11,15 +11,15 @@ set -e
 raiz=$(cd "$(dirname "$0")/.." && pwd)
 cd "$raiz"
 
-echo "-- 1/5 · datos coherentes -------------------------------"
+echo "-- 1/6 · datos coherentes -------------------------------"
 python3 herramientas/validar-datos.py
 
 echo
-echo "-- 2/5 · app.js parsea ----------------------------------"
+echo "-- 2/6 · app.js parsea ----------------------------------"
 node --check app/app.js && echo "ok"
 
 echo
-echo "-- 3/5 · los .sh parsean --------------------------------"
+echo "-- 3/6 · los .sh parsean --------------------------------"
 for f in herramientas/*.sh scripts/*.sh pruebas/*.sh; do
   [ -e "$f" ] || continue
   sh -n "$f" || { echo "sintaxis rota: $f"; exit 1; }
@@ -27,7 +27,7 @@ done
 echo "ok"
 
 echo
-echo "-- 4/5 · nada de basura de macOS ------------------------"
+echo "-- 4/6 · nada de basura de macOS ------------------------"
 sucio=$(git ls-files | grep -E '(^|/)\._|\.DS_Store$' || true)
 if [ -n "$sucio" ]; then
   echo "ficheros AppleDouble commiteados:"
@@ -37,8 +37,15 @@ fi
 echo "ok"
 
 echo
-echo "-- 5/5 · suite de tests ---------------------------------"
+echo "-- 5/6 · suite de tests ---------------------------------"
 sh pruebas/correr.sh
+
+echo
+echo "-- 6/6 · el tablero dice la verdad ----------------------"
+# Un backlog cuyos checks no se comprueban es una lista de deseos. Y en un
+# bucle autonomo es peor: el agente marca tareas contra comandos que devuelven
+# 0 sin mirar nada, y por la manana tienes cinco tareas "hechas" y cero hechas.
+sh pruebas/comprobar-features.sh
 
 echo
 echo "PUERTA EN VERDE"

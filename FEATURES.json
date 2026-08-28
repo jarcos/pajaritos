@@ -1,0 +1,73 @@
+{
+  "_lee_esto": [
+    "Backlog legible por máquina. Lo consume la skill `siguiente` y el bucle /goal.",
+    "",
+    "REGLAS, y no son decorativas:",
+    "",
+    "1. `check` es UN COMANDO, nunca una casilla. Una tarea está hecha cuando su",
+    "   comando sale 0, no cuando alguien lo dice. La rama f11-app-intents de Kona",
+    "   sobrevivió tres meses fusionada a medias porque el tablero registraba la",
+    "   intención y no el hecho.",
+    "",
+    "2. Un `check` que YA PASA antes de hacer el trabajo está ROTO. Es la versión",
+    "   de backlog de la disciplina del mutante: si no lo has visto fallar, no",
+    "   sabes que comprueba nada. `comprobar-features.sh` verifica exactamente",
+    "   eso y es lo primero que hay que correr al añadir una entrada.",
+    "",
+    "3. Las entradas NO se borran nunca. Se marcan `\"hecha\": true` con la fecha.",
+    "   El historial de lo intentado vale tanto como el de lo conseguido.",
+    "",
+    "4. Nada se da por hecho sin pasar `pruebas/puerta.sh`. Rojo no se commitea."
+  ],
+
+  "proyecto": "pajaritos",
+  "puerta": "sh pruebas/puerta.sh",
+
+  "tareas": [
+    {
+      "id": "p1",
+      "titulo": "Extraer app/logica.js con las funciones puras",
+      "porque": "Mareas, fenología y filtros son lo único con valor real de la app, y hoy viven enterrados entre pintarHoy() y abrirFicha(), que tocan el DOM. Sin separarlos, cualquier test de JS tiene que duplicar lógica o montar un DOM: las dos cosas son peores que no testear.",
+      "detalle": "Mover estacionDe, diaMarea, diasRestantes, proximaMarea, estadoMes, sinFenologia, esperables y aplicaFiltros. Reciben el estado por argumento, no leen la global E. app.js carga logica.js antes y sigue funcionando en el navegador.",
+      "check": "node --check app/logica.js && [ \"$(grep -cE '\\b(document|window|localStorage)\\b' app/logica.js)\" = 0 ] && node -e \"const l=require('./app/logica.js'); ['estacionDe','diaMarea','proximaMarea','esperables','aplicaFiltros'].forEach(f=>{if(typeof l[f]!=='function')throw new Error('falta '+f)})\"",
+      "depende_de": [],
+      "hecha": false
+    },
+    {
+      "id": "p2",
+      "titulo": "Tests de las funciones de mareas",
+      "porque": "El desfase de una zona respecto al mareógrafo decide a qué hora mandas a alguien a la marisma. Y `diasRestantes() < 1` es lo que avisa de que la predicción caducó: una marea de hace cinco días es peor que ninguna.",
+      "detalle": "Con `node --test`. Cubrir diaMarea (aplica el desfase y envuelve por medianoche), proximaMarea (devuelve la siguiente, y marca `pasada` cuando ya no quedan) y diasRestantes (negativo si no hay estación).",
+      "check": "node --test pruebas/js/ 2>&1 | grep -qE '^# fail 0' && node --test pruebas/js/ 2>&1 | grep -qE 'diaMarea|proximaMarea'",
+      "depende_de": ["p1"],
+      "hecha": false
+    },
+    {
+      "id": "p3",
+      "titulo": "Tests de fenología y probabilidad",
+      "porque": "Una especie con notaFenologia es una especie SIN dato: su matriz de doce meses es de relleno. Si se cuela en esperables(), la app se inventa el dato por la puerta de atrás — justo después de haber quitado el gráfico por lo mismo. Esto necesita un test que lo impida para siempre.",
+      "detalle": "esperables() excluye las de sinFenologia; filtra por mes, zona y marea; y estadoMes devuelve 0 para meses sin dato en vez de romper.",
+      "check": "node --test pruebas/js/ 2>&1 | grep -qE '^# fail 0' && node --test pruebas/js/ 2>&1 | grep -qE 'esperables|fenolog'",
+      "depende_de": ["p1"],
+      "hecha": false
+    },
+    {
+      "id": "p4",
+      "titulo": "Cobertura de Python con suelo declarado",
+      "porque": "Hay 10 tests de validar-datos.py y nadie sabe qué parte del guión ejecutan. Kona tenía 188 tests verdes y el 32% del código sin ejecutar nunca; aquí puede estar pasando lo mismo a menor escala.",
+      "detalle": "coverage.py como dependencia SOLO de desarrollo — nada entra en los servicios ni en el tar del despliegue. Medir, poner el suelo un punto por debajo de lo medido, y que pruebas/correr.sh falle si baja.",
+      "check": "sh pruebas/correr.sh 2>&1 | grep -qiE 'cobertura|coverage' && grep -qE 'fail.?under|--cov|COBERTURA_MINIMA' pruebas/correr.sh",
+      "depende_de": [],
+      "hecha": false
+    },
+    {
+      "id": "p5",
+      "titulo": "Cobertura de JS con suelo declarado",
+      "porque": "Mismo motivo que p4, y aquí es donde vive la lógica que decide qué ve el usuario en el campo.",
+      "detalle": "node --test --experimental-test-coverage, o c8 si hace falta. Suelo en el repo, no en prosa, y correr.sh en rojo si baja.",
+      "check": "sh pruebas/correr.sh 2>&1 | grep -qE '% (Lines|Líneas|Funcs)' && grep -qE 'test-coverage|COBERTURA_JS' pruebas/correr.sh",
+      "depende_de": ["p1"],
+      "hecha": false
+    }
+  ]
+}

@@ -35,6 +35,13 @@ jobs:
       - name: Suite de tests
         run: sh pruebas/correr.sh
 
+      # El tablero tiene que decir la verdad: ninguna tarea pendiente puede
+      # tener su check ya en verde, y ninguna marcada como hecha puede tenerlo
+      # en rojo. Sin esto, un bucle autonomo marca tareas contra comandos que
+      # no comprueban nada.
+      - name: FEATURES.json es honesto
+        run: sh pruebas/comprobar-features.sh
+
       - name: Nada de basura de macOS en el árbol
         run: |
           sucio=$(git ls-files | grep -E '(^|/)\._|\.DS_Store$' || true)
