@@ -145,15 +145,19 @@ jobs:
           fi
           echo "healthz ok al intento $i"
 
-          v=$(grep -o 'app\.js?v=[A-Za-z0-9.-]*' app/index.html | head -1 | cut -d= -f2)
-          curl -fsS --max-time 20 -o /dev/null "$base/app.js?v=$v"
-          echo "app.js?v=$v servido"
-
-          local_sw=$(grep -o "odiel-v[0-9]*" app/sw.js | head -1)
-          remoto_sw=$(curl -fsS --max-time 10 "$base/sw.js" | grep -o "odiel-v[0-9]*" | head -1)
-          [ "$local_sw" = "$remoto_sw" ] || { echo "sw.js desfasado: repo $local_sw, servido $remoto_sw"; exit 1; }
-
-          n_local=$(python3 -c "import json;print(len(json.load(open('app/datos/sinonimos.json'))['entradas']))")
-          n_remoto=$(curl -fsS --max-time 15 "$base/datos/sinonimos.json" | python3 -c "import json,sys;print(len(json.load(sys.stdin)['entradas']))")
-          [ "$n_local" = "$n_remoto" ] || { echo "sinonimos.json desfasado: repo $n_local, servido $n_remoto"; exit 1; }
-          echo "publicado y verificado · sw $remoto_sw · $n_remoto sinónimos"
+          # Hasta el 28-08-2026 esto comprobaba indicios, no bytes: un curl con
+          # -o /dev/null contra la ruta versionada de app.js pasa aunque el NAS
+          # sirva el fichero ANTERIOR, porque nginx ignora el query string de un
+          # estático y devuelve 200 igual. sw.js se comparaba
+          # por la cadena odiel-vN, sinonimos.json contando entradas, y logica.js
+          # no se miraba. Tres proxies y un olvido. Ahora se compara el sha256 de
+          # cada fichero contra el del repo, y la versión se lee del index que
+          # sirve producción: pedirle al servidor justo la versión que queremos
+          # oír no comprueba nada.
+          #
+          # La lista va aquí y no dentro del guión a propósito: un fichero que
+          # falta se ve en el sitio donde se llama. mareas.json no está porque
+          # lo genera el NAS y no vive en el repo.
+          sh herramientas/comprobar-desplegado.sh "$base" app \
+            index.html logica.js app.js sw.js manifest.webmanifest \
+            datos/especies.json datos/sinonimos.json datos/zonas.json datos/puntos.geojson

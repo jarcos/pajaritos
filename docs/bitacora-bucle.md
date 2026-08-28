@@ -85,3 +85,34 @@ pierde una tarde. **Cláusula aplicada: «hay que decidir».**
 
 `p7` queda **pendiente**, con su `check` en rojo. Que la mitad esté hecha no la
 convierte en hecha.
+
+## 2026-08-28 · p7 · HECHA (segunda mitad)
+
+José eligió el CI como sitio, así que el `check` de p7 cambió de destino —
+no para poner en verde algo rojo: se comprobó que el nuevo seguía en **rojo**
+antes de tocar nada, y la mitad ya hecha no se tocó.
+
+**Lo que el CI comprobaba de verdad hasta hoy**
+
+| comprobación | qué demostraba | agujero |
+|---|---|---|
+| `curl -o /dev/null` a la ruta versionada de `app.js` | que devuelve 200 | nginx ignora el query string de un estático: pasa sirviendo el fichero **anterior** |
+| `grep odiel-vN` en `sw.js` | que la cadena coincide | el resto del fichero puede ser cualquiera |
+| contar entradas de `sinonimos.json` | que hay N | los N pueden ser otros |
+| `logica.js` | — | no se miraba |
+
+Tres indicios y un olvido. Ahora se compara el **sha256** de nueve ficheros
+contra el del repo, con la versión leída del index que sirve producción.
+
+**Cambios sobre la primera mitad**
+
+- La lista de ficheros pasa a ser **argumentos explícitos**, sin lista por
+  defecto escondida en el guión: un fichero que falta se ve en el sitio donde
+  se llama. Y llamar sin ficheros ahora sale con error — comparar nada y salir
+  0 parece una comprobación y no lo es. Mutante matado.
+
+**Lo que cazó el check, y no era el código**
+
+Un comentario mío en `ci.yml` citaba la línea vieja literalmente, y para un
+`grep` un comentario que reproduce el código **es** el código. Reescrito en
+prosa. El check tenía razón.

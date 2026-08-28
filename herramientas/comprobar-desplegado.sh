@@ -1,7 +1,11 @@
 #!/bin/sh
 # ¿Está produccion sirviendo EXACTAMENTE los ficheros de este repo?
 #
-# Uso:  herramientas/comprobar-desplegado.sh https://pajaritos.josearcos.me [dir-app]
+# Uso:  herramientas/comprobar-desplegado.sh URL dir-app fichero [fichero...]
+#
+# La lista de ficheros va explicita en la llamada, sin lista por defecto. Una
+# lista por defecto escondida aqui dentro es como se olvida un fichero durante
+# meses sin que nadie lo note: si esta en el sitio que llama, se ve.
 #
 # No pregunta si el despliegue "fue bien": pregunta por el hash del byte que
 # devuelve el servidor. Es la unica respuesta que no se puede discutir. Un CI
@@ -15,8 +19,15 @@
 set -e
 
 BASE=${1:?falta la URL base, p.ej. https://pajaritos.josearcos.me}
-DIR=${2:-app}
+DIR=${2:?falta el directorio del repo con los ficheros, p.ej. app}
+shift 2
 BASE=${BASE%/}
+
+if [ $# -eq 0 ]; then
+  echo "FALLO: no me has dado ni un fichero que comparar."
+  echo "Comparar nada y salir 0 es peor que no comprobar: parece una comprobacion."
+  exit 2
+fi
 
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
@@ -63,11 +74,13 @@ comparar() {  # $1 = ruta relativa   $2 = query string (puede ir vacia)
   fi
 }
 
-comparar index.html ""
-comparar logica.js "?v=$VER"
-comparar app.js "?v=$VER"
-comparar sw.js ""
-comparar manifest.webmanifest ""
+# `app.js` y `logica.js` llevan version; el resto se pide tal cual.
+for f in "$@"; do
+  case $f in
+    app.js|logica.js) comparar "$f" "?v=$VER" ;;
+    *)                comparar "$f" "" ;;
+  esac
+done
 
 echo
 if [ "$fallos" -gt 0 ]; then

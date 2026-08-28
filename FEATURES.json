@@ -87,12 +87,13 @@
     },
     {
       "id": "p7",
-      "titulo": "verificar.sh compara el hash de lo desplegado con el del repo",
-      "porque": "El 28-08-2026 el despliegue de p1 se comprobo a mano: curl a produccion, md5, comparar. Salio bien. Pero «CI en verde» ya nos ha mentido antes — biblioHack tuvo un contenedor Created que nadie miraba y una base de datos sana sin datos. Un CI verde dice que el build paso, no que el NAS este sirviendo ESTE fichero. La unica respuesta que no se puede discutir es el hash del byte que devuelve produccion.",
-      "check": "grep -q \"md5sum\\|sha256sum\" herramientas/verificar.sh && grep -q \"logica.js\" herramientas/verificar.sh",
+      "titulo": "El CI compara el hash de lo desplegado, no un 200 y una cadena",
+      "porque": "El paso «Comprobar que lo publicado es lo que se subio» del CI comprueba proxies, no bytes: `curl -fsS -o /dev/null \"$base/app.js?v=$v\"` pasa aunque el NAS este sirviendo el app.js ANTERIOR, porque nginx ignora el query string de un estatico y devuelve 200 igual. El sw.js se compara por la cadena odiel-vN y sinonimos.json contando entradas. logica.js no se mira. Un hash no se puede discutir; un 200 si.",
+      "check": "grep -q \"comprobar-desplegado.sh\" .github/workflows/ci.yml && grep -q \"logica.js\" .github/workflows/ci.yml && ! grep -q 'app\\.js?v=\\$v\" *$' .github/workflows/ci.yml",
       "depende_de": [],
-      "hecha": false,
-      "notas": "PARADA a medias, y a proposito. La mitad comprobable esta hecha y probada: herramientas/comprobar-desplegado.sh compara el sha256 de lo que sirve una URL con el del repo, leyendo la version del index DESPLEGADO y no del repo. Seis tests en pruebas/python/test_comprobar_desplegado.py contra un servidor de mentira, cuatro mutantes matados. Lo que falta es enchufarlo en verificar.sh, y eso depende de un dato del NAS que no se puede ver desde la sesion remota: que hay dentro de /volume1/docker/pajaritos y cual es la raiz de documentos del contenedor pajaritos-web. Adivinarlo es justo lo que no se hace."
+      "hecha": true,
+      "notas": "El sitio lo eligio Jose el 28-08-2026 entre CI, verificar.sh o los dos: CI, porque corre solo en cada push y no necesita saber nada de como esta montado el NAS. El check cambio con esa decision, no para poner en verde algo rojo: la mitad ya hecha (comprobar-desplegado.sh y sus 6 tests) no se toca. Al enchufarlo, el propio check cazo un comentario mio que citaba la linea vieja literalmente: para un grep, un comentario que reproduce el codigo y el codigo son lo mismo. Reescrito en prosa.",
+      "fecha": "2026-08-28"
     }
   ]
 }

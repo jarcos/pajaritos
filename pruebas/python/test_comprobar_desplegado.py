@@ -61,9 +61,9 @@ class Escenario:
         self._hilo = threading.Thread(target=self._srv.serve_forever, daemon=True)
         self._hilo.start()
 
-    def correr(self) -> subprocess.CompletedProcess:
+    def correr(self, ficheros=None) -> subprocess.CompletedProcess:
         return subprocess.run(
-            ["sh", str(GUION), self.url, str(self.repo)],
+            ["sh", str(GUION), self.url, str(self.repo), *(ficheros or CONTENIDO)],
             capture_output=True, text=True, timeout=60,
         )
 
@@ -126,6 +126,17 @@ class ComprobarDesplegado(unittest.TestCase):
             r = e.correr()
         self.assertEqual(r.returncode, 1, r.stdout)
         self.assertIn("NO SE PUEDE COMPROBAR", r.stdout)
+        self.assertNotIn("AL DIA", r.stdout)
+
+    def test_sin_ficheros_no_dice_que_todo_esta_bien(self):
+        """Comparar nada y salir 0 parece una comprobación y no lo es. Es el
+        mismo agujero que un `for` sobre una lista vacía en un guión de copias:
+        cero fallos porque cero intentos."""
+        with Escenario() as e:
+            r = subprocess.run(
+                ["sh", str(GUION), e.url, str(e.repo)],
+                capture_output=True, text=True, timeout=60)
+        self.assertNotEqual(r.returncode, 0, r.stdout)
         self.assertNotIn("AL DIA", r.stdout)
 
     def test_el_index_sin_version_no_pasa_por_alto(self):
