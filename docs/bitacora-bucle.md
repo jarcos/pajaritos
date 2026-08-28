@@ -53,3 +53,35 @@
   `gh ssh-key add`, sin cambiar los remotos a HTTPS. CI en verde y desplegado.
 
 **Cláusula de parada aplicada**: «una tarea y fuera». p6 queda sin empezar.
+
+## 2026-08-28 · p7 · PARADA (mitad hecha)
+
+**Qué se ha hecho**
+
+- `herramientas/comprobar-desplegado.sh`: compara el `sha256` de lo que sirve
+  una URL con el del repo, fichero a fichero. La versión de `app.js` y
+  `logica.js` se lee del **index que sirve producción**, no del repo: pedirle
+  al servidor justo la versión que queremos oír no comprueba nada.
+- `pruebas/python/test_comprobar_desplegado.py`: 6 tests contra un
+  `http.server` sobre un árbol temporal. Sin red, sin NAS, sin tocar nada.
+
+**Mutantes matados (4)**
+
+| mutante | test que cayó |
+|---|---|
+| `curl` sin `--fail` | «un fichero no se sirve» (el 404 salía como «difiere») |
+| leer la versión del repo, no la de producción | «el index desplegado es de otra versión» + 1 |
+| salir 0 aunque haya fallos | 3 tests |
+| «no responde» contado como «todo bien» | «producción caída» |
+
+**Por qué paro aquí**
+
+Enchufarlo en `herramientas/verificar.sh` exige saber qué hay dentro de
+`/volume1/docker/pajaritos` en el NAS y cuál es la raíz de documentos del
+contenedor `pajaritos-web`. Desde la sesión remota no se puede mirar: el proxy
+bloquea `*.josearcos.me` y el NAS está en la LAN. Puedo inferirlo del `cd` que
+ya hace `verificar.sh`, pero inferir la infraestructura es exactamente cómo se
+pierde una tarde. **Cláusula aplicada: «hay que decidir».**
+
+`p7` queda **pendiente**, con su `check` en rojo. Que la mitad esté hecha no la
+convierte en hecha.

@@ -91,7 +91,8 @@
       "porque": "El 28-08-2026 el despliegue de p1 se comprobo a mano: curl a produccion, md5, comparar. Salio bien. Pero «CI en verde» ya nos ha mentido antes — biblioHack tuvo un contenedor Created que nadie miraba y una base de datos sana sin datos. Un CI verde dice que el build paso, no que el NAS este sirviendo ESTE fichero. La unica respuesta que no se puede discutir es el hash del byte que devuelve produccion.",
       "check": "grep -q \"md5sum\\|sha256sum\" herramientas/verificar.sh && grep -q \"logica.js\" herramientas/verificar.sh",
       "depende_de": [],
-      "hecha": false
+      "hecha": false,
+      "notas": "PARADA a medias, y a proposito. La mitad comprobable esta hecha y probada: herramientas/comprobar-desplegado.sh compara el sha256 de lo que sirve una URL con el del repo, leyendo la version del index DESPLEGADO y no del repo. Seis tests en pruebas/python/test_comprobar_desplegado.py contra un servidor de mentira, cuatro mutantes matados. Lo que falta es enchufarlo en verificar.sh, y eso depende de un dato del NAS que no se puede ver desde la sesion remota: que hay dentro de /volume1/docker/pajaritos y cual es la raiz de documentos del contenedor pajaritos-web. Adivinarlo es justo lo que no se hace."
     }
   ]
 }
