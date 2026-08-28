@@ -164,3 +164,33 @@ verdad, cayó. Un mutante que sobrevive obliga a mirar dos cosas: el test, y si
 el mutante prueba lo que crees.
 
 Versión a `2026-08-28b`, caché del SW a `odiel-v14`.
+
+## 2026-08-28 · PARADA · dos checks que no pueden pasar nunca
+
+Al ir a por p2, el bucle se para antes de empezar. Los `check` de **p2 y p3**
+invocan `node --test pruebas/js/`, que es **la invocación rota** que corregí en
+`correr.sh` esta misma mañana: node 22 intenta resolver el directorio como
+módulo y muere con `MODULE_NOT_FOUND`. El comando falla pase lo que pase en el
+repo.
+
+```
+# Error: Cannot find module '.../pruebas/js'
+#   code: 'MODULE_NOT_FOUND',
+```
+
+Con la invocación que sí funciona, los dos checks estarían **en verde ya**: 14
+menciones de `diaMarea`/`proximaMarea` y 14 de `esperables`/fenología en la
+suite. El trabajo de p2 y p3 entró de rebote con p1.
+
+**Lo que esto dice del tablero.** `comprobar-features.sh` verifica dos
+invariantes: una tarea pendiente no puede tener el check en verde, y una hecha
+no puede tenerlo en rojo. No cubre el tercer caso: **un check rojo por un
+motivo que no tiene nada que ver con la tarea**. Un check que no puede pasar
+nunca es tan inútil como uno que pasa siempre, y además es invisible: parece
+disciplina.
+
+**Por qué paro en vez de arreglarlo.** Arreglar el check y marcar las dos
+tareas como hechas es, mecánicamente, editar un `check` para que pase — la
+cláusula de parada más importante que tiene este bucle. Que yo esté convencido
+de tener razón es exactamente la situación para la que existe la cláusula.
+Decide José.
