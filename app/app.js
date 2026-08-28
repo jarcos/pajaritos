@@ -561,7 +561,11 @@ function abrirZona(z) {
   $('#cz-ventana').textContent = z.ventana;
   $('#cz-itin').textContent = z.itinerario;
   const dl = vaciar($('#cz-marea'));
-  const est = z.estacionMarea && E.mareas ? E.mareas.estaciones[z.estacionMarea] : null;
+  // Lo que la zona DECLARA, sin caer en huelva-5: aqui se escribe en la
+  // ficha, y poner Huelva en una zona que no tiene mareografo seria
+  // inventarse el dato. `estacionDe` sigue cayendo, y hace bien: eso es
+  // para calcular una hora, no para afirmar algo.
+  const est = Logica.estacionDeclarada(E, z);
   [['Estación', est ? (est.nombre || `código ${est.codigo}`) : 'no aplica'],
    ['Marea óptima', ETIQ_MAREA[z.mareaOptima]],
    ['Desfase', z.desfaseMinutos === null || z.desfaseMinutos === undefined ? 'no aplica'

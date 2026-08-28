@@ -131,3 +131,36 @@ afirmo sale del código de salida del paso, no de haber leído los hashes.
 que maté eran contra el guión, no contra el paso del CI. Que el paso se ponga
 en rojo con un despliegue a medias es la única parte que no se ha demostrado, y
 provocarla a propósito significa romper producción. Se sabrá el día que pase.
+
+## 2026-08-28 · p6 · HECHA
+
+La salida obvia era sustituir la copia por `Logica.estacionDe` y cerrar. Habría
+sido un error: **las dos copias no hacían lo mismo.**
+
+| | `estacionDe(estado, zid)` | la copia de `pintarZona()` |
+|---|---|---|
+| zona sin `estacionMarea` | cae en `huelva-5` | `null` |
+| `zid` desconocido | cae en `E.zonas[0]` | no aplica |
+| para qué se usa | **calcular** una hora de marea | **escribir** un dato en la ficha |
+
+Unificarlas habría puesto «Estación: Huelva» en la ficha de una zona que no
+declara mareógrafo. Es la misma familia de mentira que las doce unidades de las
+especies sin fenología: rellenar un hueco es peor que dejarlo, porque el hueco
+se ve y el relleno no.
+
+Así que **dos funciones con dos nombres**, cada una respondiendo a su pregunta:
+`estacionDe` («con qué mareógrafo calculo») sigue cayendo, y hace bien;
+`estacionDeclarada` («qué dice el JSON que tiene esta zona») no cae nunca.
+
+- 6 tests, uno de ellos afirmando **la diferencia entre las dos** para la misma
+  zona, para que nadie las «arregle» unificándolas dentro de seis meses.
+- 3 mutantes: caer en `huelva-5`, devolver `undefined` en vez de `null` (que en
+  la ficha imprime «código undefined»), y quitar la guarda de `mareas`.
+
+**Un mutante mal planteado**: el primer intento de matar la guarda la
+*sustituía* por un estado falso en vez de *quitarla*, y sobrevivía — pero es
+que era un mutante equivalente, no un agujero del test. Rehecho quitándola de
+verdad, cayó. Un mutante que sobrevive obliga a mirar dos cosas: el test, y si
+el mutante prueba lo que crees.
+
+Versión a `2026-08-28b`, caché del SW a `odiel-v14`.

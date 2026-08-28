@@ -65,6 +65,48 @@ test('estacionDe: zona sin estacionMarea usa huelva-5 por defecto', () => {
   assert.strictEqual(L.estacionDe(ESTADO, 'sinest').nombre, 'Huelva');
 });
 
+/* --- estacionDeclarada ---------------------------------------------------- */
+
+/* Ojo con la diferencia respecto a `estacionDe`, que NO es un descuido y por eso
+   son dos funciones y no una: `estacionDe` contesta «qué mareógrafo uso para
+   calcular la marea de esta zona», y ahí un valor por defecto es lo correcto.
+   `estacionDeclarada` contesta «qué mareógrafo dice esta zona que tiene», y ahí
+   inventarse Huelva sería escribir en la ficha un dato que el JSON no da. Es la
+   misma familia de mentira que las doce unidades de las especies sin fenología. */
+
+test('estacionDeclarada: la zona que declara una estación, la devuelve', () => {
+  const z = ESTADO.zonas.find(x => x.id === 'odiel');
+  assert.strictEqual(L.estacionDeclarada(ESTADO, z).nombre, 'Huelva');
+});
+
+test('estacionDeclarada: la zona SIN estación devuelve null, no huelva-5', () => {
+  const z = ESTADO.zonas.find(x => x.id === 'sinest');
+  assert.strictEqual(L.estacionDeclarada(ESTADO, z), null);
+});
+
+test('estacionDeclarada: y estacionDe, para esa misma zona, SÍ devuelve huelva-5', () => {
+  // La ficha de zona dirá «no aplica» y el cálculo de mareas seguirá usando
+  // Huelva. Las dos cosas a la vez, que es justo lo que se quiere.
+  const z = ESTADO.zonas.find(x => x.id === 'sinest');
+  assert.strictEqual(L.estacionDeclarada(ESTADO, z), null);
+  assert.strictEqual(L.estacionDe(ESTADO, 'sinest').nombre, 'Huelva');
+});
+
+test('estacionDeclarada: sin datos de mareas devuelve null', () => {
+  const z = ESTADO.zonas.find(x => x.id === 'odiel');
+  assert.strictEqual(L.estacionDeclarada({ ...ESTADO, mareas: null }, z), null);
+});
+
+test('estacionDeclarada: una estación que no existe devuelve null, no undefined', () => {
+  // `estaciones['fantasma']` es undefined, y `undefined` colado en la ficha
+  // imprime «código undefined». null al menos cae en el «no aplica».
+  assert.strictEqual(L.estacionDeclarada(ESTADO, { id: 'x', estacionMarea: 'fantasma' }), null);
+});
+
+test('estacionDeclarada: sin zona devuelve null y no revienta', () => {
+  assert.strictEqual(L.estacionDeclarada(ESTADO, null), null);
+});
+
 /* --- diaMarea ------------------------------------------------------------- */
 
 test('diaMarea: sin desfase deja las horas como vienen', () => {

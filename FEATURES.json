@@ -83,7 +83,9 @@
       "depende_de": [
         "p1"
       ],
-      "hecha": false
+      "hecha": true,
+      "fecha": "2026-08-28",
+      "notas": "No se unifico con estacionDe, que era la salida obvia y la equivocada: las dos copias no hacian lo mismo. estacionDe cae en huelva-5 porque tiene que dar una hora; la ficha de zona NO debe caer, porque escribir «Estacion: Huelva» en una zona sin mareografo es inventarse un dato — la misma familia de mentira que las doce unidades de las especies sin fenologia. Asi que son dos funciones con dos nombres: estacionDe y estacionDeclarada. Seis tests, tres mutantes."
     },
     {
       "id": "p7",

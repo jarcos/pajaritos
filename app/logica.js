@@ -51,6 +51,24 @@ var Logica = (function () {
       : null;
   }
 
+  /** Mareógrafo que una zona DECLARA tener, sin ningún valor por defecto.
+   *  `null` si la zona no declara ninguno, si no hay datos de mareas todavía o
+   *  si el código apunta a una estación que no existe.
+   *
+   *  No es `estacionDe` con otro nombre, y por eso son dos:
+   *    · `estacionDe` responde «con qué mareógrafo calculo la marea de aquí», y
+   *      ahí caer en huelva-5 es lo correcto: hay que dar una hora.
+   *    · `estacionDeclarada` responde «qué dice el JSON que tiene esta zona», y
+   *      ahí inventarse Huelva es escribir en la ficha un dato que nadie ha
+   *      dado. Misma familia que las doce unidades de las especies sin
+   *      fenología: rellenar un hueco es peor que dejarlo.
+   */
+  function estacionDeclarada(estado, zona) {
+    if (!zona || !zona.estacionMarea) return null;
+    if (!estado.mareas || !estado.mareas.estaciones) return null;
+    return estado.mareas.estaciones[zona.estacionMarea] || null;
+  }
+
   /** Predicción de un día para una zona, con el desfase de la zona respecto
    *  al mareógrafo ya aplicado. `null` si esa fecha no está en la predicción
    *  descargada, que es lo que pasa cuando caduca. */
@@ -129,7 +147,7 @@ var Logica = (function () {
 
   return {
     dosD, minutos, zonaId, estadoMes, sinFenologia,
-    estacionDe, diaMarea, diasRestantes, proximaMarea,
+    estacionDe, estacionDeclarada, diaMarea, diasRestantes, proximaMarea,
     esperables, aplicaFiltros,
   };
 })();
