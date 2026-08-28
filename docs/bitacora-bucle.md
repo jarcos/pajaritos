@@ -116,3 +116,18 @@ contra el del repo, con la versión leída del index que sirve producción.
 Un comentario mío en `ci.yml` citaba la línea vieja literalmente, y para un
 `grep` un comentario que reproduce el código **es** el código. Reescrito en
 prosa. El check tenía razón.
+
+**Resultado en producción**: run `33173526537`, job «desplegar al NAS», paso
+«Comprobar que lo publicado es lo que se subió» → `success`. Como el guión sale
+1 ante cualquier diferencia, ante un 404 y ante un servidor que no responde,
+`success` significa que los nueve ficheros coinciden byte a byte.
+
+**Lo que no he podido ver**: el log del run. `gh run view --log` y la API
+devuelven una URL de `blob.core.windows.net` que el proxy de la sesión remota
+bloquea con `Forbidden` — el mismo tipo de límite que `*.josearcos.me`. Lo que
+afirmo sale del código de salida del paso, no de haber leído los hashes.
+
+**Lo que sigue sin haberse visto fallar**: el cableado en sí. Los cinco mutantes
+que maté eran contra el guión, no contra el paso del CI. Que el paso se ponga
+en rojo con un despliegue a medias es la única parte que no se ha demostrado, y
+provocarla a propósito significa romper producción. Se sabrá el día que pase.
