@@ -84,6 +84,14 @@
         "p1"
       ],
       "hecha": false
+    },
+    {
+      "id": "p7",
+      "titulo": "verificar.sh compara el hash de lo desplegado con el del repo",
+      "porque": "El 28-08-2026 el despliegue de p1 se comprobo a mano: curl a produccion, md5, comparar. Salio bien. Pero «CI en verde» ya nos ha mentido antes — biblioHack tuvo un contenedor Created que nadie miraba y una base de datos sana sin datos. Un CI verde dice que el build paso, no que el NAS este sirviendo ESTE fichero. La unica respuesta que no se puede discutir es el hash del byte que devuelve produccion.",
+      "check": "grep -q \"md5sum\\|sha256sum\" herramientas/verificar.sh && grep -q \"logica.js\" herramientas/verificar.sh",
+      "depende_de": [],
+      "hecha": false
     }
   ]
 }

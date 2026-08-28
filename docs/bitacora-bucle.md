@@ -43,9 +43,13 @@
 - `app.js` conserva una segunda copia de «qué mareógrafo le toca a esta zona»
   en `pintarZona()`, con semántica distinta (sin los dos fallbacks). Unificarla
   cambia comportamiento, así que queda como **p6** con su propio check.
-- Nadie ha abierto la app en un navegador. Lo verificado es estático: que
-  `logica.js` no toca el navegador, que todo `Logica.x` que usa `app.js`
-  existe, y que ambos ficheros parsean.
-- El `push` no ha salido: esta VM no tiene salida a GitHub.
+- Nadie ha abierto la app en un navegador. Lo verificado es estático más el
+  despliegue: `logica.js` no toca el navegador, todo `Logica.x` que usa
+  `app.js` existe, ambos parsean, y **producción sirve los dos scripts en
+  orden con el md5 idéntico al del repo** (`f922886c…`, comprobado desde el
+  Mac porque el proxy de la sesión remota bloquea `*.josearcos.me`). Lo que
+  sigue sin probar es la interacción: que la ficha de mareas pinte bien.
+- El `push` sí salió, con `gh`: clave SSH propia de la VM dada de alta con
+  `gh ssh-key add`, sin cambiar los remotos a HTTPS. CI en verde y desplegado.
 
 **Cláusula de parada aplicada**: «una tarea y fuera». p6 queda sin empezar.
