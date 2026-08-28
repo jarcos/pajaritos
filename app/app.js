@@ -16,7 +16,7 @@ const MES_C = ['E','F','M','A','M','J','J','A','S','O','N','D'];
 const TZ = 'Europe/Madrid';
 
 const cap = s => s ? s[0].toUpperCase() + s.slice(1) : s;
-const dosD = n => String(n).padStart(2, '0');
+const dosD = Logica.dosD;
 
 function el(tag, attrs = {}, ...hijos) {
   const n = document.createElement(tag);
@@ -45,7 +45,7 @@ function ahoraLocal() {
   return { fecha: `${p.year}-${p.month}-${p.day}`, hora: `${h}:${p.minute}`,
            mes: Number(p.month) - 1, dia: Number(p.day) };
 }
-const minutos = hhmm => { const [h, m] = hhmm.split(':').map(Number); return h * 60 + m; };
+const minutos = Logica.minutos;
 function dur(min) {
   if (min < 0) min = -min;
   const h = Math.floor(min / 60), m = min % 60;
@@ -103,7 +103,7 @@ const E = {
   datosOk: false,
 };
 const porId = id => E.especies.find(e => e.id === id);
-const zonaId = id => E.zonas.find(z => z.id === id);
+const zonaId = id => Logica.zonaId(E.zonas, id);
 
 /* --- carga de datos ------------------------------------------------------- */
 async function traer(ruta) {
@@ -207,59 +207,24 @@ function ir(p, { porSistema = false } = {}) {
 }
 $$('#tabs button').forEach(b => b.addEventListener('click', () => ir(b.dataset.p)));
 /* --- mareas --------------------------------------------------------------- */
-function estacionDe(zid) {
-  const z = zonaId(zid) || E.zonas[0];
-  const eid = (z && z.estacionMarea) || 'huelva-5';
-  return E.mareas && E.mareas.estaciones ? E.mareas.estaciones[eid] : null;
-}
-function diaMarea(fecha, zid) {
-  const est = estacionDe(zid);
-  if (!est) return null;
-  const d = est.dias.find(x => x.fecha === fecha);
-  if (!d) return null;
-  const z = zonaId(zid);
-  const desfase = (z && typeof z.desfaseMinutos === 'number') ? z.desfaseMinutos : 0;
-  // El desfase de la zona respecto al mareógrafo se aplica sobre la hora mostrada.
-  return {
-    ...d, estacion: est, desfase,
-    eventos: d.eventos.map(e => {
-      const m = (minutos(e.local) + desfase + 1440) % 1440;
-      return { ...e, local: `${dosD(Math.floor(m / 60))}:${dosD(m % 60)}`, min: m };
-    }),
-  };
-}
+function estacionDe(zid) { return Logica.estacionDe(E, zid); }
+function diaMarea(fecha, zid) { return Logica.diaMarea(E, fecha, zid); }
+
 /** Días de predicción que quedan por delante. Menos de 1 = caducado. */
 function diasRestantes() {
-  const est = estacionDe(E.salida ? E.salida.zona : null);
-  if (!est || !est.dias.length) return -1;
-  const hoy = ahoraLocal().fecha;
-  return est.dias.filter(d => d.fecha >= hoy).length;
+  return Logica.diasRestantes(E, E.salida ? E.salida.zona : null, ahoraLocal().fecha);
 }
-function proximaMarea(zid) {
-  const a = ahoraLocal(), d = diaMarea(a.fecha, zid);
-  if (!d) return null;
-  const m = minutos(a.hora);
-  const sig = d.eventos.find(e => e.min >= m);
-  return sig ? { ...sig, faltan: sig.min - m, dia: d } : { ...d.eventos[d.eventos.length - 1], faltan: null, dia: d, pasada: true };
-}
+function proximaMarea(zid) { return Logica.proximaMarea(E, zid, ahoraLocal()); }
 
 /* --- probabilidad --------------------------------------------------------- */
-const estadoMes = (esp, mes) => esp.meses[mes] ?? 0;
+const estadoMes = Logica.estadoMes;
 // Las que no tienen fenología no pueden entrar en ninguna afirmación sobre un
 // mes concreto. Su matriz es doce unos, que no significa «está todo el año»
 // sino «no se sabe»: colarlas en el cuaderno precargado de julio o en el
 // filtro de «especies de este mes» sería inventarse el dato por la puerta de
 // atrás, justo después de haber quitado el gráfico por lo mismo.
-const sinFenologia = esp => !!esp.notaFenologia;
-function esperables(mes, zid, marea) {
-  return E.especies.filter(e => {
-    if (sinFenologia(e)) return false;
-    if (estadoMes(e, mes) < 1) return false;
-    if (zid && !e.zonas.includes(zid)) return false;
-    if (marea && marea !== 'indiferente' && e.marea !== 'indiferente' && e.marea !== marea) return false;
-    return true;
-  });
-}
+const sinFenologia = Logica.sinFenologia;
+function esperables(mes, zid, marea) { return Logica.esperables(E.especies, mes, zid, marea); }
 
 /* --- fragmentos reutilizables --------------------------------------------- */
 function fenMini(esp) {
@@ -358,18 +323,7 @@ function etiquetaFiltro(k, v) {
   if (k === 'grupo') return (E.grupos.find(g => g.id === v) || {}).nombre || v;
   return v;
 }
-function aplicaFiltros(omitir = null) {
-  const f = E.filtros;
-  return E.especies.filter(e => {
-    if (f.mes !== null && omitir !== 'mes' && (sinFenologia(e) || estadoMes(e, f.mes) < 1)) return false;
-    if (f.zona && omitir !== 'zona' && !e.zonas.includes(f.zona)) return false;
-    if (f.marea && omitir !== 'marea' && f.marea !== 'indiferente'
-        && e.marea !== 'indiferente' && e.marea !== f.marea) return false;
-    if (f.tamano && omitir !== 'tamano' && e.tamano !== f.tamano) return false;
-    if (f.grupo && omitir !== 'grupo' && e.grupo !== f.grupo) return false;
-    return true;
-  });
-}
+function aplicaFiltros(omitir = null) { return Logica.aplicaFiltros(E.especies, E.filtros, omitir); }
 function pintarGuia() {
   const chips = vaciar($('#guia-chips'));
   Object.entries(E.filtros).forEach(([k, v]) => {

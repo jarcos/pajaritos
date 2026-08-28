@@ -77,6 +77,25 @@ def main() -> int:
         fallos.append(f"versión de app.js desincronizada: index.html dice "
                       f"«{v_html.group(1)}» y sw.js «{v_sw.group(1)}»")
 
+    # 3b · logica.js: mismo agujero que app.js, y hay que taparlo el mismo día
+    #      que nace el fichero. Si no se declara en index.html, `Logica` es
+    #      undefined y la app muere en la primera marea; si no entra en el
+    #      ARMAZON del service worker, funciona con red y se rompe sin ella,
+    #      que es exactamente donde se usa.
+    v_l_html = re.search(r'logica\.js\?v=([\w.-]+)', html)
+    v_l_sw = re.search(r"'logica\.js\?v=([\w.-]+)'", sw)
+    if not v_l_html:
+        fallos.append("logica.js no está declarada en index.html")
+    if not v_l_sw:
+        fallos.append("logica.js no está en el ARMAZON de sw.js (no se precarga)")
+    if v_l_html and v_l_sw and v_l_html.group(1) != v_l_sw.group(1):
+        fallos.append(f"versión de logica.js desincronizada: index.html dice "
+                      f"«{v_l_html.group(1)}» y sw.js «{v_l_sw.group(1)}»")
+    if v_l_html and v_html and v_l_html.group(1) != v_html.group(1):
+        fallos.append(f"logica.js y app.js con versiones distintas en index.html: "
+                      f"«{v_l_html.group(1)}» y «{v_html.group(1)}». Se cachean "
+                      f"juntas o se quedan descompasadas.")
+
     # 4 · referencias cruzadas
     grupos = {g["id"] for g in especies["grupos"]}
     huerfanas = [e["id"] for e in especies["especies"] if e["grupo"] not in grupos]

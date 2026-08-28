@@ -19,10 +19,8 @@
     "",
     "4. Nada se da por hecho sin pasar `pruebas/puerta.sh`. Rojo no se commitea."
   ],
-
   "proyecto": "pajaritos",
   "puerta": "sh pruebas/puerta.sh",
-
   "tareas": [
     {
       "id": "p1",
@@ -31,7 +29,9 @@
       "detalle": "Mover estacionDe, diaMarea, diasRestantes, proximaMarea, estadoMes, sinFenologia, esperables y aplicaFiltros. Reciben el estado por argumento, no leen la global E. app.js carga logica.js antes y sigue funcionando en el navegador.",
       "check": "node --check app/logica.js && [ \"$(grep -cE '\\b(document|window|localStorage)\\b' app/logica.js)\" = 0 ] && node -e \"const l=require('./app/logica.js'); ['estacionDe','diaMarea','proximaMarea','esperables','aplicaFiltros'].forEach(f=>{if(typeof l[f]!=='function')throw new Error('falta '+f)})\"",
       "depende_de": [],
-      "hecha": false
+      "hecha": true,
+      "fecha": "2026-08-28",
+      "notas": "Extraida como `var Logica` (IIFE) + module.exports, no como modulo ES: la CSP del sitio es script-src self y no hay empaquetador. app.js conserva los nombres antiguos como delegaciones de una linea, asi que ninguno de los 20 puntos de llamada ha cambiado. 21 tests nuevos en pruebas/js/logica.test.js, cuatro mutantes matados."
     },
     {
       "id": "p2",
@@ -39,7 +39,9 @@
       "porque": "El desfase de una zona respecto al mareógrafo decide a qué hora mandas a alguien a la marisma. Y `diasRestantes() < 1` es lo que avisa de que la predicción caducó: una marea de hace cinco días es peor que ninguna.",
       "detalle": "Con `node --test`. Cubrir diaMarea (aplica el desfase y envuelve por medianoche), proximaMarea (devuelve la siguiente, y marca `pasada` cuando ya no quedan) y diasRestantes (negativo si no hay estación).",
       "check": "node --test pruebas/js/ 2>&1 | grep -qE '^# fail 0' && node --test pruebas/js/ 2>&1 | grep -qE 'diaMarea|proximaMarea'",
-      "depende_de": ["p1"],
+      "depende_de": [
+        "p1"
+      ],
       "hecha": false
     },
     {
@@ -48,7 +50,9 @@
       "porque": "Una especie con notaFenologia es una especie SIN dato: su matriz de doce meses es de relleno. Si se cuela en esperables(), la app se inventa el dato por la puerta de atrás — justo después de haber quitado el gráfico por lo mismo. Esto necesita un test que lo impida para siempre.",
       "detalle": "esperables() excluye las de sinFenologia; filtra por mes, zona y marea; y estadoMes devuelve 0 para meses sin dato en vez de romper.",
       "check": "node --test pruebas/js/ 2>&1 | grep -qE '^# fail 0' && node --test pruebas/js/ 2>&1 | grep -qE 'esperables|fenolog'",
-      "depende_de": ["p1"],
+      "depende_de": [
+        "p1"
+      ],
       "hecha": false
     },
     {
@@ -66,7 +70,19 @@
       "porque": "Mismo motivo que p4, y aquí es donde vive la lógica que decide qué ve el usuario en el campo.",
       "detalle": "node --test --experimental-test-coverage, o c8 si hace falta. Suelo en el repo, no en prosa, y correr.sh en rojo si baja.",
       "check": "sh pruebas/correr.sh 2>&1 | grep -qE '% (Lines|Líneas|Funcs)' && grep -qE 'test-coverage|COBERTURA_JS' pruebas/correr.sh",
-      "depende_de": ["p1"],
+      "depende_de": [
+        "p1"
+      ],
+      "hecha": false
+    },
+    {
+      "id": "p6",
+      "titulo": "La busqueda de estacion de mareas de pintarZona() tambien pasa por Logica",
+      "porque": "app.js sigue teniendo una segunda copia de «que mareografo le toca a esta zona»: `z.estacionMarea && E.mareas ? E.mareas.estaciones[z.estacionMarea] : null`. No es identica a Logica.estacionDe — no cae en huelva-5 ni en la primera zona — asi que unificarlas cambia comportamiento y necesita su propio test antes. Dos copias de la misma pregunta con respuestas distintas es como se pierden las tardes.",
+      "check": "[ \"$(grep -c 'E.mareas.estaciones\\[' app/app.js)\" = 0 ]",
+      "depende_de": [
+        "p1"
+      ],
       "hecha": false
     }
   ]
