@@ -2,8 +2,19 @@
 # Commit + push, pero SOLO si la puerta esta verde y lo que entra es lo que
 # se espera que entre. Pensado para que lo llame el bucle desatendido.
 #
-# Uso:  sh pruebas/commit-en-verde.sh "mensaje" [fichero...]
+# Uso:  sh <ruta>/commit-en-verde.sh "mensaje" [fichero...]
 #       sin ficheros hace `git add -A`, con ficheros solo esos.
+#
+# CANONICO EN hq/plantillas/commit-en-verde.sh. Cada proyecto lleva una copia
+# identica, y `hq/comprobar-cartera.sh` comprueba que no han derivado. Una
+# utilidad copiada en cuatro sitios que se toca en uno solo es como se acaba
+# con cuatro comportamientos distintos y un solo nombre — la leccion de p6 en
+# pajaritos, donde dos copias de la misma pregunta daban respuestas distintas.
+#
+# Lo unico especifico de cada proyecto es LA PUERTA, y va en un fichero
+# `.puerta` en la raiz del repo. Una linea, el comando. Por ejemplo:
+#     sh pruebas/puerta.sh        (pajaritos)
+#     make check                  (biblioHack)
 #
 # Por que existe: en un bucle sin nadie mirando, los dos fallos caros son
 # commitear rojo y commitear de mas. Los dos se evitan con comandos, no con
@@ -16,7 +27,7 @@ cd "$raiz"
 
 mensaje=$1
 if [ -z "$mensaje" ]; then
-  echo "uso: sh pruebas/commit-en-verde.sh \"mensaje\" [fichero...]" >&2
+  echo "uso: sh commit-en-verde.sh \"mensaje\" [fichero...]" >&2
   exit 2
 fi
 shift
@@ -98,7 +109,18 @@ echo "nada sospechoso"
 
 echo
 echo "-- 5/6 . la puerta -------------------------------------"
-if ! sh pruebas/puerta.sh; then
+# La puerta la declara el proyecto en `.puerta`. Si no hay fichero, no se
+# adivina un comando: se para. Commitear sin puerta porque no se encontro el
+# fichero es exactamente el fallo que la puerta existe para evitar.
+if [ ! -f .puerta ]; then
+  abortar "no hay fichero .puerta en la raiz. Sin puerta no se commitea."
+fi
+PUERTA=$(sed -n '1p' .puerta)
+if [ -z "$PUERTA" ]; then
+  abortar ".puerta esta vacio. Sin puerta no se commitea."
+fi
+echo "puerta: $PUERTA"
+if ! sh -c "$PUERTA"; then
   abortar "puerta en rojo. Rojo no se commitea."
 fi
 

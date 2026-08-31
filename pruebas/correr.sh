@@ -20,7 +20,11 @@ echo "-- JavaScript -------------------------------------------"
 ficheros=$(find pruebas/js -name '*.test.js' | sort)
 if [ -n "$ficheros" ]; then
   # shellcheck disable=SC2086
-  node --test $ficheros
+  # --test-reporter=tap NO es cosmetico: sin el, node elige formato segun
+  # version y segun si stdout es un TTY, y cualquier cosa que lea esta salida
+  # (los checks de FEATURES.json, por ejemplo) da un resultado distinto segun
+  # la maquina. Paso el 31-08-2026: verde en la VM, rojo en el Mac.
+  node --test --test-reporter=tap $ficheros
 else
   echo "sin tests de JS todavia -- ver AGENTS.md, «Deuda declarada»"
 fi
