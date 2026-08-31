@@ -34,8 +34,17 @@ con `"hecha": false` y todas sus `depende_de` ya hechas.
 4. `sh pruebas/puerta.sh` entera.
 5. Marca la tarea `"hecha": true` con la fecha en `FEATURES.json`, y solo
    entonces — el paso 6 de la puerta comprobará que su `check` pasa de verdad.
-6. `sh pruebas/commit-en-verde.sh "mensaje"`. Ese guion vuelve a correr la
+6. **Pasa el subagente `naturalista`** con el diff. Su veredicto sobre un dato
+   que no se puede defender es BLOQUEANTE, y bloqueante quiere decir que paras
+   y se lo cuentas a José — no que lo sopeses. Un agente de dominio al que se
+   le puede llevar la contraria no es un guardarraíl, es una opinión.
+7. `sh pruebas/commit-en-verde.sh "mensaje"`. Ese guion vuelve a correr la
    puerta y mira qué entra en el commit. No hagas `git commit` a mano.
+
+   Ojo: `commit-en-verde.sh` **no puede** llamar al subagente — es un guion de
+   shell y los subagentes son cosa del agente. Que el `naturalista` se consulte
+   depende de que se cumpla el paso 6, no de que lo imponga la herramienta. Es
+   el eslabón más débil de la cadena y conviene saberlo.
 
 ## Cláusulas de parada
 
