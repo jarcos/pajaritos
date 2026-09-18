@@ -509,6 +509,10 @@ function abrirFicha(esp) {
   })));
 
   $('#cf-ident').textContent = esp.identificacion;
+  // Mismo problema que tenía la fenología: un texto redactado aquí se leía con
+  // la misma autoridad que uno cotejado contra la guía publicada. La línea sale
+  // de logica.js porque es una función pura y ahí se puede probar sin DOM.
+  $('#cf-identfuente').textContent = Logica.procedenciaIdent(esp);
   $('#cf-cond').textContent = esp.conducta;
 
   const conf = vaciar($('#cf-conf'));

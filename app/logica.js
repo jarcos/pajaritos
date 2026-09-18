@@ -145,8 +145,30 @@ var Logica = (function () {
     });
   }
 
+  /* Procedencia del texto de identificación de una ficha.
+
+     Los 60 textos se redactaron aquí y sólo 49 tienen detrás los caracteres
+     que da la guía publicada. Sin esta línea, los otros 11 se leen igual de
+     firmes que los cotejados, que es el mismo fallo que ya tuvo la fenología
+     antes de estrenar su propia línea de procedencia.
+
+     El caso por defecto calla en vez de afirmar: una ficha sin procedencia
+     declarada NUNCA sale como cotejada. El validador lo impide en los datos,
+     pero el fallo seguro también tiene que estar aquí. */
+  var FUENTE_LARGA = 'Cotejada con la guía de la ría de Huelva '
+                   + '(Autoridad Portuaria · SEO/BirdLife).';
+  function procedenciaIdent(esp) {
+    var nota = (esp && esp.notaIdentificacion) || '';
+    if (esp && esp.fuenteIdentificacion === 'guia-seo') {
+      // Con matiz se recorta la coletilla de la fuente: la línea ya es densa
+      // y se lee con el sol de cara.
+      return nota ? 'Cotejada con la guía de la ría de Huelva. ' + nota : FUENTE_LARGA;
+    }
+    return ('Redacción propia, sin cotejar. ' + nota).trim();
+  }
+
   return {
-    dosD, minutos, zonaId, estadoMes, sinFenologia,
+    dosD, minutos, zonaId, estadoMes, sinFenologia, procedenciaIdent,
     estacionDe, estacionDeclarada, diaMarea, diasRestantes, proximaMarea,
     esperables, aplicaFiltros,
   };

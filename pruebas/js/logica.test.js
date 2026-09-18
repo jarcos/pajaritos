@@ -216,3 +216,47 @@ test('aplicaFiltros: no muta la lista que recibe', () => {
   L.aplicaFiltros(ESP, { ...VACIO, mes: 4 });
   assert.deepStrictEqual(ESP, copia);
 });
+
+/* --- procedencia del texto de identificación -------------------------------
+   Los 60 textos de identificación los redactamos aquí; sólo una parte está
+   cotejada contra la guía publicada de la Autoridad Portuaria. La ficha tiene
+   que decir cuál es cuál, igual que ya hace con la fenología, porque si no un
+   párrafo escrito de memoria se lee con la misma autoridad que uno contrastado.
+   Es una función pura de un objeto a una cadena: aquí se prueba, no en el DOM. */
+
+test('una ficha cotejada sin matices lo dice y nombra la fuente', () => {
+  const l = L.procedenciaIdent({ fuenteIdentificacion: 'guia-seo' });
+  assert.match(l, /Cotejada con la guía de la ría de Huelva/);
+  assert.match(l, /Autoridad Portuaria/);
+});
+
+test('una ficha cotejada con matiz antepone la fuente y añade el matiz', () => {
+  const l = L.procedenciaIdent({ fuenteIdentificacion: 'guia-seo',
+                                 notaIdentificacion: 'Del PDF viene el antifaz negro.' });
+  assert.match(l, /^Cotejada con la guía de la ría de Huelva\./);
+  assert.match(l, /antifaz negro/);
+  // La coletilla larga de la fuente sobra cuando hay matiz: la línea ya es densa.
+  assert.doesNotMatch(l, /Autoridad Portuaria/);
+});
+
+test('una ficha propia NO dice que esté cotejada', () => {
+  const l = L.procedenciaIdent({ fuenteIdentificacion: 'propia',
+                                 notaIdentificacion: 'El PDF no describe el ave.' });
+  assert.match(l, /Redacción propia, sin cotejar/);
+  assert.doesNotMatch(l, /Cotejada/);
+  assert.match(l, /no describe el ave/);
+});
+
+test('una ficha propia sin nota no deja un espacio colgando', () => {
+  const l = L.procedenciaIdent({ fuenteIdentificacion: 'propia' });
+  assert.strictEqual(l, l.trim());
+  assert.doesNotMatch(l, /undefined|null/);
+});
+
+test('sin procedencia declarada no se inventa un respaldo', () => {
+  // El validador lo impide en los datos, pero si alguna vez se cuela, el fallo
+  // seguro es callar, nunca afirmar que está cotejada.
+  for (const e of [{}, { fuenteIdentificacion: '' }, { fuenteIdentificacion: 'otra-cosa' }]) {
+    assert.doesNotMatch(L.procedenciaIdent(e), /Cotejada/);
+  }
+});

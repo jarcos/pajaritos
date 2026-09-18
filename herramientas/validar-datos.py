@@ -17,6 +17,19 @@ Cada comprobación está aquí porque algo se rompió de verdad:
     viejo para siempre.
  4. Las referencias cruzadas cierran: el grupo de cada especie existe, y los
     puntos que declara cada zona existen en puntos.geojson.
+ 5. El nombre científico de cada especie es el vigente. sinonimos.json ya trae
+    el campo `vigente` contrastado contra Wikidata; que especies.json diga otra
+    cosa significa que la ficha enseña un nombre que la comunidad ya no usa, y
+    que quien lo busque fuera no lo encuentra. El nombre del PDF de la
+    Autoridad Portuaria se conserva aparte, en `enPdfSeo`.
+ 6. Toda especie declara de dónde sale su texto de identificación. La ficha lo
+    enseña, y una especie sin `fuenteIdentificacion` se leería con la misma
+    autoridad que una cotejada contra la guía publicada. El mismo principio que
+    con la fenología: un hueco declarado antes que un respaldo supuesto.
+ 7. Los pares de confusión son recíprocos y comparten hábitat. En el campo la
+    duda va en las dos direcciones: si el tridáctilo avisa del común, el común
+    tiene que avisar del tridáctilo. Y un par que según nuestros propios datos
+    no coincide en ningún hábitat, o sobra, o revela un hábitat mal declarado.
 
 Uso:  herramientas/validar-datos.py [--datos app/datos] [--app app]
 """
@@ -95,6 +108,58 @@ def main() -> int:
         fallos.append(f"logica.js y app.js con versiones distintas en index.html: "
                       f"«{v_l_html.group(1)}» y «{v_html.group(1)}». Se cachean "
                       f"juntas o se quedan descompasadas.")
+
+    # 5 · nomenclatura vigente
+    def rotulo(e):
+        return e.get("nombre") or e.get("id") or "?"
+
+    por_id = {s["id"]: s for s in sinonimos["entradas"]}
+    viejos = []
+    for e in especies["especies"]:
+        sin = por_id.get(e["id"])
+        if sin and sin.get("vigente") and e.get("cientifico") \
+                and sin["vigente"] != e["cientifico"]:
+            viejos.append(f"{rotulo(e)}: «{e['cientifico']}» → «{sin['vigente']}»")
+    if viejos:
+        fallos.append(f"nombres científicos desfasados respecto al campo "
+                      f"`vigente` de sinonimos.json ({len(viejos)}): " + " · ".join(viejos))
+
+    # 6 · procedencia del texto de identificación
+    FUENTES = {"guia-seo", "propia"}
+    malas = [f"{rotulo(e)}: {e.get('fuenteIdentificacion') or 'sin declarar'}"
+             for e in especies["especies"]
+             if e.get("identificacion") and e.get("fuenteIdentificacion") not in FUENTES]
+    if malas:
+        fallos.append(f"especies sin procedencia válida del texto de identificación "
+                      f"({len(malas)}, se aceptan {sorted(FUENTES)}): " + " · ".join(malas[:5])
+                      + (" …" if len(malas) > 5 else ""))
+    mudas = [rotulo(e) for e in especies["especies"]
+             if e.get("fuenteIdentificacion") == "propia" and not e.get("notaIdentificacion")]
+    if mudas:
+        fallos.append("texto de identificación propio sin decir por qué el PDF no lo "
+                      f"respalda: {mudas}")
+
+    # 7 · pares de confusión
+    por_esp = {e["id"]: e for e in especies["especies"]}
+    pares = {(e["id"], c["especie"])
+             for e in especies["especies"] for c in (e.get("confusiones") or [])}
+    rotas = [p for p in pares if p[1] not in por_esp]
+    if rotas:
+        fallos.append(f"confusiones que apuntan a especies inexistentes: {sorted(rotas)}")
+    mancas = sorted(p for p in pares if p[1] in por_esp and (p[1], p[0]) not in pares)
+    if mancas:
+        fallos.append(f"pares de confusión sin recíproco ({len(mancas)}): "
+                      + " · ".join(f"{rotulo(por_esp[a])} → {rotulo(por_esp[b])}"
+                                   for a, b in mancas))
+    sin_solape = sorted({tuple(sorted(p)) for p in pares
+                         if p[1] in por_esp
+                         and not (set(por_esp[p[0]].get("habitat") or [])
+                                  & set(por_esp[p[1]].get("habitat") or []))})
+    if sin_solape:
+        fallos.append(f"pares de confusión que no comparten ningún hábitat "
+                      f"({len(sin_solape)}): "
+                      + " · ".join(f"{rotulo(por_esp[a])}/{rotulo(por_esp[b])}"
+                                   for a, b in sin_solape))
 
     # 4 · referencias cruzadas
     grupos = {g["id"] for g in especies["grupos"]}
