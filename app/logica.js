@@ -167,8 +167,29 @@ var Logica = (function () {
     return ('Redacción propia, sin cotejar. ' + nota).trim();
   }
 
+  /* Fotos. Criterio t39.1 (29-09-2026): CC0, dominio público, CC BY y CC BY-SA.
+     Las dos últimas obligan a atribuir, así que una foto sin autor, sin
+     licencia o sin enlace a su página de Commons no se enseña: el fallo seguro
+     es el placeholder, no una foto a medias. El validador lo impide en los
+     datos; esto es la segunda barrera, la que actúa si algo se cuela. */
+  function fotoMostrable(foto) {
+    return !!(foto && foto.estado === 'lista' && foto.archivo
+              && foto.autor && foto.licencia && foto.paginaArchivo);
+  }
+
+  function creditoFoto(foto) {
+    if (!fotoMostrable(foto)) return null;
+    return {
+      texto: 'Foto: ' + foto.autor + ' · ' + foto.licencia,
+      enlace: foto.paginaArchivo,
+      licenciaUrl: foto.licenciaUrl || '',
+      nota: foto.modificada ? 'Recortada y redimensionada.' : '',
+    };
+  }
+
   return {
     dosD, minutos, zonaId, estadoMes, sinFenologia, procedenciaIdent,
+    fotoMostrable, creditoFoto,
     estacionDe, estacionDeclarada, diaMarea, diasRestantes, proximaMarea,
     esperables, aplicaFiltros,
   };

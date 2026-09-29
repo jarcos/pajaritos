@@ -260,3 +260,55 @@ test('sin procedencia declarada no se inventa un respaldo', () => {
     assert.doesNotMatch(L.procedenciaIdent(e), /Cotejada/);
   }
 });
+
+/* --- fotos ------------------------------------------------------------------
+   Criterio t39.1 (29-09-2026): CC0, dominio público, CC BY y CC BY-SA, con
+   autor y licencia visibles bajo la foto y enlace a la página del archivo en
+   Commons. CC BY y CC BY-SA obligan a atribuir; una foto que se enseña sin
+   decir de quién es incumple la licencia con la que se descargó.
+   El fallo seguro es el placeholder, nunca una foto a medias. */
+
+const FOTO = {
+  estado: 'lista', archivo: 'ciconia-ciconia.webp', autor: 'Carlos Delgado',
+  licencia: 'CC BY-SA 3.0', licenciaUrl: 'https://creativecommons.org/licenses/by-sa/3.0/',
+  paginaArchivo: 'https://commons.wikimedia.org/wiki/File:Ciconia_ciconia_-_01.jpg',
+  modificada: true, revisada: '2026-09-29',
+};
+
+test('una foto pendiente no se muestra y no tiene crédito', () => {
+  assert.strictEqual(L.fotoMostrable({ estado: 'pendiente', archivo: null }), false);
+  assert.strictEqual(L.creditoFoto({ estado: 'pendiente', archivo: null }), null);
+});
+
+test('sin foto declarada tampoco rompe', () => {
+  assert.strictEqual(L.fotoMostrable(undefined), false);
+  assert.strictEqual(L.creditoFoto(undefined), null);
+});
+
+test('una foto completa se muestra con autor, licencia y enlace a Commons', () => {
+  assert.strictEqual(L.fotoMostrable(FOTO), true);
+  const c = L.creditoFoto(FOTO);
+  assert.strictEqual(c.texto, 'Foto: Carlos Delgado · CC BY-SA 3.0');
+  assert.strictEqual(c.enlace, FOTO.paginaArchivo);
+  assert.strictEqual(c.licenciaUrl, FOTO.licenciaUrl);
+});
+
+test('una foto recortada o redimensionada lo dice', () => {
+  assert.match(L.creditoFoto(FOTO).nota, /redimensionada/i);
+  assert.strictEqual(L.creditoFoto(Object.assign({}, FOTO, { modificada: false })).nota, '');
+});
+
+test('una foto lista sin autor NO se muestra: incumpliría la licencia', () => {
+  assert.strictEqual(L.fotoMostrable(Object.assign({}, FOTO, { autor: '' })), false);
+  assert.strictEqual(L.fotoMostrable(Object.assign({}, FOTO, { autor: null })), false);
+});
+
+test('una foto lista sin licencia, sin archivo o sin enlace a Commons NO se muestra', () => {
+  assert.strictEqual(L.fotoMostrable(Object.assign({}, FOTO, { licencia: '' })), false);
+  assert.strictEqual(L.fotoMostrable(Object.assign({}, FOTO, { archivo: null })), false);
+  assert.strictEqual(L.fotoMostrable(Object.assign({}, FOTO, { paginaArchivo: '' })), false);
+});
+
+test('el estado manda: con todos los campos pero pendiente, no se muestra', () => {
+  assert.strictEqual(L.fotoMostrable(Object.assign({}, FOTO, { estado: 'pendiente' })), false);
+});

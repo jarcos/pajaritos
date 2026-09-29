@@ -13,7 +13,7 @@ const V = 'odiel-v15';
 // descargado a mano y no se tiran por subir V. `activate` la deja en paz.
 const C_MAPA = 'odiel-mapa';
 const ARMAZON = [
-  './', 'index.html', 'logica.js?v=2026-09-18a', 'app.js?v=2026-09-18a',
+  './', 'index.html', 'logica.js?v=2026-09-29a', 'app.js?v=2026-09-29a',
   'manifest.webmanifest', 'icono.svg',
   'datos/especies.json', 'datos/zonas.json', 'datos/puntos.geojson', 'datos/sinonimos.json',
   // El motor del mapa entra en la precarga a propósito: 388 KB comprimidos que

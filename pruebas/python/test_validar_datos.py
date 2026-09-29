@@ -31,7 +31,8 @@ def _datos_validos() -> dict:
             "grupos": [{"id": "limicolas"}],
             "especies": [
                 {"id": "avoceta", "grupo": "limicolas",
-                 "confianza": "verificado", "zonas": ["odiel"]},
+                 "confianza": "verificado", "zonas": ["odiel"],
+                 "foto": {"estado": "pendiente", "archivo": None}},
             ],
         },
         "sinonimos.json": {
@@ -202,6 +203,133 @@ class ValidarDatos(unittest.TestCase):
             r = e.correr()
         self.assertEqual(r.returncode, 1)
         self.assertIn("p99", r.stderr)
+
+
+class ValidarFotos(unittest.TestCase):
+    """Criterio t39.1 (29-09-2026): CC0, dominio público, CC BY y CC BY-SA, con
+    autor, licencia y enlace a la página del archivo en Commons.
+
+    CC BY y CC BY-SA obligan a atribuir. Una foto «lista» a la que le falta el
+    autor o la licencia incumple la licencia con la que se descargó, y una foto
+    cuyo fichero no está sube a producción como un icono roto. Cada test de
+    aquí rompe UNA cosa de una foto sana y comprueba que el guion lo ve."""
+
+    @staticmethod
+    def _foto(**cambios) -> dict:
+        foto = {
+            "estado": "lista", "archivo": "avoceta-1a2b3c4d.webp",
+            "autor": "El Golli Mohamed", "licencia": "CC BY-SA 4.0",
+            "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Avoceta.jpg",
+            "origen": "commons", "modificada": True, "revisada": "2026-09-29",
+        }
+        foto.update(cambios)
+        return foto
+
+    def _correr(self, foto, con_fichero=True, nombre_fichero="avoceta-1a2b3c4d.webp"):
+        def mutar(d):
+            d["especies.json"]["especies"][0]["foto"] = foto
+        with escenario(mutar) as e:
+            if con_fichero:
+                (e.raiz / "app" / "fotos").mkdir(exist_ok=True)
+                (e.raiz / "app" / "fotos" / nombre_fichero).write_bytes(b"x")
+            return e.correr()
+
+    def test_foto_completa_pasa(self):
+        """El caso bueno. Sin él, los demás podrían ser falsos positivos."""
+        r = self._correr(self._foto())
+        self.assertEqual(r.returncode, 0, r.stderr)
+
+    def test_las_licencias_aceptadas_pasan(self):
+        for lic in ("CC0 1.0", "Public domain", "CC BY 4.0", "CC BY 3.0",
+                    "CC BY-SA 4.0", "CC BY-SA 2.5"):
+            with self.subTest(licencia=lic):
+                r = self._correr(self._foto(licencia=lic))
+                self.assertEqual(r.returncode, 0, r.stderr)
+
+    def test_especie_sin_campo_foto(self):
+        """app.js lee `esp.foto.estado` sin comprobar nada: sin el campo, la
+        ficha muere."""
+        def mutar(d):
+            del d["especies.json"]["especies"][0]["foto"]
+        with escenario(mutar) as e:
+            r = e.correr()
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("foto", r.stderr)
+        self.assertIn("avoceta", r.stderr)
+
+    def test_estado_desconocido(self):
+        r = self._correr(self._foto(estado="casi"))
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("estado", r.stderr)
+
+    def test_foto_lista_sin_autor(self):
+        for autor in ("", None):
+            with self.subTest(autor=autor):
+                r = self._correr(self._foto(autor=autor))
+                self.assertEqual(r.returncode, 1)
+                self.assertIn("autor", r.stderr)
+
+    def test_foto_lista_sin_licencia(self):
+        r = self._correr(self._foto(licencia=""))
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("licencia", r.stderr)
+
+    def test_licencia_no_aceptada(self):
+        """Commons solo admite libres, pero un dato mal copiado o una licencia
+        con NC o ND no cumple el criterio y tiene que parar."""
+        for lic in ("CC BY-NC 4.0", "CC BY-ND 4.0", "Copyrighted free use", "todos"):
+            with self.subTest(licencia=lic):
+                r = self._correr(self._foto(licencia=lic))
+                self.assertEqual(r.returncode, 1)
+                self.assertIn("licencia", r.stderr)
+
+    def test_foto_lista_sin_enlace_a_commons_o_de_otra_web(self):
+        for pagina in ("", None, "https://example.com/File:Avoceta.jpg",
+                       "https://commons.wikimedia.org/wiki/Category:Avoceta"):
+            with self.subTest(pagina=pagina):
+                r = self._correr(self._foto(paginaArchivo=pagina))
+                self.assertEqual(r.returncode, 1)
+                self.assertIn("paginaArchivo", r.stderr)
+
+    def test_foto_lista_sin_fecha_de_revision(self):
+        """La revisión humana es la que dice que la identificación es buena;
+        sin fecha nadie sabe si se hizo."""
+        for fecha in ("", None, "ayer", "29/09/2026"):
+            with self.subTest(fecha=fecha):
+                r = self._correr(self._foto(revisada=fecha))
+                self.assertEqual(r.returncode, 1)
+                self.assertIn("revisada", r.stderr)
+
+    def test_foto_lista_cuyo_fichero_no_existe(self):
+        r = self._correr(self._foto(), con_fichero=False)
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("no existe", r.stderr)
+        self.assertIn("avoceta-1a2b3c4d.webp", r.stderr)
+
+    def test_archivo_con_ruta(self):
+        """El nombre va tal cual a `fotos/<archivo>`; con una ruta se sale de
+        la carpeta."""
+        r = self._correr(self._foto(archivo="../datos/especies.json"), con_fichero=False)
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("archivo", r.stderr)
+
+    def test_archivo_sin_huella_en_el_nombre(self):
+        """nginx sirve /fotos/ como inmutable un año. Un nombre sin huella del
+        contenido significa que cambiar la foto por otra no llega a nadie que
+        ya tenga la vieja en caché, ni al service worker, que es cache-first."""
+        for nombre in ("avoceta.webp", "avoceta-1a2b3c.webp", "avoceta-zzzzzzzz.webp"):
+            with self.subTest(archivo=nombre):
+                r = self._correr(self._foto(archivo=nombre), nombre_fichero=nombre)
+                self.assertEqual(r.returncode, 1)
+                self.assertIn("huella", r.stderr)
+
+    def test_foto_pendiente_con_archivo_a_medias(self):
+        """Un estado que dice una cosa y unos campos que dicen otra es un
+        trabajo a medias: o está lista o está pendiente."""
+        r = self._correr({"estado": "pendiente", "archivo": "avoceta-1a2b3c4d.webp"})
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("pendiente", r.stderr)
 
 
 class DatosRealesDelRepo(unittest.TestCase):

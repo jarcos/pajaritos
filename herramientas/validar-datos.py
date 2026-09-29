@@ -31,6 +31,14 @@ Cada comprobación está aquí porque algo se rompió de verdad:
     tiene que avisar del tridáctilo. Y un par que según nuestros propios datos
     no coincide en ningún hábitat, o sobra, o revela un hábitat mal declarado.
 
+ 8. Las fotos cumplen el criterio de licencia t39.1 (29-09-2026). Una foto
+    «lista» lleva autor, licencia libre (CC0, dominio público, CC BY o
+    CC BY-SA), enlace a su página de Commons y fecha de revisión, y su fichero
+    existe en app/fotos/ con la huella del contenido en el nombre (nginx las
+    sirve como inmutables un año). CC BY y CC BY-SA obligan a atribuir: enseñar una foto
+    sin decir de quién es incumple la licencia con la que se descargó. Y una
+    especie sin campo `foto` mata la ficha, porque app.js lee `esp.foto.estado`.
+
 Uso:  herramientas/validar-datos.py [--datos app/datos] [--app app]
 """
 from __future__ import annotations
@@ -161,6 +169,55 @@ def main() -> int:
                       + " · ".join(f"{rotulo(por_esp[a])}/{rotulo(por_esp[b])}"
                                    for a, b in sin_solape))
 
+    # 8 · fotos
+    ESTADOS_FOTO = ("pendiente", "lista")
+    LICENCIA_LIBRE = re.compile(r"^(CC0( 1\.0)?|Public domain|CC BY(-SA)? [1-4]\.\d)$")
+    FECHA = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+    NOMBRE_FICHERO = re.compile(r"^[\w.-]+\.(webp|jpg|jpeg|png)$")
+    CON_HUELLA = re.compile(r"-[0-9a-f]{8}\.(webp|jpg|jpeg|png)$")
+    PAGINA_COMMONS = "https://commons.wikimedia.org/wiki/File:"
+    for e in especies["especies"]:
+        r, foto = rotulo(e), e.get("foto")
+        if not isinstance(foto, dict):
+            fallos.append(f"{r}: sin campo foto (app.js lee esp.foto.estado y la ficha muere)")
+            continue
+        estado = foto.get("estado")
+        if estado not in ESTADOS_FOTO:
+            fallos.append(f"{r}: foto.estado «{estado}» no es ninguno de {list(ESTADOS_FOTO)}")
+            continue
+        if estado == "pendiente":
+            if foto.get("archivo"):
+                fallos.append(f"{r}: foto pendiente con archivo «{foto['archivo']}»: "
+                              f"o está lista o está pendiente")
+            continue
+        archivo = foto.get("archivo") or ""
+        if not NOMBRE_FICHERO.match(archivo):
+            fallos.append(f"{r}: foto lista con archivo «{archivo}» que no es un nombre "
+                          f"de fichero simple (sin rutas, .webp .jpg .png)")
+        elif not CON_HUELLA.search(archivo):
+            fallos.append(f"{r}: foto lista con archivo «{archivo}» sin huella del contenido "
+                          f"en el nombre (-1a2b3c4d.webp): nginx sirve /fotos/ como "
+                          f"inmutable un año y otra foto tiene que ser otra URL")
+        elif not (app / "fotos" / archivo).is_file():
+            fallos.append(f"{r}: foto lista pero app/fotos/{archivo} no existe")
+        if not foto.get("autor"):
+            fallos.append(f"{r}: foto lista sin autor (CC BY y CC BY-SA obligan a atribuir)")
+        licencia = foto.get("licencia") or ""
+        if not licencia:
+            fallos.append(f"{r}: foto lista sin licencia")
+        elif not LICENCIA_LIBRE.match(licencia):
+            fallos.append(f"{r}: licencia «{licencia}» fuera del criterio "
+                          f"(CC0, dominio público, CC BY, CC BY-SA)")
+        elif not licencia.startswith("Public domain") \
+                and not (foto.get("licenciaUrl") or "").startswith("https://creativecommons.org/"):
+            fallos.append(f"{r}: foto lista sin licenciaUrl de creativecommons.org")
+        if not (foto.get("paginaArchivo") or "").startswith(PAGINA_COMMONS):
+            fallos.append(f"{r}: foto lista con paginaArchivo que no apunta a un archivo "
+                          f"de Commons ({PAGINA_COMMONS}…)")
+        if not FECHA.match(foto.get("revisada") or ""):
+            fallos.append(f"{r}: foto lista sin fecha revisada AAAA-MM-DD "
+                          f"(la revisión humana es la que da por buena la identificación)")
+
     # 4 · referencias cruzadas
     grupos = {g["id"] for g in especies["grupos"]}
     huerfanas = [e["id"] for e in especies["especies"] if e["grupo"] not in grupos]
@@ -176,7 +233,8 @@ def main() -> int:
         return _salir(fallos)
     ver = sum(1 for e in especies["especies"] if e["confianza"] == "verificado")
     cat = sum(1 for s in sinonimos["entradas"] if s["commonsVerificado"])
-    print(f"ok · {len(ids)} especies ({ver} con fenología verificada) · "
+    listas = sum(1 for e in especies["especies"] if e["foto"]["estado"] == "lista")
+    print(f"ok · {len(ids)} especies ({ver} con fenología verificada, {listas} con foto) · "
           f"{cat}/{len(sinonimos['entradas'])} categorías de Commons verificadas · "
           f"{len(ids_punto)} puntos · app.js v{v_html.group(1)}")
     return 0

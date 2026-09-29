@@ -242,8 +242,10 @@ function etEstatus(esp) { return esp.estatus.join(' + '); }
 
 function filaEspecie(esp, { conMas = false, alPulsar = null } = {}) {
   const cont = el('button', { class: 'fila', type: 'button' });
-  const mini = el('div', { class: 'miniatura' + (esp.foto.estado === 'pendiente' ? ' pend' : '') },
-                  esp.foto.estado === 'pendiente' ? el('span', { text: 'FOTO PEND.' }) : el('span', { text: 'FOTO' }));
+  const hayFoto = Logica.fotoMostrable(esp.foto);
+  const mini = el('div', { class: 'miniatura' + (hayFoto ? '' : ' pend') },
+                  hayFoto ? el('img', { src: `fotos/${esp.foto.archivo}`, alt: '', loading: 'lazy' })
+                          : el('span', { text: 'FOTO PEND.' }));
   const txt = el('div', { class: 'txt' },
     el('span', { class: 'nom', text: esp.nombre }),
     el('span', { class: 'sci' }, esp.cientifico, ' · ', el('span', { class: 'est', text: etEstatus(esp) })));
@@ -307,7 +309,7 @@ function pintarHoy() {
   $('#hoy-n').textContent = alta.length;
   $('#hoy-n-sub').textContent = `de ${E.especies.length} en la guía · ${cria.length} en cría`;
   const lista = vaciar($('#hoy-destacadas'));
-  alta.slice().sort((x, y) => (x.foto.estado === 'pendiente') - (y.foto.estado === 'pendiente'))
+  alta.slice().sort((x, y) => Logica.fotoMostrable(y.foto) - Logica.fotoMostrable(x.foto))
       .slice(0, 4).forEach(e => lista.append(filaEspecie(e)));
   if (!alta.length) lista.append(el('p', { class: 'proc', text: 'Nada con probabilidad alta este mes en esta zona.' }));
 }
@@ -465,7 +467,7 @@ function abrirFicha(esp) {
 
   const foto = $('#cf-foto');
   vaciar(foto);
-  if (esp.foto.estado === 'pendiente') {
+  if (!Logica.fotoMostrable(esp.foto)) {
     foto.className = 'foto pendiente';
     const sin = E.sinonimos && E.sinonimos.entradas.find(s => s.id === esp.id);
     const cat = encodeURIComponent((sin && sin.categoriaCommons) || esp.cientifico);
@@ -482,7 +484,12 @@ function abrirFicha(esp) {
   } else {
     foto.className = 'foto';
     foto.append(el('img', { src: `fotos/${esp.foto.archivo}`, alt: esp.nombre, style: 'width:100%;height:100%;object-fit:cover' }));
-    $('#cf-credito').textContent = `${esp.foto.autor} · ${esp.foto.licencia}`;
+    // CC BY y CC BY-SA obligan a atribuir: autor, licencia y enlace a Commons
+    // van siempre bajo la foto, y la lógica pura decide si hay derecho a enseñarla.
+    const c = Logica.creditoFoto(esp.foto);
+    const cred = vaciar($('#cf-credito'));
+    cred.append(el('a', { href: c.enlace, target: '_blank', rel: 'noopener', text: c.texto }));
+    if (c.nota) cred.append(` · ${c.nota}`);
     $('#cf-propon').classList.add('oculto');
   }
 
@@ -1310,7 +1317,7 @@ const TRAMOS = [
 ];
 let tamMapa = 0;                        // lo que dice el servidor que pesa el mapa
 async function pintarAjustes() {
-  const pend = E.especies.filter(e => e.foto.estado === 'pendiente').length;
+  const pend = E.especies.filter(e => !Logica.fotoMostrable(e.foto)).length;
   $('#aj-descarga-txt').textContent =
     `${E.especies.length - pend} fotos · mapa de Huelva · mareas de ${diasRestantes()} días · ${pend} fichas con foto pendiente`;
 

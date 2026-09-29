@@ -202,6 +202,7 @@ html[data-tema="oscuro"] .btn.pri{color:#14140F}
 .fila .miniatura{width:44px;height:44px;flex:0 0 44px;border:1px solid var(--linea-2);border-radius:var(--r-s);
       background:var(--relleno);display:grid;place-items:center;font:700 9px/1.1 var(--mono);
       color:var(--mudo);text-align:center;overflow:hidden}
+.fila .miniatura img{width:100%;height:100%;object-fit:cover;display:block}
 .fila .miniatura.pend{background:repeating-linear-gradient(45deg,var(--relleno-2) 0 5px,var(--relleno) 5px 10px)}
 .mas{flex:0 0 var(--tap);width:var(--tap);height:var(--tap);border:2px solid var(--tinta);
      border-radius:var(--r-s);display:grid;place-items:center;font:700 22px/1 var(--sans);background:var(--sup)}
@@ -274,6 +275,7 @@ html[data-tema="oscuro"] .btn.pri{color:#14140F}
 .foto .et{font:700 11px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--tinta-2);
           background:var(--sup);border:1.5px solid var(--tinta);border-radius:var(--r-s);padding:8px 12px;text-align:center}
 .credito{margin-top:6px;font:400 10px/1.4 var(--mono);color:var(--mudo)}
+.credito a{color:inherit;text-decoration:underline}
 /* De dónde sale la matriz mensual. La marca de arriba solo sabe decir
    verificada o estimada, y con eso una matriz sacada de 789 listas se leía
    igual que doce meses inventados. Esto lo distingue sin añadir un tercer
@@ -836,7 +838,7 @@ html[data-tema="oscuro"] .btn.pri{color:#14140F}
 <!-- logica.js va primero: app.js delega en Logica. Con `defer` el orden
      de las etiquetas se respeta, asi que esto es suficiente. Las dos
      comparten version a proposito: se cachean juntas o se descompasan. -->
-<script src="logica.js?v=2026-09-18a" defer></script>
-<script src="app.js?v=2026-09-18a" defer></script>
+<script src="logica.js?v=2026-09-29a" defer></script>
+<script src="app.js?v=2026-09-29a" defer></script>
 </body>
 </html>

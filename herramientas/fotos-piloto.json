@@ -1,0 +1,141 @@
+{
+ "_leeme": [
+  "Manifiesto de las fotos del piloto (t39.2). Lo lee herramientas/incorporar-fotos.py.",
+  "Criterio de licencia y atribucion: t39.1 (29/09/2026). Elegidas mirando cada foto, no solo sus metadatos.",
+  "Descartadas a proposito: fotos de museo (huevos y ejemplares naturalizados MHNT), fotos con varias especies y fotos de zoo."
+ ],
+ "revisada": "2026-09-29",
+ "fotos": {
+  "phoenicopterus-roseus": {
+   "archivo": "Flamenco común (Phoenicopterus roseus), Walvis Bay, Namibia, 2018-08-05, DD 30.jpg",
+   "autor": "Diego Delso",
+   "licencia": "CC BY-SA 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Flamenco_común_(Phoenicopterus_roseus),_Walvis_Bay,_Namibia,_2018-08-05,_DD_30.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Flamenco_com%C3%BAn_%28Phoenicopterus_roseus%29%2C_Walvis_Bay%2C_Namibia%2C_2018-08-05%2C_DD_30.jpg",
+   "ancho": 7819,
+   "alto": 5213,
+   "fechaToma": "2018-08-05",
+   "lugar": "Walvis Bay, Namibia",
+   "valoracion": "Featured picture"
+  },
+  "platalea-leucorodia": {
+   "archivo": "Eurasian Spoonbill Walking Ranganathittu Karnataka Jan24 A7C 09151.jpg",
+   "autor": "Timothy A. Gonsalves",
+   "licencia": "CC BY-SA 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Eurasian_Spoonbill_Walking_Ranganathittu_Karnataka_Jan24_A7C_09151.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/7/79/Eurasian_Spoonbill_Walking_Ranganathittu_Karnataka_Jan24_A7C_09151.jpg",
+   "ancho": 4824,
+   "alto": 3618,
+   "fechaToma": "2024-01-12",
+   "lugar": "Ranganathittu, Karnataka, India",
+   "valoracion": "Featured picture"
+  },
+  "ciconia-ciconia": {
+   "archivo": "Ciconia ciconia - 01.jpg",
+   "autor": "Carlos Delgado",
+   "licencia": "CC BY-SA 3.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Ciconia_ciconia_-_01.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Ciconia_ciconia_-_01.jpg",
+   "ancho": 3648,
+   "alto": 2432,
+   "fechaToma": "2013-04-05",
+   "lugar": "Madrid, España",
+   "valoracion": "Featured picture"
+  },
+  "ardea-cinerea": {
+   "archivo": "Grey heron 2022 04 03 03.jpg",
+   "autor": "Alexis Lours",
+   "licencia": "CC BY 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Grey_heron_2022_04_03_03.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Grey_heron_2022_04_03_03.jpg",
+   "ancho": 5145,
+   "alto": 3430,
+   "fechaToma": "2022-04-03",
+   "lugar": "Parc Georges-Valbon, Francia",
+   "valoracion": "Quality image"
+  },
+  "egretta-garzetta": {
+   "archivo": "Aigrette garzette au lac sud de Tunis (site RAMSAR).jpg",
+   "autor": "El Golli Mohamed",
+   "licencia": "CC BY-SA 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Aigrette_garzette_au_lac_sud_de_Tunis_(site_RAMSAR).jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Aigrette_garzette_au_lac_sud_de_Tunis_%28site_RAMSAR%29.jpg",
+   "ancho": 2758,
+   "alto": 1827,
+   "fechaToma": "2015-05-20",
+   "lugar": "Lago sur de Túnez, Túnez",
+   "valoracion": "Quality image"
+  },
+  "himantopus-himantopus": {
+   "archivo": "Black-winged stilt courtship behaviour.jpg",
+   "autor": "Ryzhkov Sergey",
+   "licencia": "CC BY-SA 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Black-winged_stilt_courtship_behaviour.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/b/bb/Black-winged_stilt_courtship_behaviour.jpg",
+   "ancho": 3000,
+   "alto": 2000,
+   "fechaToma": "2015-05-21",
+   "lugar": "Península de Kinburn, Ucrania",
+   "valoracion": "Featured picture",
+   "nota": "Dos adultos en cortejo. Si se prefiere un solo ave, sustituir."
+  },
+  "recurvirostra-avosetta": {
+   "archivo": "Avocette élégante Thyna022.jpg",
+   "autor": "El Golli Mohamed",
+   "licencia": "CC BY-SA 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Avocette_élégante_Thyna022.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/7/79/Avocette_%C3%A9l%C3%A9gante_Thyna022.jpg",
+   "ancho": 5170,
+   "alto": 3447,
+   "fechaToma": "2020-08-11",
+   "lugar": "Thyna, Túnez",
+   "valoracion": "Quality image"
+  },
+  "pandion-haliaetus": {
+   "archivo": "Balbuzard pecheur Lac de Tunis.jpg",
+   "autor": "El Golli Mohamed",
+   "licencia": "CC BY-SA 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Balbuzard_pecheur_Lac_de_Tunis.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/6/66/Balbuzard_pecheur_Lac_de_Tunis.jpg",
+   "ancho": 4384,
+   "alto": 2923,
+   "fechaToma": "2023-10-20",
+   "lugar": "Lago sur de Túnez, Túnez",
+   "valoracion": "Featured picture"
+  },
+  "circus-aeruginosus": {
+   "archivo": "Männliche Rohrweihe im Flug 04.jpg",
+   "autor": "Stephan Sprinz",
+   "licencia": "CC BY 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Männliche_Rohrweihe_im_Flug_04.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/b/bf/M%C3%A4nnliche_Rohrweihe_im_Flug_04.jpg",
+   "ancho": 3045,
+   "alto": 2030,
+   "fechaToma": "2023-04-12",
+   "lugar": "Spiekeroog, Alemania",
+   "valoracion": "Quality image"
+  },
+  "podiceps-nigricollis": {
+   "archivo": "Schwarzhalstaucher (Podiceps nigricollis) im NSG Wagbachniederung 1.jpg",
+   "autor": "Stephan Sprinz",
+   "licencia": "CC BY 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Schwarzhalstaucher_(Podiceps_nigricollis)_im_NSG_Wagbachniederung_1.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/8/80/Schwarzhalstaucher_%28Podiceps_nigricollis%29_im_NSG_Wagbachniederung_1.jpg",
+   "ancho": 3859,
+   "alto": 2573,
+   "fechaToma": "2021-05-01",
+   "lugar": "Wagbachniederung, Alemania",
+   "valoracion": "Quality image"
+  }
+ }
+}
