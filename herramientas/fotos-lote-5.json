@@ -1,0 +1,113 @@
+{
+ "_leeme": [
+  "Manifiesto del lote 5 de t39.3. Lo lee herramientas/incorporar-fotos.py --manifiesto herramientas/fotos-lote-5.json.",
+  "Criterio de licencia y atribucion: t39.1. Elegidas mirando cada foto. Para alcatraz se descarto una foto de un ave con plastico en el pico. Faltan paino boreal y pardela balear (t39.4): no hay foto libre utilizable en Commons."
+ ],
+ "revisada": "2026-09-29",
+ "fotos": {
+  "passer-domesticus": {
+   "archivo": "House sparrow (Passer domesticus).jpg",
+   "autor": "Charles J. Sharp",
+   "licencia": "CC BY-SA 3.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:House_sparrow_(Passer_domesticus).jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/6/65/House_sparrow_%28Passer_domesticus%29.jpg",
+   "ancho": 2942,
+   "alto": 1962,
+   "fechaToma": "2014-04-13",
+   "lugar": "Beckley, Oxfordshire, Reino Unido",
+   "valoracion": "Quality image"
+  },
+  "carduelis-carduelis": {
+   "archivo": "Carduelis carduelis close up.jpg",
+   "autor": "Francis C. Franklin",
+   "licencia": "CC BY-SA 3.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Carduelis_carduelis_close_up.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/7/7c/Carduelis_carduelis_close_up.jpg",
+   "ancho": 3184,
+   "alto": 2522,
+   "fechaToma": "2014-03-15",
+   "lugar": "Reino Unido",
+   "valoracion": "Quality image"
+  },
+  "melanitta-nigra": {
+   "archivo": "Männliche Trauerente (Melanitta nigra) - Spiekeroog, Nationalpark Niedersächsisches Wattenmeer.jpg",
+   "autor": "Stephan Sprinz",
+   "licencia": "CC BY-SA 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:M%C3%A4nnliche_Trauerente_(Melanitta_nigra)_-_Spiekeroog,_Nationalpark_Nieders%C3%A4chsisches_Wattenmeer.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/0/0b/M%C3%A4nnliche_Trauerente_%28Melanitta_nigra%29_-_Spiekeroog%2C_Nationalpark_Nieders%C3%A4chsisches_Wattenmeer.jpg",
+   "ancho": 3705,
+   "alto": 2470,
+   "fechaToma": "2020-03-03",
+   "lugar": "Spiekeroog, Alemania",
+   "valoracion": "Sin valoración"
+  },
+  "mergus-serrator": {
+   "archivo": "Red-breasted Merganser male (Mergus serrator), Barnegat Inlet, New Jersey, USA.jpg",
+   "autor": "Needsmoreritalin",
+   "licencia": "CC BY-SA 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Red-breasted_Merganser_male_(Mergus_serrator),_Barnegat_Inlet,_New_Jersey,_USA.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Red-breasted_Merganser_male_%28Mergus_serrator%29%2C_Barnegat_Inlet%2C_New_Jersey%2C_USA.jpg",
+   "ancho": 4855,
+   "alto": 2415,
+   "fechaToma": "2025-03-01",
+   "lugar": "Barnegat Inlet, Nueva Jersey, EE. UU.",
+   "valoracion": "Quality image"
+  },
+  "gavia-stellata": {
+   "archivo": "090 - RED-THROATED LOON (3-23-09) port san luis, sloco, ca (1) (8720117963).jpg",
+   "autor": "ALAN SCHMIERER",
+   "licencia": "CC0",
+   "licenciaUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:090_-_RED-THROATED_LOON_(3-23-09)_port_san_luis,_sloco,_ca_(1)_(8720117963).jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/7/75/090_-_RED-THROATED_LOON_%283-23-09%29_port_san_luis%2C_sloco%2C_ca_%281%29_%288720117963%29.jpg",
+   "ancho": 3441,
+   "alto": 2334,
+   "fechaToma": "2009-03-24",
+   "lugar": "Port San Luis, California, EE. UU.",
+   "valoracion": "Sin valoración"
+  },
+  "morus-bassanus": {
+   "archivo": "Gannet (Morus bassanus) (11).JPG",
+   "autor": "Ken Billington",
+   "licencia": "CC BY-SA 3.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Gannet_(Morus_bassanus)_(11).JPG",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Gannet_%28Morus_bassanus%29_%2811%29.JPG",
+   "ancho": 2000,
+   "alto": 1500,
+   "fechaToma": "2010-08-05",
+   "lugar": "Brow Head, Cork, Irlanda",
+   "valoracion": "Quality image"
+  },
+  "alca-torda": {
+   "archivo": "Tordalk (Alca torda) Handa.jpg",
+   "autor": "Chme82",
+   "licencia": "CC BY-SA 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Tordalk_(Alca_torda)_Handa.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/8/86/Tordalk_%28Alca_torda%29_Handa.jpg",
+   "ancho": 5568,
+   "alto": 3712,
+   "fechaToma": "2016-06-29",
+   "lugar": "Isla Handa, Escocia",
+   "valoracion": "Quality image"
+  },
+  "stercorarius-skua": {
+   "archivo": "Great skua (Stercorarius skua), Hallig Hooge.jpg",
+   "autor": "Hobbyfotowiki",
+   "licencia": "CC0",
+   "licenciaUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Great_skua_(Stercorarius_skua),_Hallig_Hooge.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/6/63/Great_skua_%28Stercorarius_skua%29%2C_Hallig_Hooge.jpg",
+   "ancho": 3937,
+   "alto": 2618,
+   "fechaToma": "2019-04-09",
+   "lugar": "Hallig Hooge, Alemania",
+   "valoracion": "Sin valoración"
+  }
+ }
+}

@@ -95,11 +95,16 @@
    "marea": "indiferente",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "melanitta-nigra-173106eb.webp",
+    "autor": "Stephan Sprinz",
+    "licencia": "CC BY-SA 4.0",
+    "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:M%C3%A4nnliche_Trauerente_(Melanitta_nigra)_-_Spiekeroog,_Nationalpark_Nieders%C3%A4chsisches_Wattenmeer.jpg",
+    "origen": "commons",
+    "archivoCommons": "Männliche Trauerente (Melanitta nigra) - Spiekeroog, Nationalpark Niedersächsisches Wattenmeer.jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "notaFenologia": "Sin fenología: los hotspots del Odiel son marisma y laguna, y no sale en ninguno. El barchart de la provincia confirma que está en Huelva, pero su denominador incluye listas de interior y no sirve para fechar. Necesita un punto de seawatch.",
    "fuenteIdentificacion": "guia-seo",
@@ -144,11 +149,16 @@
    "marea": "indiferente",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "mergus-serrator-37455516.webp",
+    "autor": "Needsmoreritalin",
+    "licencia": "CC BY-SA 4.0",
+    "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Red-breasted_Merganser_male_(Mergus_serrator),_Barnegat_Inlet,_New_Jersey,_USA.jpg",
+    "origen": "commons",
+    "archivoCommons": "Red-breasted Merganser male (Mergus serrator), Barnegat Inlet, New Jersey, USA.jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "fuenteFenologia": "eBird, los hotspots del Odiel, 789 listas, contrastado el 21/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación.",
    "fuenteIdentificacion": "guia-seo",
@@ -193,11 +203,16 @@
    "marea": "indiferente",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "gavia-stellata-ce8e0342.webp",
+    "autor": "ALAN SCHMIERER",
+    "licencia": "CC0",
+    "licenciaUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:090_-_RED-THROATED_LOON_(3-23-09)_port_san_luis,_sloco,_ca_(1)_(8720117963).jpg",
+    "origen": "commons",
+    "archivoCommons": "090 - RED-THROATED LOON (3-23-09) port san luis, sloco, ca (1) (8720117963).jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "notaFenologia": "Sin fenología: los hotspots del Odiel son marisma y laguna, y no sale en ninguno. El barchart de la provincia confirma que está en Huelva, pero su denominador incluye listas de interior y no sirve para fechar. Necesita un punto de seawatch.",
    "fuenteIdentificacion": "guia-seo"
@@ -395,11 +410,16 @@
    "marea": "indiferente",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "morus-bassanus-e53b6550.webp",
+    "autor": "Ken Billington",
+    "licencia": "CC BY-SA 3.0",
+    "licenciaUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Gannet_(Morus_bassanus)_(11).JPG",
+    "origen": "commons",
+    "archivoCommons": "Gannet (Morus bassanus) (11).JPG",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "fuenteIdentificacion": "guia-seo"
   },
@@ -447,11 +467,16 @@
    "marea": "indiferente",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "stercorarius-skua-5f97c90f.webp",
+    "autor": "Hobbyfotowiki",
+    "licencia": "CC0",
+    "licenciaUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Great_skua_(Stercorarius_skua),_Hallig_Hooge.jpg",
+    "origen": "commons",
+    "archivoCommons": "Great skua (Stercorarius skua), Hallig Hooge.jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "notaFenologia": "Sin fenología: los hotspots del Odiel son marisma y laguna, y no sale en ninguno. El barchart de la provincia confirma que está en Huelva, pero su denominador incluye listas de interior y no sirve para fechar. Necesita un punto de seawatch.",
    "fuenteIdentificacion": "guia-seo"
@@ -2707,11 +2732,16 @@
    "marea": "indiferente",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "alca-torda-637d6bee.webp",
+    "autor": "Chme82",
+    "licencia": "CC BY-SA 4.0",
+    "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Tordalk_(Alca_torda)_Handa.jpg",
+    "origen": "commons",
+    "archivoCommons": "Tordalk (Alca torda) Handa.jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "notaFenologia": "Sin fenología: los hotspots del Odiel son marisma y laguna, y no sale en ninguno. El barchart de la provincia confirma que está en Huelva, pero su denominador incluye listas de interior y no sirve para fechar. Necesita un punto de seawatch.",
    "fuenteIdentificacion": "propia",
@@ -3511,11 +3541,16 @@
    "marea": "indiferente",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "passer-domesticus-b91ebb5b.webp",
+    "autor": "Charles J. Sharp",
+    "licencia": "CC BY-SA 3.0",
+    "licenciaUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:House_sparrow_(Passer_domesticus).jpg",
+    "origen": "commons",
+    "archivoCommons": "House sparrow (Passer domesticus).jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "fuenteFenologia": "eBird, los hotspots del Odiel, 789 listas, contrastado el 21/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación.",
    "fuenteIdentificacion": "guia-seo"
@@ -3565,11 +3600,16 @@
    "marea": "indiferente",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "carduelis-carduelis-c57050bf.webp",
+    "autor": "Francis C. Franklin",
+    "licencia": "CC BY-SA 3.0",
+    "licenciaUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Carduelis_carduelis_close_up.jpg",
+    "origen": "commons",
+    "archivoCommons": "Carduelis carduelis close up.jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "fuenteFenologia": "eBird, los hotspots del Odiel, 789 listas, contrastado el 21/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación.",
    "fuenteIdentificacion": "guia-seo",
