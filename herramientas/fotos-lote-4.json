@@ -1,0 +1,139 @@
+{
+ "_leeme": [
+  "Manifiesto del lote 4 de t39.3. Lo lee herramientas/incorporar-fotos.py --manifiesto herramientas/fotos-lote-4.json.",
+  "Criterio de licencia y atribucion: t39.1. Elegidas mirando cada foto. Descartadas: petirrojo de Tierpark Hellabrunn (zoo) y una foto de avion comun que en realidad era una golondrina."
+ ],
+ "revisada": "2026-09-29",
+ "fotos": {
+  "apus-apus": {
+   "archivo": "Common swift 2024 04 21.jpg",
+   "autor": "Alexis Lours",
+   "licencia": "CC BY 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Common_swift_2024_04_21.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/1/14/Common_swift_2024_04_21.jpg",
+   "ancho": 3444,
+   "alto": 2296,
+   "fechaToma": "2024-04-21",
+   "lugar": "Gennevilliers, Francia",
+   "valoracion": "Quality image"
+  },
+  "hirundo-rustica": {
+   "archivo": "2013.06.23.-11-Wesenberg-Rauchschwalbe.jpg",
+   "autor": "Andreas Eichler",
+   "licencia": "CC BY-SA 3.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:2013.06.23.-11-Wesenberg-Rauchschwalbe.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/0/02/2013.06.23.-11-Wesenberg-Rauchschwalbe.jpg",
+   "ancho": 3486,
+   "alto": 3464,
+   "fechaToma": "2013-06-23",
+   "lugar": "Wesenberg, Alemania",
+   "valoracion": "Quality image"
+  },
+  "delichon-urbicum": {
+   "archivo": "House Martin by christoph moning.jpg",
+   "autor": "christoph_moning",
+   "licencia": "CC BY 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:House_Martin_by_christoph_moning.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/4/4c/House_Martin_by_christoph_moning.jpg",
+   "ancho": 1835,
+   "alto": 1298,
+   "fechaToma": "2009-04-09",
+   "lugar": "",
+   "valoracion": "Quality image"
+  },
+  "motacilla-flava": {
+   "archivo": "Wiesenschafstelze (Motacilla flava flava) im LSG Bergstraße-Nord 08.jpg",
+   "autor": "Stephan Sprinz",
+   "licencia": "CC BY-SA 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Wiesenschafstelze_(Motacilla_flava_flava)_im_LSG_Bergstra%C3%9Fe-Nord_08.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/5/56/Wiesenschafstelze_%28Motacilla_flava_flava%29_im_LSG_Bergstra%C3%9Fe-Nord_08.jpg",
+   "ancho": 2691,
+   "alto": 1794,
+   "fechaToma": "2021-04-24",
+   "lugar": "Bergstraße-Nord, Alemania",
+   "valoracion": "Quality image"
+  },
+  "erithacus-rubecula": {
+   "archivo": "Erithacus rubecula with cocked head.jpg",
+   "autor": "Francis C. Franklin",
+   "licencia": "CC BY-SA 3.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Erithacus_rubecula_with_cocked_head.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Erithacus_rubecula_with_cocked_head.jpg",
+   "ancho": 2574,
+   "alto": 2059,
+   "fechaToma": "2014-02-27",
+   "lugar": "",
+   "valoracion": "Quality image"
+  },
+  "phoenicurus-ochruros": {
+   "archivo": "Seehof Phoenicurus ochruros female 5264746.jpg",
+   "autor": "Ermell",
+   "licencia": "CC BY-SA 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Seehof_Phoenicurus_ochruros_female_5264746.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Seehof_Phoenicurus_ochruros_female_5264746.jpg",
+   "ancho": 2403,
+   "alto": 1802,
+   "fechaToma": "2019-05-26",
+   "lugar": "Seehof, Bamberg, Alemania",
+   "valoracion": "Quality image"
+  },
+  "saxicola-rubicola": {
+   "archivo": "Saxicola rubicola.006 - A Coruña.jpg",
+   "autor": "Fernando Losada Rodríguez",
+   "licencia": "CC BY-SA 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Saxicola_rubicola.006_-_A_Coru%C3%B1a.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Saxicola_rubicola.006_-_A_Coru%C3%B1a.jpg",
+   "ancho": 5152,
+   "alto": 3864,
+   "fechaToma": "2021-04-04",
+   "lugar": "A Coruña, España",
+   "valoracion": "Quality image"
+  },
+  "turdus-merula": {
+   "archivo": "Common Blackbird.jpg",
+   "autor": "Andreas Trepte",
+   "licencia": "CC BY-SA 2.5",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/2.5/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Common_Blackbird.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Common_Blackbird.jpg",
+   "ancho": 3105,
+   "alto": 2070,
+   "fechaToma": "2011-06-03",
+   "lugar": "Alemania",
+   "valoracion": "Quality image"
+  },
+  "pica-pica": {
+   "archivo": "Eurasian magpie 2022 05 03.jpg",
+   "autor": "Alexis Lours",
+   "licencia": "CC BY 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Eurasian_magpie_2022_05_03.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Eurasian_magpie_2022_05_03.jpg",
+   "ancho": 5078,
+   "alto": 3385,
+   "fechaToma": "2022-05-03",
+   "lugar": "Gennevilliers, Francia",
+   "valoracion": "Quality image"
+  },
+  "sturnus-unicolor": {
+   "archivo": "Étourneau unicolore (Spotless Starling) Sturnus unicolor (Tunis- Tunisia).jpg",
+   "autor": "El Golli Mohamed",
+   "licencia": "CC BY-SA 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:%C3%89tourneau_unicolore_(Spotless_Starling)_Sturnus_unicolor_(Tunis-_Tunisia).jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/5/58/%C3%89tourneau_unicolore_%28Spotless_Starling%29_Sturnus_unicolor_%28Tunis-_Tunisia%29.jpg",
+   "ancho": 2500,
+   "alto": 1662,
+   "fechaToma": "2015-05-09",
+   "lugar": "Túnez",
+   "valoracion": "Quality image"
+  }
+ }
+}
