@@ -873,11 +873,16 @@
    "marea": "indiferente",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "milvus-migrans-daaa0d8a.webp",
+    "autor": "Charles J. Sharp",
+    "licencia": "CC BY-SA 4.0",
+    "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Black_kite_(Milvus_migrans_parasitus)_in_flight.jpg",
+    "origen": "commons",
+    "archivoCommons": "Black kite (Milvus migrans parasitus) in flight.jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "fuenteIdentificacion": "propia",
    "notaIdentificacion": "El PDF no lo describe; la comparación con el milano real está en la ficha del real, no en la suya."
@@ -928,11 +933,16 @@
    "marea": "indiferente",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "milvus-milvus-1d175fa0.webp",
+    "autor": "Reinhold Möller Ermell",
+    "licencia": "CC BY-SA 4.0",
+    "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Rotmilan_(Milvus_milvus)_im_Flug-20250628-RM-155041.jpg",
+    "origen": "commons",
+    "archivoCommons": "Rotmilan (Milvus milvus) im Flug-20250628-RM-155041.jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "fuenteIdentificacion": "guia-seo"
   },
@@ -1393,11 +1403,16 @@
    "marea": "bajamar",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "charadrius-alexandrinus-825c0a4d.webp",
+    "autor": "Zeynel Cebeci",
+    "licencia": "CC BY-SA 4.0",
+    "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Charadrius_alexandrinus_-_Kentish_Plover_03.jpg",
+    "origen": "commons",
+    "archivoCommons": "Charadrius alexandrinus - Kentish Plover 03.jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "fuenteIdentificacion": "guia-seo"
   },
@@ -1613,11 +1628,16 @@
    "marea": "bajamar",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "calidris-alpina-957a6fd1.webp",
+    "autor": "Alexis Lours",
+    "licencia": "CC BY 4.0",
+    "licenciaUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Dunlin_2024_04_01_01.jpg",
+    "origen": "commons",
+    "archivoCommons": "Dunlin 2024 04 01 01.jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "fuenteIdentificacion": "guia-seo"
   },
@@ -1672,11 +1692,16 @@
    "marea": "bajamar",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "limosa-limosa-75189523.webp",
+    "autor": "Charles J. Sharp",
+    "licencia": "CC BY-SA 4.0",
+    "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Black-tailed_godwit_(Limosa_limosa_limosa)_Sri_Lanka.jpg",
+    "origen": "commons",
+    "archivoCommons": "Black-tailed godwit (Limosa limosa limosa) Sri Lanka.jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "fuenteIdentificacion": "guia-seo"
   },
@@ -1837,11 +1862,16 @@
    "marea": "bajamar",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "numenius-arquata-8d12c0ed.webp",
+    "autor": "Ken Billington",
+    "licencia": "CC BY-SA 3.0",
+    "licenciaUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Curlew_(Numenius_arquata)_(12).jpg",
+    "origen": "commons",
+    "archivoCommons": "Curlew (Numenius arquata) (12).jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "fuenteIdentificacion": "guia-seo"
   },
@@ -2064,11 +2094,16 @@
    "marea": "bajamar",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "arenaria-interpres-b89d687a.webp",
+    "autor": "Stephan Sprinz",
+    "licencia": "CC BY 4.0",
+    "licenciaUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Steinw%C3%A4lzer_(Arenaria_interpres)_im_Schlichtkleid_am_Strand_von_Oostkapelle_01.jpg",
+    "origen": "commons",
+    "archivoCommons": "Steinwälzer (Arenaria interpres) im Schlichtkleid am Strand von Oostkapelle 01.jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "fuenteIdentificacion": "guia-seo"
   },
@@ -2237,11 +2272,16 @@
    "marea": "indiferente",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "larus-audouinii-719784e7.webp",
+    "autor": "Hobbyfotowiki",
+    "licencia": "CC0",
+    "licenciaUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Audouin%27s_gull_(Ichthyaetus_audouinii).jpg",
+    "origen": "commons",
+    "archivoCommons": "Audouin's gull (Ichthyaetus audouinii).jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "fuenteIdentificacion": "guia-seo"
   },
@@ -2467,11 +2507,16 @@
    "marea": "indiferente",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "sterna-sandvicensis-7c9e15c5.webp",
+    "autor": "Charles J. Sharp",
+    "licencia": "CC BY-SA 4.0",
+    "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Sandwich_tern_(Thalasseus_sandvicensis)_in_flight_4.jpg",
+    "origen": "commons",
+    "archivoCommons": "Sandwich tern (Thalasseus sandvicensis) in flight 4.jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "fuenteIdentificacion": "guia-seo"
   },
@@ -2521,11 +2566,16 @@
    "marea": "indiferente",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "sterna-hirundo-fafdbe03.webp",
+    "autor": "Alexis Lours",
+    "licencia": "CC BY 4.0",
+    "licenciaUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Common_Tern_2025_04.jpg",
+    "origen": "commons",
+    "archivoCommons": "Common Tern 2025 04.jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "fuenteIdentificacion": "guia-seo"
   },

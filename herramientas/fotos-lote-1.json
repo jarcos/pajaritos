@@ -1,0 +1,139 @@
+{
+ "_leeme": [
+  "Manifiesto del lote 1 de t39.3. Lo lee herramientas/incorporar-fotos.py --manifiesto herramientas/fotos-lote-1.json.",
+  "Criterio de licencia y atribucion: t39.1. Elegidas mirando cada foto. Descartada una de zarapito real por ser de zoo."
+ ],
+ "revisada": "2026-09-29",
+ "fotos": {
+  "milvus-migrans": {
+   "archivo": "Black kite (Milvus migrans parasitus) in flight.jpg",
+   "autor": "Charles J. Sharp",
+   "licencia": "CC BY-SA 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Black_kite_(Milvus_migrans_parasitus)_in_flight.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/0/09/Black_kite_%28Milvus_migrans_parasitus%29_in_flight.jpg",
+   "ancho": 3942,
+   "alto": 2629,
+   "fechaToma": "2018-11-28",
+   "lugar": "Toliara, Madagascar",
+   "valoracion": "Quality image"
+  },
+  "milvus-milvus": {
+   "archivo": "Rotmilan (Milvus milvus) im Flug-20250628-RM-155041.jpg",
+   "autor": "Reinhold Möller Ermell",
+   "licencia": "CC BY-SA 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Rotmilan_(Milvus_milvus)_im_Flug-20250628-RM-155041.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/8/89/Rotmilan_%28Milvus_milvus%29_im_Flug-20250628-RM-155041.jpg",
+   "ancho": 2628,
+   "alto": 1971,
+   "fechaToma": "2025-06-28",
+   "lugar": "Steigerwald, Alemania",
+   "valoracion": "Quality image"
+  },
+  "sterna-sandvicensis": {
+   "archivo": "Sandwich tern (Thalasseus sandvicensis) in flight 4.jpg",
+   "autor": "Charles J. Sharp",
+   "licencia": "CC BY-SA 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Sandwich_tern_(Thalasseus_sandvicensis)_in_flight_4.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/9/94/Sandwich_tern_%28Thalasseus_sandvicensis%29_in_flight_4.jpg",
+   "ancho": 4296,
+   "alto": 2864,
+   "fechaToma": "2023-05-21",
+   "lugar": "Brownsea Island, Dorset, Reino Unido",
+   "valoracion": "Quality image"
+  },
+  "sterna-hirundo": {
+   "archivo": "Common Tern 2025 04.jpg",
+   "autor": "Alexis Lours",
+   "licencia": "CC BY 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Common_Tern_2025_04.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/b/bb/Common_Tern_2025_04.jpg",
+   "ancho": 4554,
+   "alto": 3036,
+   "fechaToma": "2025-06-17",
+   "lugar": "Hauts-de-Seine, Francia",
+   "valoracion": "Quality image"
+  },
+  "calidris-alpina": {
+   "archivo": "Dunlin 2024 04 01 01.jpg",
+   "autor": "Alexis Lours",
+   "licencia": "CC BY 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Dunlin_2024_04_01_01.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Dunlin_2024_04_01_01.jpg",
+   "ancho": 5694,
+   "alto": 3796,
+   "fechaToma": "2024-04-01",
+   "lugar": "Trouville-sur-Mer, Francia",
+   "valoracion": "Quality image"
+  },
+  "limosa-limosa": {
+   "archivo": "Black-tailed godwit (Limosa limosa limosa) Sri Lanka.jpg",
+   "autor": "Charles J. Sharp",
+   "licencia": "CC BY-SA 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Black-tailed_godwit_(Limosa_limosa_limosa)_Sri_Lanka.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/8/80/Black-tailed_godwit_%28Limosa_limosa_limosa%29_Sri_Lanka.jpg",
+   "ancho": 3452,
+   "alto": 2301,
+   "fechaToma": "2022-02-25",
+   "lugar": "Bundala, Sri Lanka",
+   "valoracion": "Quality image"
+  },
+  "numenius-arquata": {
+   "archivo": "Curlew (Numenius arquata) (12).jpg",
+   "autor": "Ken Billington",
+   "licencia": "CC BY-SA 3.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Curlew_(Numenius_arquata)_(12).jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/0/09/Curlew_%28Numenius_arquata%29_%2812%29.jpg",
+   "ancho": 2000,
+   "alto": 1500,
+   "fechaToma": "2009-05-24",
+   "lugar": "Brow Head, Cork, Irlanda",
+   "valoracion": "Quality image"
+  },
+  "arenaria-interpres": {
+   "archivo": "Steinwälzer (Arenaria interpres) im Schlichtkleid am Strand von Oostkapelle 01.jpg",
+   "autor": "Stephan Sprinz",
+   "licencia": "CC BY 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Steinw%C3%A4lzer_(Arenaria_interpres)_im_Schlichtkleid_am_Strand_von_Oostkapelle_01.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Steinw%C3%A4lzer_%28Arenaria_interpres%29_im_Schlichtkleid_am_Strand_von_Oostkapelle_01.jpg",
+   "ancho": 3758,
+   "alto": 2819,
+   "fechaToma": "2024-12-28",
+   "lugar": "Oostkapelle, Países Bajos",
+   "valoracion": "Featured picture"
+  },
+  "charadrius-alexandrinus": {
+   "archivo": "Charadrius alexandrinus - Kentish Plover 03.jpg",
+   "autor": "Zeynel Cebeci",
+   "licencia": "CC BY-SA 4.0",
+   "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Charadrius_alexandrinus_-_Kentish_Plover_03.jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/f/f4/Charadrius_alexandrinus_-_Kentish_Plover_03.jpg",
+   "ancho": 2250,
+   "alto": 1600,
+   "fechaToma": "2020-05-30",
+   "lugar": "Delta del Göksu, Turquía",
+   "valoracion": "Quality image"
+  },
+  "larus-audouinii": {
+   "archivo": "Audouin's gull (Ichthyaetus audouinii).jpg",
+   "autor": "Hobbyfotowiki",
+   "licencia": "CC0",
+   "licenciaUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Audouin%27s_gull_(Ichthyaetus_audouinii).jpg",
+   "original": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Audouin%27s_gull_%28Ichthyaetus_audouinii%29.jpg",
+   "ancho": 4802,
+   "alto": 3201,
+   "fechaToma": "2025-10-04",
+   "lugar": "Cabanas de Tavira, Portugal",
+   "valoracion": "Quality image"
+  }
+ }
+}
