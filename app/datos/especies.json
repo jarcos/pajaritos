@@ -1569,11 +1569,16 @@
    "marea": "bajamar",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "calidris-ferruginea-65e64743.webp",
+    "autor": "El Golli Mohamed",
+    "licencia": "CC BY-SA 4.0",
+    "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Curlew_sandpiper_at_Thyna.jpg",
+    "origen": "commons",
+    "archivoCommons": "Curlew sandpiper at Thyna.jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "fuenteIdentificacion": "guia-seo"
   },
@@ -1752,11 +1757,16 @@
    "marea": "bajamar",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "limosa-lapponica-b94a5486.webp",
+    "autor": "Hobbyfotowiki",
+    "licencia": "CC0",
+    "licenciaUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Limosa_lapponica_(Bar-tailed_godwit),_Heligoland.jpg",
+    "origen": "commons",
+    "archivoCommons": "Limosa lapponica (Bar-tailed godwit), Heligoland.jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "fuenteFenologia": "eBird, los hotspots del Odiel, 789 listas, contrastado el 21/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación.",
    "fuenteIdentificacion": "guia-seo"
@@ -1807,11 +1817,16 @@
    "marea": "bajamar",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "numenius-phaeopus-3f9e9c44.webp",
+    "autor": "Hobbyfotowiki",
+    "licencia": "CC0",
+    "licenciaUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Whimbrel_(Fuerteventura).jpg",
+    "origen": "commons",
+    "archivoCommons": "Whimbrel (Fuerteventura).jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "fuenteFenologia": "eBird, los hotspots del Odiel, 789 listas, contrastado el 21/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación.",
    "fuenteIdentificacion": "guia-seo"
@@ -1921,11 +1936,16 @@
    "marea": "indiferente",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "actitis-hypoleucos-54a16998.webp",
+    "autor": "Charles J. Sharp",
+    "licencia": "CC BY-SA 4.0",
+    "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Common_sandpiper_(Actitis_hypoleucos)_Oppdal_2.jpg",
+    "origen": "commons",
+    "archivoCommons": "Common sandpiper (Actitis hypoleucos) Oppdal 2.jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "fuenteFenologia": "eBird, los hotspots del Odiel, 789 listas, contrastado el 21/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación.",
    "fuenteIdentificacion": "guia-seo"
@@ -2216,11 +2236,16 @@
    "marea": "indiferente",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "larus-melanocephalus-698d115c.webp",
+    "autor": "Alexis Lours",
+    "licencia": "CC BY 4.0",
+    "licenciaUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Mediterranean_gull_2025_06_14.jpg",
+    "origen": "commons",
+    "archivoCommons": "Mediterranean gull 2025 06 14.jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "fuenteFenologia": "eBird, los hotspots del Odiel, 789 listas, contrastado el 21/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación.",
    "fuenteIdentificacion": "guia-seo",
@@ -2336,11 +2361,16 @@
    "marea": "indiferente",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "larus-fuscus-bfeb8d4a.webp",
+    "autor": "Fernando Losada Rodríguez",
+    "licencia": "CC BY-SA 4.0",
+    "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Larus_fuscus.001_-_Bristol.jpg",
+    "origen": "commons",
+    "archivoCommons": "Larus fuscus.001 - Bristol.jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "fuenteFenologia": "eBird, los hotspots del Odiel, 789 listas, contrastado el 21/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación.",
    "fuenteIdentificacion": "guia-seo"
@@ -2450,11 +2480,16 @@
    "marea": "indiferente",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "hydroprogne-caspia-d37eb2e2.webp",
+    "autor": "Charles J. Sharp",
+    "licencia": "CC BY-SA 4.0",
+    "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Caspian_tern_(Hydroprogne_caspia)_non-breeding.jpg",
+    "origen": "commons",
+    "archivoCommons": "Caspian tern (Hydroprogne caspia) non-breeding.jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "fuenteFenologia": "eBird, los hotspots del Odiel, 789 listas, contrastado el 21/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación.",
    "fuenteIdentificacion": "guia-seo",
@@ -2620,11 +2655,16 @@
    "marea": "indiferente",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "sternula-albifrons-59344d13.webp",
+    "autor": "El Golli Mohamed",
+    "licencia": "CC BY-SA 4.0",
+    "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Sterne_naine013_lacdeTunis.jpg",
+    "origen": "commons",
+    "archivoCommons": "Sterne naine013 lacdeTunis.jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "fuenteFenologia": "eBird, los hotspots del Odiel, 789 listas, contrastado el 21/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación.",
    "fuenteIdentificacion": "guia-seo"
@@ -2722,11 +2762,16 @@
    "marea": "indiferente",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "tyto-alba-a8314aa9.webp",
+    "autor": "Alun Williams333",
+    "licencia": "CC BY-SA 4.0",
+    "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Tyto_alba_tylluan_wen.jpg",
+    "origen": "commons",
+    "archivoCommons": "Tyto alba tylluan wen.jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "notaFenologia": "Sin fenología: aparece en el 0 % de las listas de eBird del Odiel porque nadie las hace de noche. Ningún barchart lo va a resolver; haría falta bibliografía o el atlas.",
    "fuenteIdentificacion": "guia-seo"
@@ -3022,11 +3067,16 @@
    "marea": "indiferente",
    "canto": null,
    "foto": {
-    "estado": "pendiente",
-    "archivo": null,
-    "autor": null,
-    "licencia": null,
-    "origen": null
+    "estado": "lista",
+    "archivo": "motacilla-alba-e8e23a17.webp",
+    "autor": "Zeynel Cebeci",
+    "licencia": "CC BY-SA 4.0",
+    "licenciaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "paginaArchivo": "https://commons.wikimedia.org/wiki/File:Motacilla_alba_-_White_Wagtail,_Adana_2016-11-05_02-2.jpg",
+    "origen": "commons",
+    "archivoCommons": "Motacilla alba - White Wagtail, Adana 2016-11-05 02-2.jpg",
+    "modificada": true,
+    "revisada": "2026-09-29"
    },
    "fuenteFenologia": "eBird, los hotspots del Odiel, 789 listas, contrastado el 21/08/2026. Mide detectabilidad, no abundancia: sigue siendo estimación.",
    "fuenteIdentificacion": "guia-seo"
