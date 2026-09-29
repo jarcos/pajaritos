@@ -263,8 +263,8 @@ const TAREAS = [
     d:'Se descarto la API de Mailgun: solo ensena el secreto de una key al crearla y la cuenta ya tenia sus dos gastadas. avisar() pasa a smtplib con STARTTLS en el 587 y reutiliza las credenciales que ya funcionan en biblioHack y en monitoring, asi que no hay secreto nuevo que mantener. Conexion y autenticacion verificadas desde dentro del contenedor.' },
 
   // ─────────────────────────────── pendiente
-  { id:'t39', e:'pendiente', a:'contenido', f:'F7', t:'Banco de imágenes de las 60 especies',
-    d:'Descarga de Commons e iNaturalist, verificación especie a especie, conversión a WebP y manifiesto de atribución en CSV.' },
+  { id:'t39', e:'curso', a:'contenido', f:'F7', x:'58 de 60', t:'Banco de imágenes de las 60 especies',
+    d:'58 fichas con foto de Commons (t39.1 criterio de licencia y atribución, t39.2 piloto de 10, t39.3 resto en cinco lotes, herramientas/fotos-lote-N.json). Todas con autor, licencia libre y enlace a la página del archivo. Faltan el paíño boreal y la pardela balear (t39.4): hay pocas fotos libres y la pardela se confunde con otras, así que se quedan sin foto hasta que haya una defendible.' },
   { id:'t40', e:'hecho', a:'app', f:'F5', x:'en producción', t:'MapLibre + PMTiles en el cliente',
     d:'El esquema por coordenadas ya es historia: basemap real servido desde el NAS con peticiones Range. Estilo escrito a mano tras preguntarle al .pmtiles qué trae en el Odiel —landuse/wetland es la marisma, water/basin las salinas, roads/footway los senderos—, colores leídos del CSS para que los tres modos de pantalla arrastren al mapa, y los 17 puntos como marcadores HTML en vez de capa vectorial, que así llevan etiqueta sin servidor de glifos y siguen siendo botones. Librerías precargadas por el SW pero cargadas al abrir el mapa: 388 KB que no paga quien solo mira la marea.' },
   { id:'t57', e:'pendiente', a:'app', f:'F5', x:'sin rótulos', t:'Glifos para los nombres del basemap',
