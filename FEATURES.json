@@ -119,6 +119,17 @@
       "check": "python3 -m unittest pruebas.python.test_analitica",
       "depende_de": [],
       "hecha": true
+    },
+    {
+      "id": "p10",
+      "titulo": "Un cambio en nginx/ llega de verdad a producción",
+      "fecha": "2026-11-06",
+      "porque": "El despliegue de p9 salió verde con nginx corriendo la configuración vieja: /u/script.js devolvía index.html. `up -d` no recrea un contenedor porque cambie un fichero montado, y la configuración es un bind mount de un fichero que tar sustituye. El CI ahora recrea web cuando cambia nginx/ y comprueba que la configuración viva es la del repo.",
+      "check": "python3 -m unittest pruebas.python.test_despliegue",
+      "depende_de": [
+        "p9"
+      ],
+      "hecha": true
     }
   ]
 }

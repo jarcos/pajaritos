@@ -72,6 +72,12 @@ red `tunnel`. Necesita Docker y el NAS; no sirve como puerta antes del push.
   medirse: el nombre se resuelve por variable precisamente para que un Umami
   caído no impida arrancar a nginx. Sólo se mide en pajaritos.josearcos.me
   (`data-domains`). `pruebas/python/test_analitica.py` fija todo esto.
+- **La configuración de nginx es un bind mount de un solo fichero.** Cambiarla
+  no basta: hasta el 06-11-2026 el CI subía `nginx/` y nginx seguía con la
+  vieja, porque `up -d` no recrea por el contenido de un fichero montado y
+  `tar` lo sustituye por otro inodo. Ahora el CI recrea `web` cuando cambia
+  `nginx/` y comprueba con `GET /u/api/send → 405` que la configuración viva es
+  la del repo (`pruebas/python/test_despliegue.py`).
 - **El despliegue está detrás de `AUTODEPLOY_ENABLED`.** Si la variable del
   repo no está en `true`, el job de despliegue no corre y el push parece verde
   sin haber desplegado nada.

@@ -114,12 +114,26 @@ jobs:
             echo "tocar=si" >> "$GITHUB_OUTPUT"
             echo "→ cambia la infraestructura: se recrean los contenedores"
           fi
+          # nginx aparte: ver el paso siguiente.
+          if ! git rev-parse HEAD^ >/dev/null 2>&1 || echo "$cambios" | grep -q '^nginx/'; then
+            echo "nginx=si" >> "$GITHUB_OUTPUT"
+            echo "→ cambia nginx/: se recrea web a la fuerza"
+          fi
 
       - name: Levantar los contenedores
         if: steps.infra.outputs.tocar == 'si'
         run: |
           ssh nas '/usr/local/bin/docker compose -f /volume1/docker/pajaritos/docker-compose.yml \
                    --project-directory /volume1/docker/pajaritos up -d --build'
+          # `up -d` sólo recrea si cambia la definición del servicio, no el
+          # contenido de un fichero montado. Y la configuración de nginx es un
+          # bind mount de UN fichero que `tar` sustituye por otro: el contenedor
+          # sigue leyendo el viejo hasta que se vuelve a arrancar. El 06-11-2026
+          # el CI salió verde con /u/ sirviendo index.html por esto.
+          if [ "${{ steps.infra.outputs.nginx }}" = "si" ]; then
+            ssh nas '/usr/local/bin/docker compose -f /volume1/docker/pajaritos/docker-compose.yml \
+                     --project-directory /volume1/docker/pajaritos up -d --no-deps --force-recreate web'
+          fi
 
       # La puerta: si esto no pasa, el despliegue se marca en rojo aunque los
       # ficheros ya estén copiados. Comprueba salud, y además que lo servido es
@@ -144,6 +158,16 @@ jobs:
             echo "healthz no respondió ok tras 15 intentos"; exit 1
           fi
           echo "healthz ok al intento $i"
+
+          # Que la configuración de nginx que corre es la del repo, no sólo los
+          # estáticos. GET a /u/api/send lo corta el propio nginx con 405 antes
+          # de proxear a Umami, así que no depende de que Umami esté arriba; con
+          # una configuración vieja la ruta cae en index.html y da 200.
+          codigo=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 "$base/u/api/send" || true)
+          if [ "$codigo" != "405" ]; then
+            echo "nginx no corre la configuración del repo: GET /u/api/send dio $codigo, no 405"; exit 1
+          fi
+          echo "configuración de nginx al día (GET /u/api/send → 405)"
 
           # Hasta el 28-08-2026 esto comprobaba indicios, no bytes: un curl con
           # -o /dev/null contra la ruta versionada de app.js pasa aunque el NAS
