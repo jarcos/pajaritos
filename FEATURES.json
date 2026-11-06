@@ -110,6 +110,15 @@
       "check": "grep -q \"estructural\\|MODULE_NOT_FOUND\\|command not found\" pruebas/comprobar-features.sh",
       "depende_de": [],
       "hecha": false
+    },
+    {
+      "id": "p9",
+      "titulo": "Analítica de uso con Umami, servida por /u/ desde el propio dominio",
+      "fecha": "2026-11-06",
+      "porque": "Pedido por José el 06-11-2026: la guía no tenía ninguna analítica y el resto de sus webs (FrienDraft, Huelva Developers, VibeCoders & Beers) ya miden con el Umami del NAS. Va por /u/ en nginx para que la CSP siga en 'self' y los bloqueadores no lo corten; resuelto por variable para que un Umami caído no tumbe nginx al arrancar.",
+      "check": "python3 -m unittest pruebas.python.test_analitica",
+      "depende_de": [],
+      "hecha": true
     }
   ]
 }

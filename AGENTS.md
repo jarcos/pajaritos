@@ -65,6 +65,13 @@ red `tunnel`. Necesita Docker y el NAS; no sirve como puerta antes del push.
   de datos vive en un volumen que nginx no monta, y no se almacena la IP de
   nadie. Añadirle una ruta de lectura, un borrado o un log de IPs desmonta el
   modelo entero. Si el cambio va por ahí, es una decisión, no una tarea.
+- **La analítica de uso (Umami, 06-11-2026) depende de otro proyecto.** El
+  script y los envíos van por `/u/` en nginx hacia `frienddraft-umami`, el
+  Umami del NAS que montó FrienDraft (panel en umami.josearcos.me). Si ese
+  contenedor cambia de nombre o sale de la red `tunnel`, aquí sólo deja de
+  medirse: el nombre se resuelve por variable precisamente para que un Umami
+  caído no impida arrancar a nginx. Sólo se mide en pajaritos.josearcos.me
+  (`data-domains`). `pruebas/python/test_analitica.py` fija todo esto.
 - **El despliegue está detrás de `AUTODEPLOY_ENABLED`.** Si la variable del
   repo no está en `true`, el job de despliegue no corre y el push parece verde
   sin haber desplegado nada.

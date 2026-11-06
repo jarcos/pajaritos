@@ -5,6 +5,8 @@
      · mareas           → «network first» con reserva en caché (dato perecedero)
      · fotos y teselas  → «cache first», se acumulan según se usan
      · /api/            → nunca se cachea
+     · /u/ (analítica)  → ni se toca: el script de Umami no se queda viejo en
+                          caché y sin red el envío falla sin molestar
 */
 // Al cambiar V se purgan las cachés viejas en `activate`. Súbelo siempre que
 // cambie la lista de abajo o la versión de app.js.
@@ -76,6 +78,7 @@ self.addEventListener('fetch', ev => {
   const url = new URL(req.url);
   if (url.origin !== location.origin) return;
   if (url.pathname.startsWith('/api/')) return;          // los reportes no se cachean
+  if (url.pathname.startsWith('/u/')) return;            // la analítica tampoco
 
   // Mareas: dato perecedero. Red primero, caché como red de seguridad.
   if (url.pathname.endsWith('mareas.json')) {
